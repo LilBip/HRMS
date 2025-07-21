@@ -15,7 +15,7 @@ const { Header, Sider, Content, Footer } = Layout;
 const { Title } = Typography;
 
 const MainLayout: React.FC = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,6 +23,46 @@ const MainLayout: React.FC = () => {
     logout();
     message.success('Đã đăng xuất');
     navigate('/login');
+  };
+
+  // Định nghĩa menu items dựa trên role
+  const getMenuItems = () => {
+    const baseMenuItems = [
+      {
+        key: '/',
+        icon: <DashboardOutlined />,
+        label: <Link to="/">Dashboard</Link>,
+      },
+      {
+        key: '/requests',
+        icon: <FileTextOutlined />,
+        label: <Link to="/requests">Đơn từ</Link>,
+      },
+      {
+        key: '/activity-log',
+        icon: <ClockCircleOutlined />,
+        label: <Link to="/activity-log">Nhật ký hoạt động</Link>,
+      },
+    ];
+
+    // Thêm menu items cho admin
+    if (user?.role === 'admin') {
+      return [
+        ...baseMenuItems,
+        {
+          key: '/employees',
+          icon: <TeamOutlined />,
+          label: <Link to="/employees">Nhân viên</Link>,
+        },
+        {
+          key: '/departments',
+          icon: <ApartmentOutlined />,
+          label: <Link to="/departments">Phòng ban</Link>,
+        },
+      ];
+    }
+
+    return baseMenuItems;
   };
 
   return (
@@ -46,39 +86,13 @@ const MainLayout: React.FC = () => {
           theme="dark"
           mode="inline"
           selectedKeys={[location.pathname]}
-          items={[
-            {
-              key: '/',
-              icon: <DashboardOutlined />,
-              label: <Link to="/">Dashboard</Link>,
-            },
-            {
-              key: '/employees',
-              icon: <TeamOutlined />,
-              label: <Link to="/employees">Nhân viên</Link>,
-            },
-            {
-              key: '/departments',
-              icon: <ApartmentOutlined />,
-              label: <Link to="/departments">Phòng ban</Link>,
-            },
-            {
-              key: '/requests',
-              icon: <FileTextOutlined />,
-              label: <Link to="/requests">Đơn từ</Link>,
-            },
-            {
-              key: '/activity-log',
-              icon: <ClockCircleOutlined />,
-              label: <Link to="/activity-log">Nhật ký hoạt động</Link>,
-            },
-          ]}
+          items={getMenuItems()}
         />
       </Sider>
 
       {/* Phần nội dung bên phải */}
       <Layout>
-        {/* Header ngang với nút logout */}
+        {/* Header ngang với nút logout và thông tin user */}
         <Header
           style={{
             background: '#fff',
@@ -86,8 +100,12 @@ const MainLayout: React.FC = () => {
             display: 'flex',
             justifyContent: 'flex-end',
             alignItems: 'center',
+            gap: '16px'
           }}
         >
+          <Typography.Text strong>
+            {user?.fullName} ({user?.role === 'admin' ? 'Admin' : 'User'})
+          </Typography.Text>
           <Popconfirm
             title="Bạn có chắc chắn muốn đăng xuất?"
             onConfirm={handleLogout}

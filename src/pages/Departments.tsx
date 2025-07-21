@@ -16,7 +16,7 @@ import {
   updateDepartment,
   deleteDepartment,
 } from '../api/departmentApi';
-import { addActivityLog } from '../api/activityLogApi';
+import { createActivityLog } from '../api/activityLogApi';
 
 const Departments: React.FC = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -55,11 +55,10 @@ const Departments: React.FC = () => {
       await deleteDepartment(id);
       message.success('Xóa phòng ban thành công');
       if (department) {
-        await addActivityLog({
-          id: crypto.randomUUID(),
+        await createActivityLog({
           name: department.name,
           activityType: 'Delete',
-          time: new Date().toISOString(),
+          details: `Xóa phòng ban ${department.name}`
         });
       }
       fetchDepartments();
@@ -73,21 +72,19 @@ const Departments: React.FC = () => {
       if (editingDepartment) {
         await updateDepartment(editingDepartment.id, { ...values, id: editingDepartment.id });
         message.success('Cập nhật phòng ban thành công');
-        await addActivityLog({
-          id: crypto.randomUUID(),
+        await createActivityLog({
           name: values.name,
-          activityType: 'Edit',
-          time: new Date().toISOString(),
+          activityType: 'Update',
+          details: `Cập nhật phòng ban ${values.name}`
         });
       } else {
         const newId = crypto.randomUUID();
         await addDepartment({ ...values, id: newId });
         message.success('Thêm phòng ban thành công');
-        await addActivityLog({
-          id: newId,
+        await createActivityLog({
           name: values.name,
           activityType: 'Add',
-          time: new Date().toISOString(),
+          details: `Thêm phòng ban mới ${values.name}`
         });
       }
       setDrawerVisible(false);

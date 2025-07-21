@@ -7,6 +7,14 @@
       "position": "a",
       "status": "Đang làm việc",
       "startDate": "2022/07/08"
+    },
+    {
+      "id": "c6cedab9-9d89-4153-82c6-baa285d3e203",
+      "name": "Khánh Duy",
+      "department": "a",
+      "position": "a",
+      "status": "Đang thử việc",
+      "startDate": "lllllll"
     }
   ],
   "departments": [
@@ -14,6 +22,26 @@
       "id": "544b71f5-f464-4faa-9070-1ebff9eedc53",
       "name": "a",
       "description": "a\n"
+    }
+  ],
+  "accounts": [
+    {
+      "id": "admin-001",
+      "username": "admin",
+      "password": "admin123",
+      "fullName": "Administrator",
+      "role": "admin",
+      "email": "admin@hrms.com",
+      "status": "active"
+    },
+    {
+      "id": "user-001",
+      "username": "user1",
+      "password": "user123",
+      "fullName": "Normal User",
+      "role": "user",
+      "email": "user1@hrms.com",
+      "status": "active"
     }
   ],
   "activityLogs": [
@@ -28,7 +56,65 @@
       "name": "a",
       "activityType": "Add",
       "time": "2025-07-21T05:15:43.673Z"
+    },
+    {
+      "id": "1753084920033",
+      "name": "Nghia Tran Minh",
+      "activityType": "Add",
+      "details": "Tạo đơn Nghỉ phép mới",
+      "time": "2025-07-21T08:02:00.033Z"
+    },
+    {
+      "id": "1753084969655",
+      "name": "Administrator",
+      "activityType": "Approve",
+      "details": "Phê duyệt đơn Nghỉ phép của Normal User - Ghi chú: oke em\n",
+      "time": "2025-07-21T08:02:49.655Z"
+    },
+    {
+      "id": "1753088172593",
+      "name": "Khánh Duy",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới Khánh Duy",
+      "time": "2025-07-21T08:56:12.593Z"
     }
   ],
-  "requestForms": []
+  "requestForms": [
+    {
+      "id": "1753081828547",
+      "employeeId": "user-001",
+      "employeeName": "Normal User",
+      "type": "Nghỉ phép",
+      "content": "Xin nghỉ phép từ 24/07/2025 đến 26/08/2025",
+      "submissionDate": "2024-03-21T10:00:00.000Z",
+      "status": "rejected",
+      "approvedBy": "Administrator",
+      "approvalDate": "2025-07-21T07:19:00.048Z",
+      "approvalNote": ""
+    },
+    {
+      "id": "1753081828548",
+      "employeeId": "admin-001",
+      "employeeName": "Administrator",
+      "type": "Công tác",
+      "content": "Công tác tại Hà Nội từ 01/04/2024 đến 05/04/2024",
+      "submissionDate": "2024-03-21T11:00:00.000Z",
+      "status": "approved",
+      "approvedBy": "Administrator",
+      "approvalDate": "2025-07-21T07:20:46.457Z",
+      "approvalNote": "Okee"
+    },
+    {
+      "id": "1753084920010",
+      "employeeId": "user-001",
+      "employeeName": "Normal User",
+      "type": "Nghỉ phép",
+      "content": "thích thì nghỉ từ 22/07/2025 đến 22/08/2025",
+      "submissionDate": "2025-07-21T08:02:00.010Z",
+      "status": "approved",
+      "approvedBy": "Administrator",
+      "approvalDate": "2025-07-21T08:02:49.648Z",
+      "approvalNote": "oke em\n"
+    }
+  ]
 }
