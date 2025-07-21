@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import Employees from './pages/Employees';
+import Departments from './pages/Departments';
+import Login from './pages/Login';
+import ActivityLogPage from './pages/ActivityLog';
+import RequestForms from './pages/RequestForms';
+
+import MainLayout from './layout/MainLayout';
+import { useAuth } from './contexts/AuthContexts';
+import '../src/index.css';
 
 function App() {
+  const { isAuthenticated } = useAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={isAuthenticated ? <MainLayout /> : <Navigate to="/login" />}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route index element={<Dashboard />} />
+          <Route path="employees" element={<Employees />} />
+          <Route path="departments" element={<Departments />} />
+          <Route path="activity-log" element={<ActivityLogPage />} />
+          <Route path="requests" element={<RequestForms />} />
+        </Route>
+        <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
+      </Routes>
+    </Router>
   );
 }
 

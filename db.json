@@ -1,0 +1,34 @@
+{
+  "employees": [
+    {
+      "id": "49f0b6db-a5b9-4f54-b00b-98903f2c0e2d",
+      "name": "a",
+      "department": "a",
+      "position": "a",
+      "status": "Đang làm việc",
+      "startDate": "2022/07/08"
+    }
+  ],
+  "departments": [
+    {
+      "id": "544b71f5-f464-4faa-9070-1ebff9eedc53",
+      "name": "a",
+      "description": "a\n"
+    }
+  ],
+  "activityLogs": [
+    {
+      "id": "544b71f5-f464-4faa-9070-1ebff9eedc53",
+      "name": "a",
+      "activityType": "Add",
+      "time": "2025-07-21T05:15:13.837Z"
+    },
+    {
+      "id": "49f0b6db-a5b9-4f54-b00b-98903f2c0e2d",
+      "name": "a",
+      "activityType": "Add",
+      "time": "2025-07-21T05:15:43.673Z"
+    }
+  ],
+  "requestForms": []
+}
