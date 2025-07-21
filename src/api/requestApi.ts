@@ -1,21 +1,38 @@
 import axios from 'axios';
 import { RequestForm } from '../types/request';
 
-const API_URL = 'http://localhost:3001/requestForms';
+const BASE_URL = 'http://localhost:3001';
 
-export const getRequestForms = async (): Promise<RequestForm[]> => {
-  const res = await axios.get(API_URL);
-  return res.data;
+export const getRequests = async (): Promise<RequestForm[]> => {
+  const response = await axios.get(`${BASE_URL}/requestForms`);
+  return response.data;
 };
 
-export const createRequestForm = async (form: RequestForm) => {
-  await axios.post(API_URL, form);
+export const createRequest = async (request: Omit<RequestForm, 'id' | 'status'>): Promise<RequestForm> => {
+  const newRequest = {
+    ...request,
+    status: 'pending',
+    submissionDate: new Date().toISOString()
+  };
+  const response = await axios.post(`${BASE_URL}/requestForms`, newRequest);
+  return response.data;
 };
 
-export const updateRequestForm = async (id: string, form: Partial<RequestForm>) => {
-  await axios.patch(`${API_URL}/${id}`, form);
-};
-
-export const deleteRequestForm = async (id: string) => {
-  await axios.delete(`${API_URL}/${id}`);
+export const approveRequest = async (
+  requestId: string,
+  approverName: string,
+  approved: boolean,
+  note?: string
+): Promise<RequestForm> => {
+  const request = await axios.get(`${BASE_URL}/requestForms/${requestId}`);
+  const updatedRequest = {
+    ...request.data,
+    status: approved ? 'approved' : 'rejected',
+    approvedBy: approverName,
+    approvalDate: new Date().toISOString(),
+    approvalNote: note
+  };
+  
+  const response = await axios.put(`${BASE_URL}/requestForms/${requestId}`, updatedRequest);
+  return response.data;
 };

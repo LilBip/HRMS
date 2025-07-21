@@ -1,119 +1,147 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Table,
-  Button,
-  Drawer,
-  Form,
-  Input,
-  Select,
-  DatePicker,
-  Space,
-  Popconfirm,
-  Tag,
-  message,
-} from 'antd';
-import dayjs from 'dayjs';
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContexts';
+import { getRequests, approveRequest } from '../api/requestApi';
+import { createActivityLog } from '../api/activityLogApi';
 import { RequestForm } from '../types/request';
 import {
-  getRequestForms,
-  createRequestForm,
-  updateRequestForm,
-  deleteRequestForm,
-} from '../api/requestApi';
-import { PlusOutlined } from '@ant-design/icons';
+  Table,
+  Typography,
+  Button,
+  Modal,
+  Input,
+  Tag,
+  Space,
+  message,
+  Form,
+  Select,
+  DatePicker
+} from 'antd';
 
-const { RangePicker } = DatePicker;
+const { TextArea } = Input;
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const RequestForms: React.FC = () => {
-  const [forms, setForms] = useState<RequestForm[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
+  const { user } = useContext(AuthContext);
+  const [requests, setRequests] = useState<RequestForm[]>([]);
+  const [selectedRequest, setSelectedRequest] = useState<RequestForm | null>(null);
+  const [approvalNote, setApprovalNote] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [createModalVisible, setCreateModalVisible] = useState(false);
   const [form] = Form.useForm();
-  const [editingForm, setEditingForm] = useState<RequestForm | null>(null);
-
-  const fetchForms = async () => {
-    setLoading(true);
-    try {
-      const data = await getRequestForms();
-      setForms(data);
-    } catch {
-      message.error('Lỗi khi tải dữ liệu đơn từ');
-    }
-    setLoading(false);
-  };
 
   useEffect(() => {
-    fetchForms();
+    loadRequests();
   }, []);
 
-  const handleFinish = async (values: any) => {
-    const [startDate, endDate] = values.dateRange;
-    const formData: RequestForm = {
-        id: editingForm ? editingForm.id : Date.now().toString(),
-        employeeName: values.employeeName,
-        type: values.type,
-        reason: values.reason,
-        startDate: startDate.format('YYYY-MM-DD'),
-        endDate: endDate.format('YYYY-MM-DD'),
-        status: values.status,
-        date: function (date: any): unknown {
-            throw new Error('Function not implemented.');
-        }
-    };
-
+  const loadRequests = async () => {
     try {
-      if (editingForm) {
-        await updateRequestForm(editingForm.id, formData);
-        message.success('Cập nhật đơn thành công');
-      } else {
-        await createRequestForm(formData);
-        message.success('Tạo đơn mới thành công');
-      }
-      fetchForms();
-      setOpen(false);
+      const data = await getRequests();
+      setRequests(data);
+    } catch (error) {
+      console.error('Error loading requests:', error);
+    }
+  };
+
+  const handleCreateRequest = async (values: any) => {
+    try {
+      const [startDate, endDate] = values.dateRange || [];
+      const content = `${values.type === 'Khác' ? values.customType + ' - ' : ''}${values.content}${
+        startDate && endDate
+          ? ` từ ${startDate.format('DD/MM/YYYY')} đến ${endDate.format('DD/MM/YYYY')}`
+          : ''
+      }`;
+
+      const newRequest = {
+        id: Date.now().toString(),
+        employeeId: user?.id || '',
+        employeeName: user?.fullName || '',
+        type: values.type === 'Khác' ? values.customType : values.type,
+        content,
+        submissionDate: new Date().toISOString(),
+        status: 'pending'
+      };
+
+      await fetch('http://localhost:3001/requestForms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newRequest)
+      });
+
+      await createActivityLog({
+        name: user?.fullName || '',
+        activityType: 'Add',
+        details: `Tạo đơn ${newRequest.type} mới`
+      });
+
+      message.success('Tạo đơn thành công');
+      setCreateModalVisible(false);
       form.resetFields();
-      setEditingForm(null);
-    } catch {
-      message.error('Lỗi khi lưu đơn từ');
+      loadRequests();
+    } catch (error) {
+      console.error('Error creating request:', error);
+      message.error('Lỗi khi tạo đơn');
     }
   };
 
-  const handleEdit = (record: RequestForm) => {
-    setEditingForm(record);
-    form.setFieldsValue({
-      ...record,
-      dateRange: [dayjs(record.startDate), dayjs(record.endDate)],
-    });
-    setOpen(true);
+  const handleApprovalClick = (request: RequestForm) => {
+    setSelectedRequest(request);
+    setApprovalNote('');
+    setOpenDialog(true);
   };
 
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteRequestForm(id);
-      message.success('Xóa đơn thành công');
-      fetchForms();
-    } catch {
-      message.error('Lỗi khi xóa đơn');
+  const handleApprove = async (approved: boolean) => {
+    if (selectedRequest && user) {
+      try {
+        setLoading(true);
+        
+        // Duyệt đơn
+        await approveRequest(
+          selectedRequest.id,
+          user.fullName,
+          approved,
+          approvalNote
+        );
+
+        // Tạo activity log
+        await createActivityLog({
+          name: user.fullName,
+          activityType: approved ? 'Approve' : 'Reject',
+          details: `${approved ? 'Phê duyệt' : 'Từ chối'} đơn ${selectedRequest.type} của ${selectedRequest.employeeName}${approvalNote ? ` - Ghi chú: ${approvalNote}` : ''}`
+        });
+
+        message.success(approved ? 'Đã phê duyệt đơn' : 'Đã từ chối đơn');
+        setOpenDialog(false);
+        loadRequests();
+      } catch (error) {
+        console.error('Error approving request:', error);
+        message.error('Lỗi duyệt đơn');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
-  const handleApprove = async (
-    record: RequestForm,
-    newStatus: 'Đã duyệt' | 'Từ chối'
-  ) => {
-    try {
-      await updateRequestForm(record.id, { status: newStatus });
-      message.success(`Đơn đã được ${newStatus.toLowerCase()}`);
-      fetchForms();
-    } catch {
-      message.error('Có lỗi khi cập nhật trạng thái đơn');
+  const getStatusTag = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'pending':
+      case 'chờ duyệt':
+        return <Tag color="orange">Chờ duyệt</Tag>;
+      case 'approved':
+      case 'đã duyệt':
+        return <Tag color="green">Đã duyệt</Tag>;
+      case 'rejected':
+      case 'từ chối':
+        return <Tag color="red">Từ chối</Tag>;
+      default:
+        return <Tag>{status}</Tag>;
     }
   };
 
   const columns = [
     {
-      title: 'Tên nhân viên',
+      title: 'Người gửi',
       dataIndex: 'employeeName',
       key: 'employeeName',
     },
@@ -123,87 +151,147 @@ const RequestForms: React.FC = () => {
       key: 'type',
     },
     {
-      title: 'Lý do',
-      dataIndex: 'reason',
-      key: 'reason',
+      title: 'Nội dung',
+      dataIndex: 'content',
+      key: 'content',
     },
     {
-      title: 'Từ ngày',
-      dataIndex: 'startDate',
-      key: 'startDate',
-    },
-    {
-      title: 'Đến ngày',
-      dataIndex: 'endDate',
-      key: 'endDate',
+      title: 'Ngày gửi',
+      dataIndex: 'submissionDate',
+      key: 'submissionDate',
+      render: (date: string) => new Date(date).toLocaleDateString('vi-VN'),
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
-      render: (status: string) => {
-        let color = status === 'Đã duyệt' ? 'green' : status === 'Từ chối' ? 'red' : 'orange';
-        return <Tag color={color}>{status}</Tag>;
-      },
+      render: (status: string) => getStatusTag(status),
     },
     {
-      title: 'Hành động',
-      key: 'action',
-      render: (_: any, record: RequestForm) => (
-        <Space>
-          <Button type="link" onClick={() => handleEdit(record)}>Sửa</Button>
-          <Popconfirm title="Xóa đơn này?" onConfirm={() => handleDelete(record.id)}>
-            <Button type="link" danger>Xóa</Button>
-          </Popconfirm>
-          {record.status === 'Chờ duyệt' && (
-            <>
-              <Popconfirm
-                title="Xác nhận duyệt đơn này?"
-                onConfirm={() => handleApprove(record, 'Đã duyệt')}
-              >
-                <Button type="link" style={{ color: 'green' }}>Duyệt</Button>
-              </Popconfirm>
-              <Popconfirm
-                title="Xác nhận từ chối đơn này?"
-                onConfirm={() => handleApprove(record, 'Từ chối')}
-              >
-                <Button type="link" danger>Từ chối</Button>
-              </Popconfirm>
-            </>
-          )}
-        </Space>
-      ),
+      title: 'Người duyệt',
+      key: 'approvedBy',
+      render: (_: any, record: RequestForm) =>
+        record.approvedBy ? (
+          <div>
+            <div>{record.approvedBy}</div>
+            <small style={{ color: 'gray' }}>
+              {record.approvalDate && new Date(record.approvalDate).toLocaleDateString('vi-VN')}
+            </small>
+          </div>
+        ) : (
+          '-'
+        ),
     },
+    ...(user?.role === 'admin'
+      ? [{
+          title: 'Hành động',
+          key: 'action',
+          render: (_: any, record: RequestForm) =>
+            record.status === 'pending' && (
+              <Button size="small" type="primary" onClick={() => handleApprovalClick(record)}>
+                Duyệt đơn
+              </Button>
+            ),
+        }]
+      : []),
   ];
 
   return (
-    <>
-      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
-        <h2>Quản lý Đơn từ</h2>
-        <Button icon={<PlusOutlined />} type="primary" onClick={() => setOpen(true)}>
+    <div style={{ padding: 24 }}>
+      <Space style={{ width: '100%', justifyContent: 'space-between', marginBottom: 16 }}>
+        <Typography.Title level={3} style={{ margin: 0 }}>Danh sách đơn từ</Typography.Title>
+        <Button type="primary" onClick={() => setCreateModalVisible(true)}>
           Tạo đơn mới
         </Button>
-      </div>
-      <Table rowKey="id" columns={columns} dataSource={forms} loading={loading} />
+      </Space>
 
-      <Drawer
-        title={editingForm ? 'Chỉnh sửa đơn từ' : 'Tạo đơn từ'}
-        open={open}
-        onClose={() => {
-          setOpen(false);
-          setEditingForm(null);
+      <Table
+        dataSource={requests}
+        columns={columns}
+        rowKey="id"
+        bordered
+        pagination={{ pageSize: 8 }}
+      />
+
+      {/* Modal duyệt đơn */}
+      <Modal
+        open={openDialog}
+        title={`Duyệt đơn - ${selectedRequest?.type || ''}`}
+        onCancel={() => setOpenDialog(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setOpenDialog(false)}>
+            Hủy
+          </Button>,
+          <Button
+            key="reject"
+            type="primary"
+            danger
+            loading={loading}
+            onClick={() => handleApprove(false)}
+          >
+            Từ chối
+          </Button>,
+          <Button
+            key="approve"
+            type="primary"
+            loading={loading}
+            onClick={() => handleApprove(true)}
+          >
+            Phê duyệt
+          </Button>,
+        ]}
+      >
+        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+          <Typography.Text strong>Nội dung:</Typography.Text>
+          <Typography.Paragraph>{selectedRequest?.content}</Typography.Paragraph>
+
+          <Typography.Text type="secondary">
+            Ngày gửi:{' '}
+            {selectedRequest?.submissionDate &&
+              new Date(selectedRequest.submissionDate).toLocaleDateString('vi-VN')}
+          </Typography.Text>
+
+          <TextArea
+            rows={4}
+            placeholder="Ghi chú duyệt đơn"
+            value={approvalNote}
+            onChange={(e) => setApprovalNote(e.target.value)}
+          />
+        </Space>
+      </Modal>
+
+      {/* Modal tạo đơn mới */}
+      <Modal
+        open={createModalVisible}
+        title="Tạo đơn mới"
+        onCancel={() => {
+          setCreateModalVisible(false);
           form.resetFields();
         }}
-        width={480}
-      >
-        <Form layout="vertical" form={form} onFinish={handleFinish}>
-          <Form.Item
-            name="employeeName"
-            label="Tên nhân viên"
-            rules={[{ required: true, message: 'Vui lòng nhập tên nhân viên' }]}
+        footer={[
+          <Button 
+            key="cancel" 
+            onClick={() => {
+              setCreateModalVisible(false);
+              form.resetFields();
+            }}
           >
-            <Input />
-          </Form.Item>
+            Hủy
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            onClick={() => form.submit()}
+          >
+            Tạo đơn
+          </Button>
+        ]}
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleCreateRequest}
+        >
           <Form.Item
             name="type"
             label="Loại đơn"
@@ -213,41 +301,52 @@ const RequestForms: React.FC = () => {
               <Option value="Nghỉ phép">Nghỉ phép</Option>
               <Option value="Công tác">Công tác</Option>
               <Option value="Tăng ca">Tăng ca</Option>
+              <Option value="Khác">Khác</Option>
             </Select>
           </Form.Item>
+
           <Form.Item
-            name="reason"
-            label="Lý do"
-            rules={[{ required: true, message: 'Vui lòng nhập lý do' }]}
+            noStyle
+            shouldUpdate={(prevValues, currentValues) => prevValues?.type !== currentValues?.type}
           >
-            <Input.TextArea rows={2} />
+            {({ getFieldValue }) =>
+              getFieldValue('type') === 'Khác' ? (
+                <Form.Item
+                  name="customType"
+                  label="Tên loại đơn"
+                  rules={[{ required: true, message: 'Vui lòng nhập tên loại đơn' }]}
+                >
+                  <Input placeholder="Nhập tên loại đơn..." />
+                </Form.Item>
+              ) : null
+            }
           </Form.Item>
+
           <Form.Item
             name="dateRange"
             label="Thời gian"
             rules={[{ required: true, message: 'Vui lòng chọn thời gian' }]}
           >
-            <RangePicker format="YYYY-MM-DD" />
+            <RangePicker 
+              format="DD/MM/YYYY"
+              placeholder={['Từ ngày', 'Đến ngày']}
+              style={{ width: '100%' }}
+            />
           </Form.Item>
+
           <Form.Item
-            name="status"
-            label="Trạng thái"
-            rules={[{ required: true, message: 'Vui lòng chọn trạng thái' }]}
+            name="content"
+            label="Nội dung chi tiết"
+            rules={[{ required: true, message: 'Vui lòng nhập nội dung đơn' }]}
           >
-            <Select>
-              <Option value="Chờ duyệt">Chờ duyệt</Option>
-              <Option value="Đã duyệt">Đã duyệt</Option>
-              <Option value="Từ chối">Từ chối</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Lưu
-            </Button>
+            <TextArea 
+              rows={4} 
+              placeholder="Nhập nội dung chi tiết của đơn..." 
+            />
           </Form.Item>
         </Form>
-      </Drawer>
-    </>
+      </Modal>
+    </div>
   );
 };
 

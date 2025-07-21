@@ -16,7 +16,7 @@ import { getAllEmployees } from '../api/dashboardApi';
 import { Employee } from '../types/employee';
 import { getDepartments } from '../api/departmentApi';
 import { Department } from '../types/department';
-import { addActivityLog } from '../api/activityLogApi';
+import { createActivityLog } from '../api/activityLogApi';
 
 const { Option } = Select;
 
@@ -74,11 +74,10 @@ const Employees: React.FC = () => {
       });
       message.success('Xóa nhân viên thành công');
       if (employee) {
-        await addActivityLog({
-          id: crypto.randomUUID(),
+        await createActivityLog({
           name: employee.name,
           activityType: 'Delete',
-          time: new Date().toISOString(),
+          details: `Xóa nhân viên ${employee.name}`
         });
       }
       fetchEmployees();
@@ -101,11 +100,10 @@ const Employees: React.FC = () => {
           body: JSON.stringify(values),
         });
         message.success('Cập nhật nhân viên thành công');
-        await addActivityLog({
-          id: crypto.randomUUID(),
+        await createActivityLog({
           name: values.name,
-          activityType: 'Edit',
-          time: new Date().toISOString(),
+          activityType: 'Update',
+          details: `Cập nhật thông tin nhân viên ${values.name}`
         });
       } else {
         const newId = crypto.randomUUID();
@@ -115,11 +113,10 @@ const Employees: React.FC = () => {
           body: JSON.stringify({ ...values, id: newId }),
         });
         message.success('Thêm nhân viên thành công');
-        await addActivityLog({
-          id: newId,
+        await createActivityLog({
           name: values.name,
           activityType: 'Add',
-          time: new Date().toISOString(),
+          details: `Thêm nhân viên mới ${values.name}`
         });
       }
       setDrawerVisible(false);
