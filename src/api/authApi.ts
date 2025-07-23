@@ -6,6 +6,7 @@ export interface LoginCredentials {
 }
 
 export interface Account {
+  token: string;
   id: string;
   username: string;
   password: string;

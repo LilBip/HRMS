@@ -7,23 +7,9 @@
       "position": "a",
       "status": "Đang làm việc",
       "startDate": "2022/07/08"
-    },
-    {
-      "id": "c6cedab9-9d89-4153-82c6-baa285d3e203",
-      "name": "Khánh Duy",
-      "department": "a",
-      "position": "a",
-      "status": "Đang thử việc",
-      "startDate": "lllllll"
     }
   ],
-  "departments": [
-    {
-      "id": "544b71f5-f464-4faa-9070-1ebff9eedc53",
-      "name": "a",
-      "description": "a\n"
-    }
-  ],
+  "departments": [],
   "accounts": [
     {
       "id": "admin-001",
@@ -77,6 +63,34 @@
       "activityType": "Add",
       "details": "Thêm nhân viên mới Khánh Duy",
       "time": "2025-07-21T08:56:12.593Z"
+    },
+    {
+      "id": "1753090051170",
+      "name": "Khánh Duy",
+      "activityType": "Delete",
+      "details": "Xóa nhân viên Khánh Duy",
+      "time": "2025-07-21T09:27:31.170Z"
+    },
+    {
+      "id": "1753090059217",
+      "name": "a",
+      "activityType": "Delete",
+      "details": "Xóa phòng ban a",
+      "time": "2025-07-21T09:27:39.217Z"
+    },
+    {
+      "id": "1753090143458",
+      "name": "Normal User",
+      "activityType": "Add",
+      "details": "Tạo đơn Nghỉ phép mới",
+      "time": "2025-07-21T09:29:03.458Z"
+    },
+    {
+      "id": "1753090211699",
+      "name": "Administrator",
+      "activityType": "Reject",
+      "details": "Từ chối đơn Nghỉ phép của Normal User - Ghi chú: Đi chơi thì vô công ty",
+      "time": "2025-07-21T09:30:11.699Z"
     }
   ],
   "requestForms": [
@@ -115,6 +129,18 @@
       "approvedBy": "Administrator",
       "approvalDate": "2025-07-21T08:02:49.648Z",
       "approvalNote": "oke em\n"
+    },
+    {
+      "id": "1753090143452",
+      "employeeId": "user-001",
+      "employeeName": "Normal User",
+      "type": "Nghỉ phép",
+      "content": "T đi chơi mày cấm được t?\n từ 07/07/2025 đến 15/07/2025",
+      "submissionDate": "2025-07-21T09:29:03.452Z",
+      "status": "rejected",
+      "approvedBy": "Administrator",
+      "approvalDate": "2025-07-21T09:30:11.693Z",
+      "approvalNote": "Đi chơi thì vô công ty"
     }
   ]
 }

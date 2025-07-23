@@ -11,7 +11,10 @@ import { useAuth } from './contexts/AuthContexts';
 import '../src/index.css';
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  // Đợi AuthContext khởi tạo xong
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Router>

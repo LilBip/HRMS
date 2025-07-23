@@ -15,10 +15,12 @@ import {
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(AuthContext);
+
   const [credentials, setCredentials] = useState<LoginCredentials>({
     username: '',
     password: ''
   });
+
   const [error, setError] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,13 +39,15 @@ const Login: React.FC = () => {
       const account = await login(credentials);
       if (account) {
         setUser({
+          token: account.token || account.id, // nếu API có `token`, ưu tiên dùng
           id: account.id,
           username: account.username,
           fullName: account.fullName,
           role: account.role,
           email: account.email
         });
-        navigate('/dashboard');
+
+        navigate('/'); // quay về Dashboard qua route "/"
       }
     } catch (err) {
       setError('Invalid username or password');
