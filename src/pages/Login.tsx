@@ -132,11 +132,17 @@ const Login: React.FC = () => {
             >
               Sign In
             </Button>
+            <Button
+              fullWidth
+              variant="text"
+              onClick={() => navigate("/register")}
+            >
+              Đăng ký tài khoản mới
+            </Button>
           </Box>
         </Paper>
       </Box>
     </Container>
   );
 };
-
 export default Login;

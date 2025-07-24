@@ -10,10 +10,14 @@ import {
 } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import { getAllEmployees } from '../api/employeeApi';
-import { getAttendanceHistory, addAttendanceRecord } from '../api/attendanceApi';
+import {
+  getAttendanceHistory,
+  addAttendanceRecord,
+} from '../api/attendanceApi';
 import { AttendanceRecord } from '../types/attendance';
 import { useAuth } from '../contexts/AuthContexts';
 import { Employee } from '../types/employee';
+import { createActivityLog } from '../api/activityLogApi';
 
 const Attendance: React.FC = () => {
   const { user } = useAuth();
@@ -82,6 +86,13 @@ const Attendance: React.FC = () => {
         checkIn: dayjs().toISOString(),
         status: 'present',
       });
+
+      await createActivityLog({
+        name: user?.fullName || user?.username || 'Unknown',
+        activityType: 'Add',
+        details: `Check-in vào lúc ${dayjs().format('HH:mm:ss')} ngày ${selectedDate.format('DD/MM/YYYY')}`,
+      });
+
       message.success('Check-in thành công');
       fetchAttendance();
     } catch {
@@ -102,6 +113,13 @@ const Attendance: React.FC = () => {
           ...todayRecord,
           checkOut: dayjs().toISOString(),
         });
+
+        await createActivityLog({
+          name: user?.fullName || user?.username || 'Unknown',
+          activityType: 'Update',
+          details: `Check-out vào lúc ${dayjs().format('HH:mm:ss')} ngày ${selectedDate.format('DD/MM/YYYY')}`,
+        });
+
         message.success('Check-out thành công');
         fetchAttendance();
       } else {
@@ -132,13 +150,15 @@ const Attendance: React.FC = () => {
       title: 'Check-in',
       dataIndex: 'checkIn',
       key: 'checkIn',
-      render: (time: string) => (time ? dayjs(time).format('HH:mm:ss') : '-'),
+      render: (time: string) =>
+        time ? dayjs(time).format('HH:mm:ss') : '-',
     },
     {
       title: 'Check-out',
       dataIndex: 'checkOut',
       key: 'checkOut',
-      render: (time: string) => (time ? dayjs(time).format('HH:mm:ss') : '-'),
+      render: (time: string) =>
+        time ? dayjs(time).format('HH:mm:ss') : '-',
     },
     {
       title: 'Trạng thái',
@@ -177,7 +197,9 @@ const Attendance: React.FC = () => {
             onChange={setSelectedUserId}
             optionFilterProp="children"
             filterOption={(input, option) =>
-              (option?.children?.toString() || '').toLowerCase().includes(input.toLowerCase())
+              (option?.children?.toString() || '')
+                .toLowerCase()
+                .includes(input.toLowerCase())
             }
           >
             {employees.map((emp) => (

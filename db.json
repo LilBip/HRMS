@@ -1,48 +1,19 @@
 {
   "employees": [
     {
-      "name": "Nghia Tran Minh",
-      "department": "Lập trình C++ cơ bản, nâng cao000",
-      "position": "Developer",
+      "name": "Dương Kiến Nghiệp",
+      "department": "Thiết kế đồ họa",
+      "position": "Intern",
       "status": "Đang làm việc",
-      "startDate": "2022/07/08777777777",
-      "id": "9aa63e06-51ae-4093-8136-9c13edd9fcd7"
-    },
-    {
-      "id": "efd79257-4ab7-4097-8afc-c528ecd3d61c",
-      "name": "Kyllian MP3",
-      "department": "Lập trình C++ cơ bản, nâng cao000",
-      "position": "Developer",
-      "status": "Đang làm việc",
-      "startDate": "2003-13-04"
-    },
-    {
-      "id": "60622f4a-980c-4c9e-8e60-c873d8df7060",
-      "name": "Nghia Tran Minh",
-      "department": "học học",
-      "position": "Developer",
-      "status": "Đang làm việc",
-      "startDate": "2022/07/08"
-    },
-    {
-      "id": "d731c9ae-561d-4efa-a0e4-6da7fd12ff3a",
-      "name": "Normal User",
-      "department": "Lập trình C++ cơ bản, nâng cao000",
-      "position": "Developer",
-      "status": "Đang thử việc",
-      "startDate": "2025-07-24"
+      "startDate": "2025-07-24",
+      "id": "1753382498200"
     }
   ],
   "departments": [
     {
-      "id": "0f19bedb-994b-438c-b2a0-87f1177be218",
-      "name": "Lập trình C++ cơ bản, nâng cao000",
-      "description": "ffsdfs"
-    },
-    {
-      "id": "2350a491-2244-4f52-a911-d2c4a230eba6",
-      "name": "học học",
-      "description": "fsdfsdf"
+      "id": "dd75effb-eeea-43af-a786-70a221a84a36",
+      "name": "Thiết kế đồ họa",
+      "description": "a"
     }
   ],
   "accounts": [
@@ -56,256 +27,69 @@
       "status": "active"
     },
     {
-      "id": "user-001",
-      "username": "user1",
-      "password": "user123",
-      "fullName": "Normal User",
+      "id": "1753382498200",
+      "username": "User",
+      "password": "1",
+      "fullName": "Dương Kiến Nghiệp",
       "role": "user",
-      "email": "user1@hrms.com",
+      "email": "kiennghiep2003@gmail.com",
       "status": "active"
     }
   ],
   "activityLogs": [
     {
-      "id": "544b71f5-f464-4faa-9070-1ebff9eedc53",
-      "name": "a",
+      "id": "1753383062317",
+      "name": "Dương Kiến Nghiệp",
       "activityType": "Add",
-      "time": "2025-07-21T05:15:13.837Z"
+      "details": "Check-in vào lúc 01:51:02 ngày 25/07/2025",
+      "time": "2025-07-24T18:51:02.317Z"
     },
     {
-      "id": "49f0b6db-a5b9-4f54-b00b-98903f2c0e2d",
-      "name": "a",
-      "activityType": "Add",
-      "time": "2025-07-21T05:15:43.673Z"
-    },
-    {
-      "id": "1753084920033",
-      "name": "Nghia Tran Minh",
-      "activityType": "Add",
-      "details": "Tạo đơn Nghỉ phép mới",
-      "time": "2025-07-21T08:02:00.033Z"
-    },
-    {
-      "id": "1753084969655",
-      "name": "Administrator",
-      "activityType": "Approve",
-      "details": "Phê duyệt đơn Nghỉ phép của Normal User - Ghi chú: oke em\n",
-      "time": "2025-07-21T08:02:49.655Z"
-    },
-    {
-      "id": "1753088172593",
-      "name": "Khánh Duy",
-      "activityType": "Add",
-      "details": "Thêm nhân viên mới Khánh Duy",
-      "time": "2025-07-21T08:56:12.593Z"
-    },
-    {
-      "id": "1753090051170",
-      "name": "Khánh Duy",
-      "activityType": "Delete",
-      "details": "Xóa nhân viên Khánh Duy",
-      "time": "2025-07-21T09:27:31.170Z"
-    },
-    {
-      "id": "1753090059217",
-      "name": "a",
-      "activityType": "Delete",
-      "details": "Xóa phòng ban a",
-      "time": "2025-07-21T09:27:39.217Z"
-    },
-    {
-      "id": "1753090143458",
-      "name": "Normal User",
-      "activityType": "Add",
-      "details": "Tạo đơn Nghỉ phép mới",
-      "time": "2025-07-21T09:29:03.458Z"
-    },
-    {
-      "id": "1753090211699",
-      "name": "Administrator",
-      "activityType": "Reject",
-      "details": "Từ chối đơn Nghỉ phép của Normal User - Ghi chú: Đi chơi thì vô công ty",
-      "time": "2025-07-21T09:30:11.699Z"
-    },
-    {
-      "id": "1753322577054",
-      "name": "a",
+      "id": "1753383062710",
+      "name": "Dương Kiến Nghiệp",
       "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên a",
-      "time": "2025-07-24T02:02:57.054Z"
+      "details": "Check-out vào lúc 01:51:02 ngày 25/07/2025",
+      "time": "2025-07-24T18:51:02.710Z"
     },
     {
-      "id": "1753322690508",
-      "name": "a",
+      "id": "1753383240385",
+      "name": "Dương Kiến Nghiệp",
       "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên a",
-      "time": "2025-07-24T02:04:50.508Z"
+      "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
+      "time": "2025-07-24T18:54:00.385Z"
     },
     {
-      "id": "1753322693855",
-      "name": "a",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên a",
-      "time": "2025-07-24T02:04:53.855Z"
-    },
-    {
-      "id": "1753322705583",
-      "name": "a",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên a",
-      "time": "2025-07-24T02:05:05.583Z"
-    },
-    {
-      "id": "1753322821488",
-      "name": "Lập trình C++ cơ bản, nâng cao000",
+      "id": "1753383274169",
+      "name": "Thiết kế đồ họa",
       "activityType": "Add",
-      "details": "Thêm phòng ban mới Lập trình C++ cơ bản, nâng cao000",
-      "time": "2025-07-24T02:07:01.488Z"
+      "details": "Thêm phòng ban mới Thiết kế đồ họa",
+      "time": "2025-07-24T18:54:34.169Z"
     },
     {
-      "id": "1753322827371",
-      "name": "học học",
-      "activityType": "Add",
-      "details": "Thêm phòng ban mới học học",
-      "time": "2025-07-24T02:07:07.371Z"
-    },
-    {
-      "id": "1753323040902",
-      "name": "a",
+      "id": "1753383331093",
+      "name": "Dương Kiến Nghiệp",
       "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên a",
-      "time": "2025-07-24T02:10:40.902Z"
-    },
-    {
-      "id": "1753323543612",
-      "name": "a",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên a",
-      "time": "2025-07-24T02:19:03.612Z"
-    },
-    {
-      "id": "1753323547326",
-      "name": "a",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên a",
-      "time": "2025-07-24T02:19:07.326Z"
-    },
-    {
-      "id": "1753323554015",
-      "name": "a",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên a",
-      "time": "2025-07-24T02:19:14.015Z"
-    },
-    {
-      "id": "1753324024562",
-      "name": "Nghia Tran Minh",
-      "activityType": "Add",
-      "details": "Thêm nhân viên mới Nghia Tran Minh",
-      "time": "2025-07-24T02:27:04.562Z"
-    },
-    {
-      "id": "1753324060952",
-      "name": "Kyllian MP3",
-      "activityType": "Add",
-      "details": "Thêm nhân viên mới Kyllian MP3",
-      "time": "2025-07-24T02:27:40.952Z"
-    },
-    {
-      "id": "1753324089603",
-      "name": "Nghia Tran Minh",
-      "activityType": "Add",
-      "details": "Thêm nhân viên mới Nghia Tran Minh",
-      "time": "2025-07-24T02:28:09.603Z"
-    },
-    {
-      "id": "1753324192078",
-      "name": "a",
-      "activityType": "Delete",
-      "details": "Xóa nhân viên a",
-      "time": "2025-07-24T02:29:52.078Z"
-    },
-    {
-      "id": "1753324402440",
-      "name": "Nghia Tran Minh",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Nghia Tran Minh",
-      "time": "2025-07-24T02:33:22.440Z"
-    },
-    {
-      "id": "1753375429372",
-      "name": "Normal User",
-      "activityType": "Add",
-      "details": "Thêm nhân viên mới Normal User",
-      "time": "2025-07-24T16:43:49.372Z"
+      "details": "Check-out vào lúc 01:55:31 ngày 25/07/2025",
+      "time": "2025-07-24T18:55:31.093Z"
     }
   ],
-  "requestForms": [
-    {
-      "id": "1753081828547",
-      "employeeId": "user-001",
-      "employeeName": "Normal User",
-      "type": "Nghỉ phép",
-      "content": "Xin nghỉ phép từ 24/07/2025 đến 26/08/2025",
-      "submissionDate": "2024-03-21T10:00:00.000Z",
-      "status": "rejected",
-      "approvedBy": "Administrator",
-      "approvalDate": "2025-07-21T07:19:00.048Z",
-      "approvalNote": ""
-    },
-    {
-      "id": "1753081828548",
-      "employeeId": "admin-001",
-      "employeeName": "Administrator",
-      "type": "Công tác",
-      "content": "Công tác tại Hà Nội từ 01/04/2024 đến 05/04/2024",
-      "submissionDate": "2024-03-21T11:00:00.000Z",
-      "status": "approved",
-      "approvedBy": "Administrator",
-      "approvalDate": "2025-07-21T07:20:46.457Z",
-      "approvalNote": "Okee"
-    },
-    {
-      "id": "1753084920010",
-      "employeeId": "user-001",
-      "employeeName": "Normal User",
-      "type": "Nghỉ phép",
-      "content": "thích thì nghỉ từ 22/07/2025 đến 22/08/2025",
-      "submissionDate": "2025-07-21T08:02:00.010Z",
-      "status": "approved",
-      "approvedBy": "Administrator",
-      "approvalDate": "2025-07-21T08:02:49.648Z",
-      "approvalNote": "oke em\n"
-    },
-    {
-      "id": "1753090143452",
-      "employeeId": "user-001",
-      "employeeName": "Normal User",
-      "type": "Nghỉ phép",
-      "content": "T đi chơi mày cấm được t?\n từ 07/07/2025 đến 15/07/2025",
-      "submissionDate": "2025-07-21T09:29:03.452Z",
-      "status": "rejected",
-      "approvedBy": "Administrator",
-      "approvalDate": "2025-07-21T09:30:11.693Z",
-      "approvalNote": "Đi chơi thì vô công ty"
-    }
-  ],
+  "requestForms": [],
   "attendance": [
     {
-      "id": "user-001-2025-07-24",
-      "userId": "user-001",
-      "date": "2025-07-24",
-      "checkIn": "2025-07-24T16:44:12.784Z",
+      "id": "1753382498200-2025-07-25",
+      "userId": "1753382498200",
+      "date": "2025-07-25",
+      "checkIn": "2025-07-24T18:51:02.308Z",
       "status": "present",
-      "checkOut": "2025-07-24T16:44:13.171Z"
+      "checkOut": "2025-07-24T18:55:31.084Z"
     },
     {
-      "id": "user-001-2025-07-23",
-      "userId": "user-001",
-      "date": "2025-07-23",
-      "checkIn": "2025-07-24T16:41:44.137Z",
+      "id": "1753382498200-2025-07-26",
+      "userId": "1753382498200",
+      "date": "2025-07-26",
+      "checkIn": "2025-07-24T18:44:14.655Z",
       "status": "present",
-      "checkOut": "2025-07-24T16:41:44.945Z"
+      "checkOut": "2025-07-24T18:44:15.545Z"
     }
   ]
 }
