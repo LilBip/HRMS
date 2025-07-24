@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Button,
-  Drawer,
   Form,
   Input,
   Select,
@@ -11,12 +10,14 @@ import {
   message,
   Modal,
   Descriptions,
-} from 'antd';
-import { getAllEmployees } from '../api/dashboardApi';
-import { Employee } from '../types/employee';
-import { getDepartments } from '../api/departmentApi';
-import { Department } from '../types/department';
-import { createActivityLog } from '../api/activityLogApi';
+} from "antd";
+import { getAllEmployees } from "../api/dashboardApi";
+import { Employee } from "../types/employee";
+import { getDepartments } from "../api/departmentApi";
+import { Department } from "../types/department";
+import { createActivityLog } from "../api/activityLogApi";
+import { DatePicker } from "antd";
+
 
 const { Option } = Select;
 
@@ -26,10 +27,12 @@ const Employees: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [form] = Form.useForm();
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState<string | null>(null);
   const [detailVisible, setDetailVisible] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+    null
+  );
 
   useEffect(() => {
     fetchEmployees();
@@ -41,7 +44,7 @@ const Employees: React.FC = () => {
       const data = await getAllEmployees();
       setEmployees(data);
     } catch (error) {
-      message.error('Không thể tải danh sách nhân viên');
+      message.error("Không thể tải danh sách nhân viên");
     }
   };
 
@@ -50,7 +53,7 @@ const Employees: React.FC = () => {
       const data = await getDepartments();
       setDepartments(data);
     } catch {
-      message.error('Không thể tải danh sách phòng ban');
+      message.error("Không thể tải danh sách phòng ban");
     }
   };
 
@@ -68,21 +71,21 @@ const Employees: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const employee = employees.find(emp => emp.id === id);
+      const employee = employees.find((emp) => emp.id === id);
       await fetch(`http://localhost:3001/employees/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
-      message.success('Xóa nhân viên thành công');
+      message.success("Xóa nhân viên thành công");
       if (employee) {
         await createActivityLog({
           name: employee.name,
-          activityType: 'Delete',
-          details: `Xóa nhân viên ${employee.name}`
+          activityType: "Delete",
+          details: `Xóa nhân viên ${employee.name}`,
         });
       }
       fetchEmployees();
     } catch {
-      message.error('Xóa nhân viên thất bại');
+      message.error("Xóa nhân viên thất bại");
     }
   };
 
@@ -95,34 +98,34 @@ const Employees: React.FC = () => {
     try {
       if (editingEmployee) {
         await fetch(`http://localhost:3001/employees/${editingEmployee.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
         });
-        message.success('Cập nhật nhân viên thành công');
+        message.success("Cập nhật nhân viên thành công");
         await createActivityLog({
           name: values.name,
-          activityType: 'Update',
-          details: `Cập nhật thông tin nhân viên ${values.name}`
+          activityType: "Update",
+          details: `Cập nhật thông tin nhân viên ${values.name}`,
         });
       } else {
         const newId = crypto.randomUUID();
-        await fetch('http://localhost:3001/employees', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        await fetch("http://localhost:3001/employees", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...values, id: newId }),
         });
-        message.success('Thêm nhân viên thành công');
+        message.success("Thêm nhân viên thành công");
         await createActivityLog({
           name: values.name,
-          activityType: 'Add',
-          details: `Thêm nhân viên mới ${values.name}`
+          activityType: "Add",
+          details: `Thêm nhân viên mới ${values.name}`,
         });
       }
       setDrawerVisible(false);
       fetchEmployees();
     } catch {
-      message.error('Lưu dữ liệu thất bại');
+      message.error("Lưu dữ liệu thất bại");
     }
   };
 
@@ -132,25 +135,35 @@ const Employees: React.FC = () => {
       emp.department.toLowerCase().includes(searchText.toLowerCase()) ||
       emp.position.toLowerCase().includes(searchText.toLowerCase());
 
-    const matchesDepartment = !departmentFilter || emp.department === departmentFilter;
+    const matchesDepartment =
+      !departmentFilter || emp.department === departmentFilter;
 
     return matchesSearch && matchesDepartment;
   });
 
   const columns = [
-    { title: 'Họ tên', dataIndex: 'name' },
-    { title: 'Phòng ban', dataIndex: 'department' },
-    { title: 'Vị trí', dataIndex: 'position' },
-    { title: 'Trạng thái', dataIndex: 'status' },
-    { title: 'Ngày bắt đầu', dataIndex: 'startDate' },
+    { title: "Họ tên", dataIndex: "name" },
+    { title: "Phòng ban", dataIndex: "department" },
+    { title: "Vị trí", dataIndex: "position" },
+    { title: "Trạng thái", dataIndex: "status" },
+    { title: "Ngày bắt đầu", dataIndex: "startDate" },
     {
-      title: 'Hành động',
+      title: "Hành động",
       render: (_: any, record: Employee) => (
         <Space>
-          <Button type="link" onClick={() => handleViewDetail(record)}>Xem</Button>
-          <Button type="link" onClick={() => handleEdit(record)}>Sửa</Button>
-          <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => handleDelete(record.id)}>
-            <Button danger type="link">Xóa</Button>
+          <Button type="link" onClick={() => handleViewDetail(record)}>
+            Xem
+          </Button>
+          <Button type="link" onClick={() => handleEdit(record)}>
+            Sửa
+          </Button>
+          <Popconfirm
+            title="Bạn có chắc chắn muốn xóa?"
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button danger type="link">
+              Xóa
+            </Button>
           </Popconfirm>
         </Space>
       ),
@@ -160,7 +173,9 @@ const Employees: React.FC = () => {
   return (
     <div style={{ padding: 24 }}>
       <Space style={{ marginBottom: 16 }} wrap>
-        <Button type="primary" onClick={handleAdd}>Thêm nhân viên</Button>
+        <Button type="primary" onClick={handleAdd}>
+          Thêm nhân viên
+        </Button>
         <Input.Search
           placeholder="Tìm theo tên, phòng ban, vị trí..."
           allowClear
@@ -173,51 +188,78 @@ const Employees: React.FC = () => {
           onChange={(value) => setDepartmentFilter(value || null)}
           style={{ width: 200 }}
         >
-          {departments.map(dep => (
-            <Option key={dep.name} value={dep.name}>{dep.name}</Option>
+          {departments.map((dep) => (
+            <Option key={dep.name} value={dep.name}>
+              {dep.name}
+            </Option>
           ))}
         </Select>
       </Space>
 
       <Table columns={columns} dataSource={filteredEmployees} rowKey="id" />
 
-      <Drawer
-        title={editingEmployee ? 'Cập nhật nhân viên' : 'Thêm nhân viên'}
+      <Modal
+        title={editingEmployee ? "Cập nhật nhân viên" : "Thêm nhân viên"}
         open={drawerVisible}
-        onClose={() => setDrawerVisible(false)}
-        width={400}
+        onCancel={() => setDrawerVisible(false)}
+        width={700}
+        centered
+        style={{ top: -10 }}
+        footer={null}
       >
         <Form layout="vertical" form={form} onFinish={onFinish}>
-          <Form.Item name="name" label="Họ tên" rules={[{ required: true, message: 'Vui lòng nhập họ tên' }]}>
+          <Form.Item
+            name="name"
+            label="Họ tên"
+            rules={[{ required: true, message: "Vui lòng nhập họ tên" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="department" label="Phòng ban" rules={[{ required: true, message: 'Vui lòng chọn phòng ban' }]}>
+          <Form.Item
+            name="department"
+            label="Phòng ban"
+            rules={[{ required: true, message: "Vui lòng chọn phòng ban" }]}
+          >
             <Select placeholder="Chọn phòng ban">
-              {departments.map(dep => (
-                <Option key={dep.name} value={dep.name}>{dep.name}</Option>
+              {departments.map((dep) => (
+                <Option key={dep.name} value={dep.name}>
+                  {dep.name}
+                </Option>
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="position" label="Vị trí" rules={[{ required: true, message: 'Vui lòng nhập vị trí' }]}>
+          <Form.Item
+            name="position"
+            label="Vị trí"
+            rules={[{ required: true, message: "Vui lòng nhập vị trí" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="status" label="Trạng thái" rules={[{ required: true, message: 'Vui lòng chọn trạng thái' }]}>
+          <Form.Item
+            name="status"
+            label="Trạng thái"
+            rules={[{ required: true, message: "Vui lòng chọn trạng thái" }]}
+          >
             <Select>
               <Option value="Đang thử việc">Đang thử việc</Option>
               <Option value="Đang làm việc">Đang làm việc</Option>
               <Option value="Đang nghỉ phép">Đang nghỉ phép</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="startDate" label="Ngày bắt đầu" rules={[{ required: true, message: 'Vui lòng nhập ngày bắt đầu' }]}>
+          <Form.Item
+            name="startDate"
+            label="Ngày bắt đầu"
+            rules={[{ required: true, message: "Vui lòng nhập ngày bắt đầu" }]}
+          >
             <Input placeholder="yyyy-mm-dd" />
           </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              {editingEmployee ? 'Cập nhật' : 'Thêm mới'}
+          <Form.Item style={{ textAlign: "right", marginBottom: 0 }}>
+            <Button type="primary" htmlType="submit">
+              {editingEmployee ? "Cập nhật" : "Thêm mới"}
             </Button>
           </Form.Item>
         </Form>
-      </Drawer>
+      </Modal>
 
       <Modal
         title="Chi tiết nhân viên"
@@ -227,12 +269,24 @@ const Employees: React.FC = () => {
       >
         {selectedEmployee && (
           <Descriptions column={1} bordered size="small">
-            <Descriptions.Item label="Họ tên">{selectedEmployee.name}</Descriptions.Item>
-            <Descriptions.Item label="Email">{selectedEmployee.email}</Descriptions.Item>
-            <Descriptions.Item label="Phòng ban">{selectedEmployee.department}</Descriptions.Item>
-            <Descriptions.Item label="Vị trí">{selectedEmployee.position}</Descriptions.Item>
-            <Descriptions.Item label="Trạng thái">{selectedEmployee.status}</Descriptions.Item>
-            <Descriptions.Item label="Ngày bắt đầu">{selectedEmployee.startDate}</Descriptions.Item>
+            <Descriptions.Item label="Họ tên">
+              {selectedEmployee.name}
+            </Descriptions.Item>
+            <Descriptions.Item label="Email">
+              {selectedEmployee.email}
+            </Descriptions.Item>
+            <Descriptions.Item label="Phòng ban">
+              {selectedEmployee.department}
+            </Descriptions.Item>
+            <Descriptions.Item label="Vị trí">
+              {selectedEmployee.position}
+            </Descriptions.Item>
+            <Descriptions.Item label="Trạng thái">
+              {selectedEmployee.status}
+            </Descriptions.Item>
+            <Descriptions.Item label="Ngày bắt đầu">
+              {selectedEmployee.startDate}
+            </Descriptions.Item>
           </Descriptions>
         )}
       </Modal>

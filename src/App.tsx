@@ -1,14 +1,20 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import Employees from './pages/Employees';
-import Departments from './pages/Departments';
-import Login from './pages/Login';
-import ActivityLogPage from './pages/ActivityLog';
-import RequestForms from './pages/RequestForms';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Employees from "./pages/Employees";
+import Departments from "./pages/Departments";
+import Login from "./pages/Login";
+import ActivityLogPage from "./pages/ActivityLog";
+import RequestForms from "./pages/RequestForms";
+import Profile from "./pages/Profile";
 
-import MainLayout from './layout/MainLayout';
-import { useAuth } from './contexts/AuthContexts';
-import '../src/index.css';
+import MainLayout from "./layout/MainLayout";
+import { useAuth } from "./contexts/AuthContexts";
+import "../src/index.css";
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -29,8 +35,12 @@ function App() {
           <Route path="departments" element={<Departments />} />
           <Route path="activity-log" element={<ActivityLogPage />} />
           <Route path="requests" element={<RequestForms />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
-        <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
+        <Route
+          path="*"
+          element={<Navigate to={isAuthenticated ? "/" : "/login"} />}
+        />
       </Routes>
     </Router>
   );

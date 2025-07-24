@@ -1,15 +1,15 @@
-import React from 'react';
-import { Layout, Menu, Button, Typography, Popconfirm, message, } from 'antd';
-import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContexts';
+import React from "react";
+import { Layout, Menu, Button, Typography, Popconfirm, message } from "antd";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContexts";
 import {
   DashboardOutlined,
   TeamOutlined,
   ApartmentOutlined,
   LogoutOutlined,
   ClockCircleOutlined,
-  FileTextOutlined
-} from '@ant-design/icons';
+  FileTextOutlined,
+} from "@ant-design/icons";
 
 const { Header, Sider, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -21,41 +21,41 @@ const MainLayout: React.FC = () => {
 
   const handleLogout = () => {
     logout();
-    message.success('Đã đăng xuất');
-    navigate('/login');
+    message.success("Đã đăng xuất");
+    navigate("/login");
   };
 
   // Định nghĩa menu items dựa trên role
   const getMenuItems = () => {
     const baseMenuItems = [
       {
-        key: '/',
+        key: "/",
         icon: <DashboardOutlined />,
         label: <Link to="/">Dashboard</Link>,
       },
       {
-        key: '/requests',
+        key: "/requests",
         icon: <FileTextOutlined />,
         label: <Link to="/requests">Đơn từ</Link>,
       },
       {
-        key: '/activity-log',
+        key: "/activity-log",
         icon: <ClockCircleOutlined />,
         label: <Link to="/activity-log">Nhật ký hoạt động</Link>,
       },
     ];
 
     // Thêm menu items cho admin
-    if (user?.role === 'admin') {
+    if (user?.role === "admin") {
       return [
         ...baseMenuItems,
         {
-          key: '/employees',
+          key: "/employees",
           icon: <TeamOutlined />,
           label: <Link to="/employees">Nhân viên</Link>,
         },
         {
-          key: '/departments',
+          key: "/departments",
           icon: <ApartmentOutlined />,
           label: <Link to="/departments">Phòng ban</Link>,
         },
@@ -66,19 +66,19 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: "100vh" }}>
       {/* Sidebar trái */}
       <Sider breakpoint="lg" collapsedWidth="0">
         <div
           style={{
             height: 64,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: '#001529',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#001529",
           }}
         >
-          <Title level={4} style={{ color: '#fff', margin: 0 }}>
+          <Title level={4} style={{ color: "#fff", margin: 0 }}>
             HR Manager
           </Title>
         </div>
@@ -95,17 +95,24 @@ const MainLayout: React.FC = () => {
         {/* Header ngang với nút logout và thông tin user */}
         <Header
           style={{
-            background: '#fff',
-            padding: '0 24px',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            gap: '16px'
+            background: "#fff",
+            padding: "0 24px",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            gap: "16px",
           }}
         >
-          <Typography.Text strong>
-            {user?.fullName} ({user?.role === 'admin' ? 'Admin' : 'User'})
-          </Typography.Text>
+          <Link
+            to="/profile"
+            style={{
+              fontWeight: "bold",
+              color: "inherit",
+              textDecoration: "underline",
+            }}
+          >
+            {user?.fullName} ({user?.role === "admin" ? "Admin" : "User"})
+          </Link>
           <Popconfirm
             title="Bạn có chắc chắn muốn đăng xuất?"
             onConfirm={handleLogout}
@@ -121,17 +128,17 @@ const MainLayout: React.FC = () => {
         {/* Nội dung */}
         <Content
           style={{
-            margin: '24px',
-            padding: '24px',
-            background: '#fff',
+            margin: "24px",
+            padding: "24px",
+            background: "#fff",
             borderRadius: 12,
-            boxShadow: '0 3px 12px rgba(0, 0, 0, 0.1)',
+            boxShadow: "0 3px 12px rgba(0, 0, 0, 0.1)",
           }}
         >
           <Outlet />
         </Content>
 
-        <Footer style={{ textAlign: 'center', background: '#f0f2f5' }}>
+        <Footer style={{ textAlign: "center", background: "#f0f2f5" }}>
           © {new Date().getFullYear()} Hệ thống quản lý nhân sự
         </Footer>
       </Layout>

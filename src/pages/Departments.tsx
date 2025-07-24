@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Table,
   Button,
-  Drawer,
+  Modal,
   Form,
   Input,
   Space,
@@ -20,7 +20,7 @@ import { createActivityLog } from '../api/activityLogApi';
 
 const Departments: React.FC = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
-  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [editingDepartment, setEditingDepartment] = useState<Department | null>(null);
 
@@ -40,13 +40,13 @@ const Departments: React.FC = () => {
   const handleAdd = () => {
     setEditingDepartment(null);
     form.resetFields();
-    setDrawerVisible(true);
+    setModalVisible(true);
   };
 
   const handleEdit = (record: Department) => {
     setEditingDepartment(record);
     form.setFieldsValue(record);
-    setDrawerVisible(true);
+    setModalVisible(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -87,7 +87,7 @@ const Departments: React.FC = () => {
           details: `Thêm phòng ban mới ${values.name}`
         });
       }
-      setDrawerVisible(false);
+      setModalVisible(false);
       fetchDepartments();
     } catch {
       message.error('Lưu dữ liệu thất bại');
@@ -117,11 +117,14 @@ const Departments: React.FC = () => {
       </Space>
       <Table columns={columns} dataSource={departments} rowKey="id" />
 
-      <Drawer
+      <Modal
         title={editingDepartment ? 'Cập nhật phòng ban' : 'Thêm phòng ban'}
-        open={drawerVisible}
-        onClose={() => setDrawerVisible(false)}
-        width={400}
+        open={modalVisible}
+        onCancel={() => setModalVisible(false)}
+        width={600}
+        footer={null}
+        centered
+        style={{ top: 40 }}
       >
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Form.Item name="name" label="Tên phòng ban" rules={[{ required: true, message: 'Vui lòng nhập tên phòng ban' }]}>
@@ -130,13 +133,13 @@ const Departments: React.FC = () => {
           <Form.Item name="description" label="Mô tả">
             <Input.TextArea rows={4} />
           </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+          <Form.Item style={{ textAlign: 'right', marginBottom: 0 }}>
+            <Button type="primary" htmlType="submit">
               {editingDepartment ? 'Cập nhật' : 'Thêm mới'}
             </Button>
           </Form.Item>
         </Form>
-      </Drawer>
+      </Modal>
     </div>
   );
 };

@@ -1,15 +1,26 @@
 {
   "employees": [
     {
-      "id": "49f0b6db-a5b9-4f54-b00b-98903f2c0e2d",
       "name": "a",
-      "department": "a",
+      "department": "Lập trình C++ cơ bản, nâng cao000",
       "position": "a",
       "status": "Đang làm việc",
-      "startDate": "2022/07/08"
+      "startDate": "2022/07/09989999",
+      "id": "49f0b6db-a5b9-4f54-b00b-98903f2c0e2d"
     }
   ],
-  "departments": [],
+  "departments": [
+    {
+      "id": "0f19bedb-994b-438c-b2a0-87f1177be218",
+      "name": "Lập trình C++ cơ bản, nâng cao000",
+      "description": "ffsdfs"
+    },
+    {
+      "id": "2350a491-2244-4f52-a911-d2c4a230eba6",
+      "name": "học học",
+      "description": "fsdfsdf"
+    }
+  ],
   "accounts": [
     {
       "id": "admin-001",
@@ -91,6 +102,76 @@
       "activityType": "Reject",
       "details": "Từ chối đơn Nghỉ phép của Normal User - Ghi chú: Đi chơi thì vô công ty",
       "time": "2025-07-21T09:30:11.699Z"
+    },
+    {
+      "id": "1753322577054",
+      "name": "a",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên a",
+      "time": "2025-07-24T02:02:57.054Z"
+    },
+    {
+      "id": "1753322690508",
+      "name": "a",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên a",
+      "time": "2025-07-24T02:04:50.508Z"
+    },
+    {
+      "id": "1753322693855",
+      "name": "a",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên a",
+      "time": "2025-07-24T02:04:53.855Z"
+    },
+    {
+      "id": "1753322705583",
+      "name": "a",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên a",
+      "time": "2025-07-24T02:05:05.583Z"
+    },
+    {
+      "id": "1753322821488",
+      "name": "Lập trình C++ cơ bản, nâng cao000",
+      "activityType": "Add",
+      "details": "Thêm phòng ban mới Lập trình C++ cơ bản, nâng cao000",
+      "time": "2025-07-24T02:07:01.488Z"
+    },
+    {
+      "id": "1753322827371",
+      "name": "học học",
+      "activityType": "Add",
+      "details": "Thêm phòng ban mới học học",
+      "time": "2025-07-24T02:07:07.371Z"
+    },
+    {
+      "id": "1753323040902",
+      "name": "a",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên a",
+      "time": "2025-07-24T02:10:40.902Z"
+    },
+    {
+      "id": "1753323543612",
+      "name": "a",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên a",
+      "time": "2025-07-24T02:19:03.612Z"
+    },
+    {
+      "id": "1753323547326",
+      "name": "a",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên a",
+      "time": "2025-07-24T02:19:07.326Z"
+    },
+    {
+      "id": "1753323554015",
+      "name": "a",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên a",
+      "time": "2025-07-24T02:19:14.015Z"
     }
   ],
   "requestForms": [
