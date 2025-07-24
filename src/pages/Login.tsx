@@ -9,8 +9,11 @@ import {
   Button,
   Typography,
   Box,
-  Alert
+  Alert,
+  IconButton,
+  InputAdornment
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +25,7 @@ const Login: React.FC = () => {
   });
 
   const [error, setError] = useState<string>('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,7 +43,7 @@ const Login: React.FC = () => {
       const account = await login(credentials);
       if (account) {
         setUser({
-          token: account.token || account.id, // nếu API có `token`, ưu tiên dùng
+          token: account.token || account.id,
           id: account.id,
           username: account.username,
           fullName: account.fullName,
@@ -47,7 +51,7 @@ const Login: React.FC = () => {
           email: account.email
         });
 
-        navigate('/'); // quay về Dashboard qua route "/"
+        navigate('/');
       }
     } catch (err) {
       setError('Invalid username or password');
@@ -101,11 +105,24 @@ const Login: React.FC = () => {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               autoComplete="current-password"
               value={credentials.password}
               onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword((show) => !show)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               type="submit"

@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import ActivityLogPage from "./pages/ActivityLog";
 import RequestForms from "./pages/RequestForms";
 import Profile from "./pages/Profile";
+import Attendance from "./pages/Attendance"; // ✅ Thêm dòng này
 
 import MainLayout from "./layout/MainLayout";
 import { useAuth } from "./contexts/AuthContexts";
@@ -19,7 +20,6 @@ import "../src/index.css";
 function App() {
   const { isAuthenticated, loading } = useAuth();
 
-  // Đợi AuthContext khởi tạo xong
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -35,6 +35,7 @@ function App() {
           <Route path="departments" element={<Departments />} />
           <Route path="activity-log" element={<ActivityLogPage />} />
           <Route path="requests" element={<RequestForms />} />
+          <Route path="attendance" element={<Attendance />} /> {/* ✅ Route mới */}
           <Route path="profile" element={<Profile />} />
         </Route>
         <Route

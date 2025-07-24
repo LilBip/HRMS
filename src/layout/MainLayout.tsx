@@ -1,6 +1,19 @@
 import React from "react";
-import { Layout, Menu, Button, Typography, Popconfirm, message } from "antd";
-import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import {
+  Layout,
+  Menu,
+  Button,
+  Typography,
+  Popconfirm,
+  message,
+  Spin,
+} from "antd";
+import {
+  Link,
+  Outlet,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContexts";
 import {
   DashboardOutlined,
@@ -15,7 +28,7 @@ const { Header, Sider, Content, Footer } = Layout;
 const { Title } = Typography;
 
 const MainLayout: React.FC = () => {
-  const { logout, user } = useAuth();
+  const { logout, user, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,7 +38,6 @@ const MainLayout: React.FC = () => {
     navigate("/login");
   };
 
-  // Định nghĩa menu items dựa trên role
   const getMenuItems = () => {
     const baseMenuItems = [
       {
@@ -43,9 +55,13 @@ const MainLayout: React.FC = () => {
         icon: <ClockCircleOutlined />,
         label: <Link to="/activity-log">Nhật ký hoạt động</Link>,
       },
+      {
+        key: "/attendance",
+        icon: <ClockCircleOutlined />,
+        label: <Link to="/attendance">Chấm công</Link>,
+      },
     ];
 
-    // Thêm menu items cho admin
     if (user?.role === "admin") {
       return [
         ...baseMenuItems,
@@ -67,7 +83,6 @@ const MainLayout: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      {/* Sidebar trái */}
       <Sider breakpoint="lg" collapsedWidth="0">
         <div
           style={{
@@ -90,9 +105,7 @@ const MainLayout: React.FC = () => {
         />
       </Sider>
 
-      {/* Phần nội dung bên phải */}
       <Layout>
-        {/* Header ngang với nút logout và thông tin user */}
         <Header
           style={{
             background: "#fff",
@@ -125,7 +138,6 @@ const MainLayout: React.FC = () => {
           </Popconfirm>
         </Header>
 
-        {/* Nội dung */}
         <Content
           style={{
             margin: "24px",
@@ -133,9 +145,12 @@ const MainLayout: React.FC = () => {
             background: "#fff",
             borderRadius: 12,
             boxShadow: "0 3px 12px rgba(0, 0, 0, 0.1)",
+            minHeight: 360,
           }}
         >
-          <Outlet />
+          <Spin spinning={loading} tip="Đang tải...">
+            <Outlet />
+          </Spin>
         </Content>
 
         <Footer style={{ textAlign: "center", background: "#f0f2f5" }}>

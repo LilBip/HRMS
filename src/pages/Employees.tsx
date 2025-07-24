@@ -10,29 +10,31 @@ import {
   message,
   Modal,
   Descriptions,
+  DatePicker,
 } from "antd";
+import dayjs from "dayjs";
 import { getAllEmployees } from "../api/dashboardApi";
-import { Employee } from "../types/employee";
 import { getDepartments } from "../api/departmentApi";
-import { Department } from "../types/department";
 import { createActivityLog } from "../api/activityLogApi";
-import { DatePicker } from "antd";
-
+import { Employee } from "../types/employee";
+import { Department } from "../types/department";
 
 const { Option } = Select;
+const EMPLOYEE_API = "http://localhost:3001/employees";
 
 const Employees: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
-  const [drawerVisible, setDrawerVisible] = useState(false);
   const [form] = Form.useForm();
+
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [detailVisible, setDetailVisible] = useState(false);
+
   const [searchText, setSearchText] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState<string | null>(null);
-  const [detailVisible, setDetailVisible] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
-    null
-  );
 
   useEffect(() => {
     fetchEmployees();
@@ -43,7 +45,7 @@ const Employees: React.FC = () => {
     try {
       const data = await getAllEmployees();
       setEmployees(data);
-    } catch (error) {
+    } catch {
       message.error("Không thể tải danh sách nhân viên");
     }
   };
@@ -65,17 +67,18 @@ const Employees: React.FC = () => {
 
   const handleEdit = (record: Employee) => {
     setEditingEmployee(record);
-    form.setFieldsValue(record);
+    form.setFieldsValue({
+      ...record,
+      startDate: dayjs(record.startDate),
+    });
     setDrawerVisible(true);
   };
 
   const handleDelete = async (id: string) => {
     try {
       const employee = employees.find((emp) => emp.id === id);
-      await fetch(`http://localhost:3001/employees/${id}`, {
-        method: "DELETE",
-      });
-      message.success("Xóa nhân viên thành công");
+      await fetch(`${EMPLOYEE_API}/${id}`, { method: "DELETE" });
+
       if (employee) {
         await createActivityLog({
           name: employee.name,
@@ -83,6 +86,8 @@ const Employees: React.FC = () => {
           details: `Xóa nhân viên ${employee.name}`,
         });
       }
+
+      message.success("Xóa nhân viên thành công");
       fetchEmployees();
     } catch {
       message.error("Xóa nhân viên thất bại");
@@ -94,34 +99,44 @@ const Employees: React.FC = () => {
     setDetailVisible(true);
   };
 
-  const onFinish = async (values: Employee) => {
+  const handleSubmit = async (values: any) => {
+    const formatted = {
+      ...values,
+      startDate: values.startDate.format("YYYY-MM-DD"),
+    };
+
     try {
       if (editingEmployee) {
-        await fetch(`http://localhost:3001/employees/${editingEmployee.id}`, {
+        await fetch(`${EMPLOYEE_API}/${editingEmployee.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
+          body: JSON.stringify(formatted),
         });
-        message.success("Cập nhật nhân viên thành công");
+
         await createActivityLog({
-          name: values.name,
+          name: formatted.name,
           activityType: "Update",
-          details: `Cập nhật thông tin nhân viên ${values.name}`,
+          details: `Cập nhật thông tin nhân viên ${formatted.name}`,
         });
+
+        message.success("Cập nhật nhân viên thành công");
       } else {
-        const newId = crypto.randomUUID();
-        await fetch("http://localhost:3001/employees", {
+        const newEmployee = { ...formatted, id: crypto.randomUUID() };
+        await fetch(EMPLOYEE_API, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...values, id: newId }),
+          body: JSON.stringify(newEmployee),
         });
-        message.success("Thêm nhân viên thành công");
+
         await createActivityLog({
-          name: values.name,
+          name: formatted.name,
           activityType: "Add",
-          details: `Thêm nhân viên mới ${values.name}`,
+          details: `Thêm nhân viên mới ${formatted.name}`,
         });
+
+        message.success("Thêm nhân viên thành công");
       }
+
       setDrawerVisible(false);
       fetchEmployees();
     } catch {
@@ -130,15 +145,14 @@ const Employees: React.FC = () => {
   };
 
   const filteredEmployees = employees.filter((emp) => {
-    const matchesSearch =
+    const matchText =
       emp.name.toLowerCase().includes(searchText.toLowerCase()) ||
       emp.department.toLowerCase().includes(searchText.toLowerCase()) ||
       emp.position.toLowerCase().includes(searchText.toLowerCase());
 
-    const matchesDepartment =
-      !departmentFilter || emp.department === departmentFilter;
+    const matchDepartment = !departmentFilter || emp.department === departmentFilter;
 
-    return matchesSearch && matchesDepartment;
+    return matchText && matchDepartment;
   });
 
   const columns = [
@@ -172,6 +186,7 @@ const Employees: React.FC = () => {
 
   return (
     <div style={{ padding: 24 }}>
+      {/* Bộ lọc và tìm kiếm */}
       <Space style={{ marginBottom: 16 }} wrap>
         <Button type="primary" onClick={handleAdd}>
           Thêm nhân viên
@@ -196,18 +211,19 @@ const Employees: React.FC = () => {
         </Select>
       </Space>
 
+      {/* Danh sách nhân viên */}
       <Table columns={columns} dataSource={filteredEmployees} rowKey="id" />
 
+      {/* Modal Thêm/Sửa */}
       <Modal
         title={editingEmployee ? "Cập nhật nhân viên" : "Thêm nhân viên"}
         open={drawerVisible}
         onCancel={() => setDrawerVisible(false)}
         width={700}
         centered
-        style={{ top: -10 }}
         footer={null}
       >
-        <Form layout="vertical" form={form} onFinish={onFinish}>
+        <Form layout="vertical" form={form} onFinish={handleSubmit}>
           <Form.Item
             name="name"
             label="Họ tên"
@@ -249,9 +265,9 @@ const Employees: React.FC = () => {
           <Form.Item
             name="startDate"
             label="Ngày bắt đầu"
-            rules={[{ required: true, message: "Vui lòng nhập ngày bắt đầu" }]}
+            rules={[{ required: true, message: "Vui lòng chọn ngày bắt đầu" }]}
           >
-            <Input placeholder="yyyy-mm-dd" />
+            <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item style={{ textAlign: "right", marginBottom: 0 }}>
             <Button type="primary" htmlType="submit">
@@ -261,6 +277,7 @@ const Employees: React.FC = () => {
         </Form>
       </Modal>
 
+      {/* Modal Chi tiết */}
       <Modal
         title="Chi tiết nhân viên"
         open={detailVisible}
@@ -269,24 +286,12 @@ const Employees: React.FC = () => {
       >
         {selectedEmployee && (
           <Descriptions column={1} bordered size="small">
-            <Descriptions.Item label="Họ tên">
-              {selectedEmployee.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Email">
-              {selectedEmployee.email}
-            </Descriptions.Item>
-            <Descriptions.Item label="Phòng ban">
-              {selectedEmployee.department}
-            </Descriptions.Item>
-            <Descriptions.Item label="Vị trí">
-              {selectedEmployee.position}
-            </Descriptions.Item>
-            <Descriptions.Item label="Trạng thái">
-              {selectedEmployee.status}
-            </Descriptions.Item>
-            <Descriptions.Item label="Ngày bắt đầu">
-              {selectedEmployee.startDate}
-            </Descriptions.Item>
+            <Descriptions.Item label="Họ tên">{selectedEmployee.name}</Descriptions.Item>
+            <Descriptions.Item label="Email">{selectedEmployee.email}</Descriptions.Item>
+            <Descriptions.Item label="Phòng ban">{selectedEmployee.department}</Descriptions.Item>
+            <Descriptions.Item label="Vị trí">{selectedEmployee.position}</Descriptions.Item>
+            <Descriptions.Item label="Trạng thái">{selectedEmployee.status}</Descriptions.Item>
+            <Descriptions.Item label="Ngày bắt đầu">{selectedEmployee.startDate}</Descriptions.Item>
           </Descriptions>
         )}
       </Modal>

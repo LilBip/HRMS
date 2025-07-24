@@ -1,12 +1,36 @@
 {
   "employees": [
     {
-      "name": "a",
+      "name": "Nghia Tran Minh",
       "department": "Lập trình C++ cơ bản, nâng cao000",
-      "position": "a",
+      "position": "Developer",
       "status": "Đang làm việc",
-      "startDate": "2022/07/09989999",
-      "id": "49f0b6db-a5b9-4f54-b00b-98903f2c0e2d"
+      "startDate": "2022/07/08777777777",
+      "id": "9aa63e06-51ae-4093-8136-9c13edd9fcd7"
+    },
+    {
+      "id": "efd79257-4ab7-4097-8afc-c528ecd3d61c",
+      "name": "Kyllian MP3",
+      "department": "Lập trình C++ cơ bản, nâng cao000",
+      "position": "Developer",
+      "status": "Đang làm việc",
+      "startDate": "2003-13-04"
+    },
+    {
+      "id": "60622f4a-980c-4c9e-8e60-c873d8df7060",
+      "name": "Nghia Tran Minh",
+      "department": "học học",
+      "position": "Developer",
+      "status": "Đang làm việc",
+      "startDate": "2022/07/08"
+    },
+    {
+      "id": "d731c9ae-561d-4efa-a0e4-6da7fd12ff3a",
+      "name": "Normal User",
+      "department": "Lập trình C++ cơ bản, nâng cao000",
+      "position": "Developer",
+      "status": "Đang thử việc",
+      "startDate": "2025-07-24"
     }
   ],
   "departments": [
@@ -172,6 +196,48 @@
       "activityType": "Update",
       "details": "Cập nhật thông tin nhân viên a",
       "time": "2025-07-24T02:19:14.015Z"
+    },
+    {
+      "id": "1753324024562",
+      "name": "Nghia Tran Minh",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới Nghia Tran Minh",
+      "time": "2025-07-24T02:27:04.562Z"
+    },
+    {
+      "id": "1753324060952",
+      "name": "Kyllian MP3",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới Kyllian MP3",
+      "time": "2025-07-24T02:27:40.952Z"
+    },
+    {
+      "id": "1753324089603",
+      "name": "Nghia Tran Minh",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới Nghia Tran Minh",
+      "time": "2025-07-24T02:28:09.603Z"
+    },
+    {
+      "id": "1753324192078",
+      "name": "a",
+      "activityType": "Delete",
+      "details": "Xóa nhân viên a",
+      "time": "2025-07-24T02:29:52.078Z"
+    },
+    {
+      "id": "1753324402440",
+      "name": "Nghia Tran Minh",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Nghia Tran Minh",
+      "time": "2025-07-24T02:33:22.440Z"
+    },
+    {
+      "id": "1753375429372",
+      "name": "Normal User",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới Normal User",
+      "time": "2025-07-24T16:43:49.372Z"
     }
   ],
   "requestForms": [
@@ -222,6 +288,24 @@
       "approvedBy": "Administrator",
       "approvalDate": "2025-07-21T09:30:11.693Z",
       "approvalNote": "Đi chơi thì vô công ty"
+    }
+  ],
+  "attendance": [
+    {
+      "id": "user-001-2025-07-24",
+      "userId": "user-001",
+      "date": "2025-07-24",
+      "checkIn": "2025-07-24T16:44:12.784Z",
+      "status": "present",
+      "checkOut": "2025-07-24T16:44:13.171Z"
+    },
+    {
+      "id": "user-001-2025-07-23",
+      "userId": "user-001",
+      "date": "2025-07-23",
+      "checkIn": "2025-07-24T16:41:44.137Z",
+      "status": "present",
+      "checkOut": "2025-07-24T16:41:44.945Z"
     }
   ]
 }
