@@ -3,7 +3,7 @@
     {
       "name": "Dương Kiến Nghiệp",
       "department": "Thiết kế đồ họa",
-      "position": "Intern",
+      "position": "Director",
       "status": "Đang làm việc",
       "startDate": "2025-07-24",
       "id": "1753382498200"
@@ -97,6 +97,83 @@
       "activityType": "Add",
       "details": "Thêm phòng ban mới Lập trình C++ cơ bản, nâng cao000",
       "time": "2025-07-25T01:34:16.315Z"
+    },
+    {
+      "id": "1753412838782",
+      "name": "quach khanh duy",
+      "activityType": "Add",
+      "details": "Thêm chức vụ mới quach khanh duy",
+      "time": "2025-07-25T03:07:18.782Z"
+    },
+    {
+      "id": "1753412847710",
+      "name": "Intern",
+      "activityType": "Add",
+      "details": "Thêm chức vụ mới Intern",
+      "time": "2025-07-25T03:07:27.710Z"
+    },
+    {
+      "id": "1753412850765",
+      "name": "Intern",
+      "activityType": "Delete",
+      "details": "Xóa chức vụ Intern",
+      "time": "2025-07-25T03:07:30.765Z"
+    },
+    {
+      "id": "1753412862906",
+      "name": "Employee",
+      "activityType": "Add",
+      "details": "Thêm chức vụ mới Employee",
+      "time": "2025-07-25T03:07:42.906Z"
+    },
+    {
+      "id": "1753412868526",
+      "name": "Employee",
+      "activityType": "Delete",
+      "details": "Xóa chức vụ Employee",
+      "time": "2025-07-25T03:07:48.526Z"
+    },
+    {
+      "id": "1753412870607",
+      "name": "quach khanh duy",
+      "activityType": "Delete",
+      "details": "Xóa chức vụ quach khanh duy",
+      "time": "2025-07-25T03:07:50.607Z"
+    },
+    {
+      "id": "1753412873490",
+      "name": "Developers",
+      "activityType": "Update",
+      "details": "Cập nhật chức vụ Developers",
+      "time": "2025-07-25T03:07:53.490Z"
+    },
+    {
+      "id": "1753412877202",
+      "name": "Developer",
+      "activityType": "Update",
+      "details": "Cập nhật chức vụ Developer",
+      "time": "2025-07-25T03:07:57.202Z"
+    },
+    {
+      "id": "1753414385735",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
+      "time": "2025-07-25T03:33:05.735Z"
+    },
+    {
+      "id": "1753414394701",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
+      "time": "2025-07-25T03:33:14.701Z"
+    },
+    {
+      "id": "1753414398376",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
+      "time": "2025-07-25T03:33:18.376Z"
     }
   ],
   "requestForms": [
@@ -129,6 +206,23 @@
       "checkIn": "2025-07-24T18:44:14.655Z",
       "status": "present",
       "checkOut": "2025-07-24T18:44:15.545Z"
+    }
+  ],
+  "position": [
+    {
+      "id": "1",
+      "name": "Director",
+      "description": "Giám đốc"
+    },
+    {
+      "id": "2",
+      "name": "Intern",
+      "description": "Thực tập sinh"
+    },
+    {
+      "name": "Developer",
+      "description": "Lập trình viên",
+      "id": "3"
     }
   ]
 }

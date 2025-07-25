@@ -18,7 +18,8 @@ import {
   ClockCircleOutlined,
   FileTextOutlined,
   CalendarOutlined ,
-  UserOutlined
+  UserOutlined,
+  IdcardOutlined
 } from "@ant-design/icons";
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -89,6 +90,11 @@ const MainLayout: React.FC = () => {
           icon: <ApartmentOutlined />,
           label: <Link to="/departments">Phòng ban</Link>,
         },
+        {
+          key: "/position",
+          icon: <IdcardOutlined />,
+          label: <Link to="/position">Chức vụ</Link>,
+        }
       ];
     }
 
@@ -97,7 +103,7 @@ const MainLayout: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider breakpoint="lg" collapsedWidth="0">
+      <Sider breakpoint="lg" collapsedWidth="0" width={225}>
         <div
           style={{
             height: 64,
