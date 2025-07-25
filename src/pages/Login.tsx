@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContexts';
-import { login, LoginCredentials } from '../api/authApi';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContexts";
+import { login, LoginCredentials } from "../api/authApi";
 import {
   Container,
   Paper,
@@ -11,33 +11,33 @@ import {
   Box,
   Alert,
   IconButton,
-  InputAdornment
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+  InputAdornment,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(AuthContext);
 
   const [credentials, setCredentials] = useState<LoginCredentials>({
-    username: '',
-    password: ''
+    username: "",
+    password: "",
   });
 
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setCredentials(prev => ({
+    setCredentials((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
       const account = await login(credentials);
@@ -48,40 +48,56 @@ const Login: React.FC = () => {
           username: account.username,
           fullName: account.fullName,
           role: account.role,
-          email: account.email
+          email: account.email,
         });
 
-        navigate('/');
+        navigate("/");
       }
     } catch (err) {
-      setError('Invalid username or password');
+      setError("Invalid username or password");
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+    <Box
+      sx={{
+        backgroundImage: `url(${require("../style/images/background.jpg")})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Container component="main" maxWidth="xs">
         <Paper
           elevation={3}
           sx={{
-            padding: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%',
+            marginTop: 25,
+            padding: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+            backgroundColor: "transparent",
+            borderRadius: 2,
           }}
         >
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography
+            style={{ color: "#f7e9e9ff" }}
+            component="h1"
+            variant="h5"
+          >
+            Sign in to become a hero
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
+          <Box
+            style={{ margin: 0 }}
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ mt: 1, width: "100%" }}
+          >
             {error && (
               <Alert severity="error" sx={{ mb: 2 }}>
                 {error}
@@ -98,30 +114,56 @@ const Login: React.FC = () => {
               autoFocus
               value={credentials.username}
               onChange={handleChange}
+              sx={{
+                "& label": { color: "white" }, // màu label (Username)
+                "& input": { color: "white" }, // màu text người dùng gõ
+                "& .MuiInput-underline:before": {
+                  borderBottomColor: "white", // viền dưới mặc định
+                },
+                "& .MuiInput-underline:hover:before": {
+                  borderBottomColor: "white", // viền khi hover
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "white", // viền khi focus
+                },
+              }}
             />
             <TextField
+              variant="outlined"
               margin="normal"
               required
               fullWidth
               name="password"
               label="Password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               id="password"
               autoComplete="current-password"
               value={credentials.password}
               onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={() => setShowPassword((show) => !show)}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        edge="end"
+                        sx={{ color: "white" }}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              sx={{
+                "& label": { color: "white" },
+                "& input": { color: "white" },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: "white" },
+                  "&:hover fieldset": { borderColor: "white" },
+                  "&.Mui-focused fieldset": { borderColor: "white" },
+                },
               }}
             />
             <Button
@@ -141,8 +183,8 @@ const Login: React.FC = () => {
             </Button>
           </Box>
         </Paper>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 };
 export default Login;

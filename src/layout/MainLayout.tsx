@@ -10,6 +10,7 @@ import {
 } from "antd";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContexts";
+import logo from "../style/images/logo.jpg";
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -75,7 +76,7 @@ const MainLayout: React.FC = () => {
           children: [
             {
               key: "/employees",
-              icon: <UserOutlined />, 
+              icon: <UserOutlined />,
               label: <Link to="/employees">Danh sách nhân viên</Link>,
             },
             {
@@ -110,11 +111,13 @@ const MainLayout: React.FC = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            gap: 8,
             background: "#001529",
           }}
         >
+          <img src={logo} alt="Logo" style={{ height: 32, borderRadius: "50%" }} />
           <Title level={4} style={{ color: "#fff", margin: 0 }}>
-            HR Manager
+            HRM
           </Title>
         </div>
         <Menu
