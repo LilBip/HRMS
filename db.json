@@ -14,6 +14,11 @@
       "id": "dd75effb-eeea-43af-a786-70a221a84a36",
       "name": "Thiết kế đồ họa",
       "description": "a"
+    },
+    {
+      "id": "e6515ca4-ab5b-49a2-877c-e6c864719dca",
+      "name": "Lập trình C++ cơ bản, nâng cao000",
+      "description": "kjbk"
     }
   ],
   "accounts": [
@@ -71,9 +76,43 @@
       "activityType": "Update",
       "details": "Check-out vào lúc 01:55:31 ngày 25/07/2025",
       "time": "2025-07-24T18:55:31.093Z"
+    },
+    {
+      "id": "1753407221181",
+      "name": "Administrator",
+      "activityType": "Add",
+      "details": "Tạo đơn Nghỉ phép mới",
+      "time": "2025-07-25T01:33:41.181Z"
+    },
+    {
+      "id": "1753407229869",
+      "name": "Administrator",
+      "activityType": "Approve",
+      "details": "Phê duyệt đơn Nghỉ phép của Administrator",
+      "time": "2025-07-25T01:33:49.870Z"
+    },
+    {
+      "id": "1753407256315",
+      "name": "Lập trình C++ cơ bản, nâng cao000",
+      "activityType": "Add",
+      "details": "Thêm phòng ban mới Lập trình C++ cơ bản, nâng cao000",
+      "time": "2025-07-25T01:34:16.315Z"
     }
   ],
-  "requestForms": [],
+  "requestForms": [
+    {
+      "id": "1753407221167",
+      "employeeId": "admin-001",
+      "employeeName": "Administrator",
+      "type": "Nghỉ phép",
+      "content": "abcd từ 25/07/2025 đến 28/08/2025",
+      "submissionDate": "2025-07-25T01:33:41.167Z",
+      "status": "approved",
+      "approvedBy": "Administrator",
+      "approvalDate": "2025-07-25T01:33:49.860Z",
+      "approvalNote": ""
+    }
+  ],
   "attendance": [
     {
       "id": "1753382498200-2025-07-25",

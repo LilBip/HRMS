@@ -8,12 +8,7 @@ import {
   message,
   Spin,
 } from "antd";
-import {
-  Link,
-  Outlet,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContexts";
 import {
   DashboardOutlined,
@@ -22,6 +17,8 @@ import {
   LogoutOutlined,
   ClockCircleOutlined,
   FileTextOutlined,
+  CalendarOutlined ,
+  UserOutlined
 } from "@ant-design/icons";
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -37,7 +34,6 @@ const MainLayout: React.FC = () => {
     message.success("Đã đăng xuất");
     navigate("/login");
   };
-
   const getMenuItems = () => {
     const baseMenuItems = [
       {
@@ -55,20 +51,38 @@ const MainLayout: React.FC = () => {
         icon: <ClockCircleOutlined />,
         label: <Link to="/activity-log">Nhật ký hoạt động</Link>,
       },
-      {
-        key: "/attendance",
-        icon: <ClockCircleOutlined />,
-        label: <Link to="/attendance">Chấm công</Link>,
-      },
     ];
+
+    if (user?.role === "user") {
+      return [
+        ...baseMenuItems,
+        {
+          key: "/attendance",
+          icon: <ClockCircleOutlined />,
+          label: <Link to="/attendance">Chấm công</Link>,
+        },
+      ];
+    }
 
     if (user?.role === "admin") {
       return [
         ...baseMenuItems,
         {
-          key: "/employees",
+          key: "employee-management",
           icon: <TeamOutlined />,
-          label: <Link to="/employees">Nhân viên</Link>,
+          label: "Quản lý nhân viên",
+          children: [
+            {
+              key: "/employees",
+              icon: <UserOutlined />, 
+              label: <Link to="/employees">Danh sách nhân viên</Link>,
+            },
+            {
+              key: "/attendance",
+              icon: <CalendarOutlined />,
+              label: <Link to="/attendance">Chấm công</Link>,
+            },
+          ],
         },
         {
           key: "/departments",
