@@ -17,6 +17,7 @@ import Register from "./pages/Register";
 import MainLayout from "./layout/MainLayout";
 import { useAuth } from "./contexts/AuthContexts";
 import "../src/index.css";
+import Position from "./pages/Position";
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -44,6 +45,7 @@ function App() {
           <Route path="requests" element={<RequestForms />} />
           <Route path="attendance" element={<Attendance />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="position" element={<Position />} />
         </Route>
         <Route
           path="*"

@@ -18,6 +18,8 @@ import { getDepartments } from "../api/departmentApi";
 import { createActivityLog } from "../api/activityLogApi";
 import { Employee } from "../types/employee";
 import { Department } from "../types/department";
+import { getPositions } from "../api/positionApi";
+import { Position } from "../types/position";
 
 const { Option } = Select;
 const EMPLOYEE_API = "http://localhost:3001/employees";
@@ -25,6 +27,7 @@ const EMPLOYEE_API = "http://localhost:3001/employees";
 const Employees: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [positions, setPositions] = useState<Position[]>([]);
   const [form] = Form.useForm();
 
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
@@ -39,6 +42,7 @@ const Employees: React.FC = () => {
   useEffect(() => {
     fetchEmployees();
     fetchDepartments();
+    fetchPositions();
   }, []);
 
   const fetchEmployees = async () => {
@@ -56,6 +60,15 @@ const Employees: React.FC = () => {
       setDepartments(data);
     } catch {
       message.error("Không thể tải danh sách phòng ban");
+    }
+  };
+
+  const fetchPositions = async () => {
+    try {
+      const data = await getPositions();
+      setPositions(data);
+    } catch {
+      message.error("Không thể tải danh sách chức vụ");
     }
   };
 
@@ -249,7 +262,13 @@ const Employees: React.FC = () => {
             label="Vị trí"
             rules={[{ required: true, message: "Vui lòng nhập vị trí" }]}
           >
-            <Input />
+            <Select placeholder="Chọn vị trí">
+              {positions.map((pos) => (
+                <Option key={pos.name} value={pos.name}>
+                  {pos.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item
             name="status"
