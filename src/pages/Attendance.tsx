@@ -7,6 +7,7 @@ import {
   Tag,
   DatePicker,
   Select,
+  Typography,
 } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import { getAllEmployees } from '../api/employeeApi';
@@ -180,8 +181,8 @@ const Attendance: React.FC = () => {
   ];
 
   return (
-    <div>
-      <h2>Chấm công</h2>
+    <div style={{ padding: 24 }}>
+      <Typography.Title level={3}>Chấm công</Typography.Title>
       <Space style={{ marginBottom: 16 }}>
         <DatePicker
           value={selectedDate}

@@ -8,6 +8,7 @@ import {
   Space,
   Popconfirm,
   message,
+  Typography,
 } from 'antd';
 import { Department } from '../types/department';
 import {
@@ -112,9 +113,22 @@ const Departments: React.FC = () => {
 
   return (
     <div style={{ padding: 24 }}>
-      <Space style={{ marginBottom: 16 }}>
-        <Button type="primary" onClick={handleAdd}>Thêm phòng ban</Button>
-      </Space>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 16,
+        }}
+      >
+        <Typography.Title level={3} style={{ margin: 0 }}>Danh sách phòng ban</Typography.Title>
+        <Button
+          type="primary"
+          onClick={handleAdd}>
+            + Thêm phòng ban
+          </Button>
+      </div>
+      
       <Table columns={columns} dataSource={departments} rowKey="id" />
 
       <Modal

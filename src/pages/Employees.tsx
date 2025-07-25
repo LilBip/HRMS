@@ -11,6 +11,7 @@ import {
   Modal,
   Descriptions,
   DatePicker,
+  Typography,
 } from "antd";
 import dayjs from "dayjs";
 import { getAllEmployees } from "../api/dashboardApi";
@@ -200,6 +201,9 @@ const Employees: React.FC = () => {
   return (
     <div style={{ padding: 24 }}>
       {/* Bộ lọc và tìm kiếm */}
+      <Typography.Title level={3} style={{ marginBottom: 10 }}>
+        Danh sách nhân viên
+      </Typography.Title>
       <Space style={{ marginBottom: 16 }} wrap>
         <Button type="primary" onClick={handleAdd}>
           Thêm nhân viên
