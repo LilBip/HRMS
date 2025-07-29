@@ -15,6 +15,17 @@
       "status": "Đang thử việc",
       "startDate": "2025-07-28",
       "id": "1753718339571"
+    },
+    {
+      "id": "1753753767697",
+      "fullName": "b",
+      "username": "b",
+      "password": "1",
+      "confirmPassword": "1",
+      "email": "kiennghiep2003@gmail.com",
+      "name": "b",
+      "status": "Đang thử việc",
+      "startDate": "2025-07-29"
     }
   ],
   "departments": [
@@ -27,6 +38,11 @@
       "id": "e6515ca4-ab5b-49a2-877c-e6c864719dca",
       "name": "Lập trình C++ cơ bản, nâng cao000",
       "description": "kjbk"
+    },
+    {
+      "id": "3d48ef2c-95d1-4a58-a275-8634bce2aed8",
+      "name": "Nghia Tran Minh",
+      "description": "he he he\n"
     }
   ],
   "accounts": [
@@ -55,6 +71,15 @@
       "fullName": "A",
       "role": "user",
       "email": "A@gmail.com",
+      "status": "active"
+    },
+    {
+      "id": "1753753767697",
+      "username": "b",
+      "password": "1",
+      "fullName": "b",
+      "role": "user",
+      "email": "kiennghiep2003@gmail.com",
       "status": "active"
     }
   ],
@@ -289,6 +314,27 @@
       "activityType": "Update",
       "details": "Check-out lúc 23:03:30 ngày 31/07/2025",
       "time": "2025-07-28T16:03:30.716Z"
+    },
+    {
+      "id": "1753753612503",
+      "name": "A",
+      "activityType": "Add",
+      "details": "Check-in lúc 08:46:52 ngày 29/07/2025",
+      "time": "2025-07-29T01:46:52.503Z"
+    },
+    {
+      "id": "1753753614108",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Check-out lúc 08:46:54 ngày 29/07/2025",
+      "time": "2025-07-29T01:46:54.108Z"
+    },
+    {
+      "id": "1753753715497",
+      "name": "Nghia Tran Minh",
+      "activityType": "Add",
+      "details": "Thêm phòng ban mới Nghia Tran Minh",
+      "time": "2025-07-29T01:48:35.497Z"
     }
   ],
   "requestForms": [
@@ -345,6 +391,14 @@
       "checkIn": "2025-07-28T16:03:30.278Z",
       "status": "present",
       "checkOut": "2025-07-28T16:03:30.708Z"
+    },
+    {
+      "id": "1753718339571-2025-07-29",
+      "userId": "1753718339571",
+      "date": "2025-07-29",
+      "checkIn": "2025-07-29T01:46:52.489Z",
+      "status": "present",
+      "checkOut": "2025-07-29T01:46:54.097Z"
     }
   ],
   "position": [
