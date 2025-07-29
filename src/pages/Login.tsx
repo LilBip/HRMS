@@ -50,7 +50,6 @@ const Login: React.FC = () => {
           role: account.role,
           email: account.email,
         });
-
         navigate("/");
       }
     } catch (err) {
@@ -61,48 +60,46 @@ const Login: React.FC = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `url(${require("../style/images/background.jpg")})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
         minHeight: "100vh",
+        bgcolor: "#181a1f",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        px: 2,
       }}
     >
-      <Container component="main" maxWidth="xs">
+      <Container maxWidth="xs">
         <Paper
-          elevation={3}
+          elevation={4}
           sx={{
-            marginTop: 25,
-            padding: 0,
+            p: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "100%",
-            backgroundColor: "transparent",
-            borderRadius: 2,
+            borderRadius: 3,
+            bgcolor: "rgba(255, 255, 255, 0.05)",
           }}
         >
           <Typography
-            style={{ color: "#f7e9e9ff" }}
             component="h1"
             variant="h5"
+            sx={{
+              color: "#f7e9e9",
+              mb: 2,
+              fontWeight: "bold",
+              fontFamily: "Montserrat, sans-serif",
+            }}
           >
             Sign in to become a hero
           </Typography>
-          <Box
-            style={{ margin: 0 }}
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{ mt: 1, width: "100%" }}
-          >
+
+          <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
             {error && (
               <Alert severity="error" sx={{ mb: 2 }}>
                 {error}
               </Alert>
             )}
+
             <TextField
               margin="normal"
               required
@@ -115,19 +112,20 @@ const Login: React.FC = () => {
               value={credentials.username}
               onChange={handleChange}
               sx={{
-                "& label": { color: "white" }, // màu label (Username)
-                "& input": { color: "white" }, // màu text người dùng gõ
+                "& label": { color: "white" },
+                "& input": { color: "white" },
                 "& .MuiInput-underline:before": {
-                  borderBottomColor: "white", // viền dưới mặc định
+                  borderBottomColor: "white",
                 },
                 "& .MuiInput-underline:hover:before": {
-                  borderBottomColor: "white", // viền khi hover
+                  borderBottomColor: "white",
                 },
                 "& .MuiInput-underline:after": {
-                  borderBottomColor: "white", // viền khi focus
+                  borderBottomColor: "white",
                 },
               }}
             />
+
             <TextField
               variant="outlined"
               margin="normal"
@@ -140,21 +138,19 @@ const Login: React.FC = () => {
               autoComplete="current-password"
               value={credentials.password}
               onChange={handleChange}
-              slotProps={{
-                input: {
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                        edge="end"
-                        sx={{ color: "white" }}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                },
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      edge="end"
+                      sx={{ color: "white" }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
               sx={{
                 "& label": { color: "white" },
@@ -166,18 +162,31 @@ const Login: React.FC = () => {
                 },
               }}
             />
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                bgcolor: "#00A8E8",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "1rem",
+                "&:hover": {
+                  bgcolor: "#0077B6",
+                },
+              }}
             >
               Sign In
             </Button>
+
             <Button
               fullWidth
               variant="text"
               onClick={() => navigate("/register")}
+              sx={{ color: "#00A8E8" }}
             >
               Đăng ký tài khoản mới
             </Button>
@@ -187,4 +196,5 @@ const Login: React.FC = () => {
     </Box>
   );
 };
+
 export default Login;

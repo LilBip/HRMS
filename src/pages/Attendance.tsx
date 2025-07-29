@@ -30,11 +30,13 @@ const Attendance: React.FC = () => {
 
   const isAdmin = user?.role === 'admin';
 
-  // Lấy danh sách nhân viên cho admin
+  // ✅ Chỉ cho phép chấm công ngày hôm nay
+  const isToday = (date: Dayjs) => date.isSame(dayjs(), 'day');
+
   useEffect(() => {
     if (isAdmin) {
       getAllEmployees()
-        .then((data: Employee[]) => {
+        .then((data) => {
           setEmployees(data);
           if (!selectedUserId && data.length > 0) {
             setSelectedUserId(data[0].id);
@@ -43,32 +45,22 @@ const Attendance: React.FC = () => {
         .catch(() => message.error('Không thể tải danh sách nhân viên'));
     }
     // eslint-disable-next-line
-  }, [isAdmin]);
+  }, []);
 
-  // Lấy dữ liệu chấm công
   useEffect(() => {
     fetchAttendance();
     // eslint-disable-next-line
-  }, [selectedDate, selectedUserId, user]);
+  }, [selectedDate, selectedUserId]);
 
   const fetchAttendance = async () => {
     setLoading(true);
     try {
-      const allData = await getAttendanceHistory();
-      let filtered: AttendanceRecord[] = [];
-      if (isAdmin) {
-        filtered = allData.filter(
-          (item) =>
-            (!selectedUserId || item.userId === selectedUserId) &&
-            item.date === selectedDate.format('YYYY-MM-DD')
-        );
-      } else {
-        filtered = allData.filter(
-          (item) =>
-            item.userId === user?.id &&
-            item.date === selectedDate.format('YYYY-MM-DD')
-        );
-      }
+      const all = await getAttendanceHistory();
+      const filtered = all.filter(
+        (record) =>
+          record.date === selectedDate.format('YYYY-MM-DD') &&
+          (isAdmin ? record.userId === selectedUserId : record.userId === user?.id)
+      );
       setAttendanceData(filtered);
     } catch {
       message.error('Không thể tải dữ liệu chấm công');
@@ -77,11 +69,20 @@ const Attendance: React.FC = () => {
     }
   };
 
-  // Check-in
   const handleCheckIn = async () => {
+    if (!isToday(selectedDate)) {
+      return message.warning('Chỉ có thể check-in trong ngày hôm nay');
+    }
+
     try {
+      const recordId = `${user?.id}-${selectedDate.format('YYYY-MM-DD')}`;
+      const alreadyCheckedIn = attendanceData.some((r) => r.checkIn);
+      if (alreadyCheckedIn) {
+        return message.warning('Bạn đã check-in rồi');
+      }
+
       await addAttendanceRecord({
-        id: `${user?.id}-${selectedDate.format('YYYY-MM-DD')}`,
+        id: recordId,
         userId: user?.id || '',
         date: selectedDate.format('YYYY-MM-DD'),
         checkIn: dayjs().toISOString(),
@@ -91,7 +92,7 @@ const Attendance: React.FC = () => {
       await createActivityLog({
         name: user?.fullName || user?.username || 'Unknown',
         activityType: 'Add',
-        details: `Check-in vào lúc ${dayjs().format('HH:mm:ss')} ngày ${selectedDate.format('DD/MM/YYYY')}`,
+        details: `Check-in lúc ${dayjs().format('HH:mm:ss')} ngày ${selectedDate.format('DD/MM/YYYY')}`,
       });
 
       message.success('Check-in thành công');
@@ -101,31 +102,37 @@ const Attendance: React.FC = () => {
     }
   };
 
-  // Check-out
   const handleCheckOut = async () => {
+    if (!isToday(selectedDate)) {
+      return message.warning('Chỉ có thể check-out trong ngày hôm nay');
+    }
+
     try {
       const todayRecord = attendanceData.find(
-        (item) =>
-          item.userId === user?.id &&
-          item.date === selectedDate.format('YYYY-MM-DD')
+        (r) => r.userId === user?.id && r.date === selectedDate.format('YYYY-MM-DD')
       );
-      if (todayRecord) {
-        await addAttendanceRecord({
-          ...todayRecord,
-          checkOut: dayjs().toISOString(),
-        });
 
-        await createActivityLog({
-          name: user?.fullName || user?.username || 'Unknown',
-          activityType: 'Update',
-          details: `Check-out vào lúc ${dayjs().format('HH:mm:ss')} ngày ${selectedDate.format('DD/MM/YYYY')}`,
-        });
-
-        message.success('Check-out thành công');
-        fetchAttendance();
-      } else {
-        message.error('Bạn chưa check-in!');
+      if (!todayRecord || !todayRecord.checkIn) {
+        return message.error('Bạn cần check-in trước!');
       }
+
+      if (todayRecord.checkOut) {
+        return message.warning('Bạn đã check-out rồi');
+      }
+
+      await addAttendanceRecord({
+        ...todayRecord,
+        checkOut: dayjs().toISOString(),
+      });
+
+      await createActivityLog({
+        name: user?.fullName || user?.username || 'Unknown',
+        activityType: 'Update',
+        details: `Check-out lúc ${dayjs().format('HH:mm:ss')} ngày ${selectedDate.format('DD/MM/YYYY')}`,
+      });
+
+      message.success('Check-out thành công');
+      fetchAttendance();
     } catch {
       message.error('Check-out thất bại');
     }
@@ -137,7 +144,7 @@ const Attendance: React.FC = () => {
       dataIndex: 'userId',
       key: 'userId',
       render: (id: string) => {
-        const emp = employees.find((emp) => emp.id === id);
+        const emp = employees.find((e) => e.id === id);
         return emp ? emp.name : id;
       },
     },
@@ -151,32 +158,29 @@ const Attendance: React.FC = () => {
       title: 'Check-in',
       dataIndex: 'checkIn',
       key: 'checkIn',
-      render: (time: string) =>
-        time ? dayjs(time).format('HH:mm:ss') : '-',
+      render: (t: string) => (t ? dayjs(t).format('HH:mm:ss') : '-'),
     },
     {
       title: 'Check-out',
       dataIndex: 'checkOut',
       key: 'checkOut',
-      render: (time: string) =>
-        time ? dayjs(time).format('HH:mm:ss') : '-',
+      render: (t: string) => (t ? dayjs(t).format('HH:mm:ss') : '-'),
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
-      render: (status: string) => {
-        let color = 'default';
-        if (status === 'present') color = 'green';
-        else if (status === 'absent') color = 'red';
-        else if (status === 'leave') color = 'blue';
-        return <Tag color={color}>{status.toUpperCase()}</Tag>;
+      render: (s: string) => {
+        const color =
+          s === 'present' ? 'green' : s === 'leave' ? 'blue' : 'red';
+        return <Tag color={color}>{s.toUpperCase()}</Tag>;
       },
     },
     {
       title: 'Ghi chú',
       dataIndex: 'note',
       key: 'note',
+      render: (text: string) => text || '-',
     },
   ];
 
@@ -186,10 +190,11 @@ const Attendance: React.FC = () => {
       <Space style={{ marginBottom: 16 }}>
         <DatePicker
           value={selectedDate}
-          onChange={(date) => date && setSelectedDate(date)}
+          onChange={(d) => d && setSelectedDate(d)}
           allowClear={false}
+          // ✅ Vô hiệu hóa chọn ngày quá khứ và tương lai
         />
-        {isAdmin && (
+        {isAdmin ? (
           <Select
             showSearch
             style={{ width: 220 }}
@@ -197,11 +202,6 @@ const Attendance: React.FC = () => {
             value={selectedUserId}
             onChange={setSelectedUserId}
             optionFilterProp="children"
-            filterOption={(input, option) =>
-              (option?.children?.toString() || '')
-                .toLowerCase()
-                .includes(input.toLowerCase())
-            }
           >
             {employees.map((emp) => (
               <Select.Option key={emp.id} value={emp.id}>
@@ -209,8 +209,7 @@ const Attendance: React.FC = () => {
               </Select.Option>
             ))}
           </Select>
-        )}
-        {!isAdmin && (
+        ) : (
           <>
             <Button type="primary" onClick={handleCheckIn}>
               Check-in

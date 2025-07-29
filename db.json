@@ -7,6 +7,14 @@
       "status": "Đang làm việc",
       "startDate": "2025-07-24",
       "id": "1753382498200"
+    },
+    {
+      "name": "A",
+      "department": "Thiết kế đồ họa",
+      "position": "Intern",
+      "status": "Đang thử việc",
+      "startDate": "2025-07-28",
+      "id": "1753718339571"
     }
   ],
   "departments": [
@@ -38,6 +46,15 @@
       "fullName": "Dương Kiến Nghiệp",
       "role": "user",
       "email": "kiennghiep2003@gmail.com",
+      "status": "active"
+    },
+    {
+      "id": "1753718339571",
+      "username": "A",
+      "password": "1",
+      "fullName": "A",
+      "role": "user",
+      "email": "A@gmail.com",
       "status": "active"
     }
   ],
@@ -174,6 +191,104 @@
       "activityType": "Update",
       "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
       "time": "2025-07-25T03:33:18.376Z"
+    },
+    {
+      "id": "1753718364244",
+      "name": "A",
+      "activityType": "Add",
+      "details": "Check-in vào lúc 22:59:24 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:24.244Z"
+    },
+    {
+      "id": "1753718364570",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Check-out vào lúc 22:59:24 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:24.570Z"
+    },
+    {
+      "id": "1753718365131",
+      "name": "A",
+      "activityType": "Add",
+      "details": "Check-in vào lúc 22:59:25 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:25.131Z"
+    },
+    {
+      "id": "1753718365407",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Check-out vào lúc 22:59:25 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:25.407Z"
+    },
+    {
+      "id": "1753718366428",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Check-out vào lúc 22:59:26 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:26.428Z"
+    },
+    {
+      "id": "1753718367780",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Check-out vào lúc 22:59:27 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:27.780Z"
+    },
+    {
+      "id": "1753718368040",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Check-out vào lúc 22:59:28 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:28.040Z"
+    },
+    {
+      "id": "1753718368302",
+      "name": "A",
+      "activityType": "Add",
+      "details": "Check-in vào lúc 22:59:28 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:28.302Z"
+    },
+    {
+      "id": "1753718369264",
+      "name": "A",
+      "activityType": "Add",
+      "details": "Check-in vào lúc 22:59:29 ngày 28/07/2025",
+      "time": "2025-07-28T15:59:29.264Z"
+    },
+    {
+      "id": "1753718394628",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên A",
+      "time": "2025-07-28T15:59:54.628Z"
+    },
+    {
+      "id": "1753718603843",
+      "name": "A",
+      "activityType": "Add",
+      "details": "Check-in lúc 23:03:23 ngày 22/07/2025",
+      "time": "2025-07-28T16:03:23.843Z"
+    },
+    {
+      "id": "1753718605261",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Check-out lúc 23:03:25 ngày 22/07/2025",
+      "time": "2025-07-28T16:03:25.261Z"
+    },
+    {
+      "id": "1753718610290",
+      "name": "A",
+      "activityType": "Add",
+      "details": "Check-in lúc 23:03:30 ngày 31/07/2025",
+      "time": "2025-07-28T16:03:30.290Z"
+    },
+    {
+      "id": "1753718610716",
+      "name": "A",
+      "activityType": "Update",
+      "details": "Check-out lúc 23:03:30 ngày 31/07/2025",
+      "time": "2025-07-28T16:03:30.716Z"
     }
   ],
   "requestForms": [
@@ -206,6 +321,30 @@
       "checkIn": "2025-07-24T18:44:14.655Z",
       "status": "present",
       "checkOut": "2025-07-24T18:44:15.545Z"
+    },
+    {
+      "id": "1753718339571-2025-07-28",
+      "userId": "1753718339571",
+      "date": "2025-07-28",
+      "checkIn": "2025-07-28T15:59:29.258Z",
+      "status": "present",
+      "checkOut": "2025-07-28T15:59:28.032Z"
+    },
+    {
+      "id": "1753718339571-2025-07-22",
+      "userId": "1753718339571",
+      "date": "2025-07-22",
+      "checkIn": "2025-07-28T16:03:23.830Z",
+      "status": "present",
+      "checkOut": "2025-07-28T16:03:25.253Z"
+    },
+    {
+      "id": "1753718339571-2025-07-31",
+      "userId": "1753718339571",
+      "date": "2025-07-31",
+      "checkIn": "2025-07-28T16:03:30.278Z",
+      "status": "present",
+      "checkOut": "2025-07-28T16:03:30.708Z"
     }
   ],
   "position": [

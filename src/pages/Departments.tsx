@@ -1,161 +1,129 @@
-import React, { useEffect, useState } from 'react';
 import {
-  Table,
-  Button,
-  Modal,
-  Form,
-  Input,
-  Space,
-  Popconfirm,
-  message,
+  Card,
+  Descriptions,
+  Spin,
   Typography,
-} from 'antd';
-import { Department } from '../types/department';
+  message,
+  Avatar,
+} from "antd";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContexts";
 import {
-  getDepartments,
-  addDepartment,
-  updateDepartment,
-  deleteDepartment,
-} from '../api/departmentApi';
-import { createActivityLog } from '../api/activityLogApi';
+  UserOutlined,
+  MailOutlined,
+  IdcardOutlined,
+  TagOutlined,
+  KeyOutlined,
+  AppstoreOutlined,
+} from "@ant-design/icons";
 
-const Departments: React.FC = () => {
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [form] = Form.useForm();
-  const [editingDepartment, setEditingDepartment] = useState<Department | null>(null);
+const { Title, Text } = Typography;
+
+const Profile: React.FC = () => {
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<any>(null);
+  const [departments, setDepartments] = useState<any[]>([]);
+  const [roles, setRoles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchDepartments();
-  }, []);
-
-  const fetchDepartments = async () => {
-    try {
-      const data = await getDepartments();
-      setDepartments(data);
-    } catch {
-      message.error('Không thể tải danh sách phòng ban');
+    if (!user) {
+      setProfile(null);
+      return;
     }
-  };
 
-  const handleAdd = () => {
-    setEditingDepartment(null);
-    form.resetFields();
-    setModalVisible(true);
-  };
+    const fetchData = async () => {
+      try {
+        const [accountRes, deptRes, roleRes] = await Promise.all([
+          fetch(`http://localhost:3001/accounts?id=${user.id}`),
+          fetch(`http://localhost:3001/departments`),
+          fetch(`http://localhost:3001/roles`),
+        ]);
 
-  const handleEdit = (record: Department) => {
-    setEditingDepartment(record);
-    form.setFieldsValue(record);
-    setModalVisible(true);
-  };
+        const [accountData, deptData, roleData] = await Promise.all([
+          accountRes.json(),
+          deptRes.json(),
+          roleRes.json(),
+        ]);
 
-  const handleDelete = async (id: string) => {
-    try {
-      const department = departments.find(dep => dep.id === id);
-      await deleteDepartment(id);
-      message.success('Xóa phòng ban thành công');
-      if (department) {
-        await createActivityLog({
-          name: department.name,
-          activityType: 'Delete',
-          details: `Xóa phòng ban ${department.name}`
-        });
+        setProfile(accountData[0]);
+        setDepartments(deptData);
+        setRoles(roleData);
+      } catch (error) {
+        message.error("Lỗi khi tải dữ liệu hồ sơ");
+      } finally {
+        setLoading(false);
       }
-      fetchDepartments();
-    } catch {
-      message.error('Xóa phòng ban thất bại');
-    }
-  };
+    };
 
-  const onFinish = async (values: Omit<Department, 'id'>) => {
-    try {
-      if (editingDepartment) {
-        await updateDepartment(editingDepartment.id, { ...values, id: editingDepartment.id });
-        message.success('Cập nhật phòng ban thành công');
-        await createActivityLog({
-          name: values.name,
-          activityType: 'Update',
-          details: `Cập nhật phòng ban ${values.name}`
-        });
-      } else {
-        const newId = crypto.randomUUID();
-        await addDepartment({ ...values, id: newId });
-        message.success('Thêm phòng ban thành công');
-        await createActivityLog({
-          name: values.name,
-          activityType: 'Add',
-          details: `Thêm phòng ban mới ${values.name}`
-        });
-      }
-      setModalVisible(false);
-      fetchDepartments();
-    } catch {
-      message.error('Lưu dữ liệu thất bại');
-    }
-  };
+    fetchData();
+  }, [user]);
 
-  const columns = [
-    { title: 'Tên phòng ban', dataIndex: 'name' },
-    { title: 'Mô tả', dataIndex: 'description' },
-    {
-      title: 'Hành động',
-      render: (_: any, record: Department) => (
-        <Space>
-          <Button type="link" onClick={() => handleEdit(record)}>Sửa</Button>
-          <Popconfirm title="Bạn có chắc muốn xóa?" onConfirm={() => handleDelete(record.id)}>
-            <Button danger type="link">Xóa</Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ];
+  if (!user || !profile || loading)
+    return (
+      <Spin
+        style={{ display: "block", margin: "100px auto" }}
+        size="large"
+      />
+    );
+
+  const departmentName =
+    departments.find((d) => d.id === profile.departmentId)?.name || "Không rõ";
+
+  const roleName =
+    roles.find((r) => r.id === profile.roleId)?.name ||
+    (profile.role === "admin" ? "Quản trị viên" : "Nhân viên");
 
   return (
-    <div style={{ padding: 24 }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 16,
-        }}
-      >
-        <Typography.Title level={3} style={{ margin: 0 }}>Danh sách phòng ban</Typography.Title>
-        <Button
-          type="primary"
-          onClick={handleAdd}>
-            + Thêm phòng ban
-          </Button>
+    <Card
+      style={{
+        maxWidth: 600,
+        margin: "40px auto",
+        borderRadius: 16,
+        boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+        background: "linear-gradient(to right, #ffffff, #f9f9f9)",
+      }}
+      bodyStyle={{ padding: "32px" }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 24 }}>
+        <Avatar
+          size={96}
+          icon={<UserOutlined />}
+          style={{ backgroundColor: "#1890ff", marginBottom: 16 }}
+        />
+        <Title level={3} style={{ marginBottom: 0 }}>
+          {profile.fullName}
+        </Title>
+        <Text type="secondary">{roleName}</Text>
       </div>
-      
-      <Table columns={columns} dataSource={departments} rowKey="id" />
 
-      <Modal
-        title={editingDepartment ? 'Cập nhật phòng ban' : 'Thêm phòng ban'}
-        open={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        width={600}
-        footer={null}
-        centered
-        style={{ top: 40 }}
+      <Descriptions
+        bordered
+        column={1}
+        labelStyle={{ fontWeight: 600, backgroundColor: "#fafafa" }}
+        contentStyle={{ backgroundColor: "#ffffff" }}
       >
-        <Form layout="vertical" form={form} onFinish={onFinish}>
-          <Form.Item name="name" label="Tên phòng ban" rules={[{ required: true, message: 'Vui lòng nhập tên phòng ban' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="description" label="Mô tả">
-            <Input.TextArea rows={4} />
-          </Form.Item>
-          <Form.Item style={{ textAlign: 'right', marginBottom: 0 }}>
-            <Button type="primary" htmlType="submit">
-              {editingDepartment ? 'Cập nhật' : 'Thêm mới'}
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </div>
+        <Descriptions.Item label={<><IdcardOutlined /> ID</>}>
+          {profile.id}
+        </Descriptions.Item>
+        <Descriptions.Item label={<><KeyOutlined /> Tên đăng nhập</>}>
+          {profile.username}
+        </Descriptions.Item>
+        <Descriptions.Item label={<><MailOutlined /> Email</>}>
+          {profile.email}
+        </Descriptions.Item>
+        <Descriptions.Item label={<><TagOutlined /> Chức vụ</>}>
+          {profile.position}
+        </Descriptions.Item>
+        <Descriptions.Item label={<><AppstoreOutlined /> Phòng ban</>}>
+          {departmentName}
+        </Descriptions.Item>
+        <Descriptions.Item label={<><TagOutlined /> Vai trò</>}>
+          {roleName}
+        </Descriptions.Item>
+      </Descriptions>
+    </Card>
   );
 };
 
-export default Departments;
+export default Profile;

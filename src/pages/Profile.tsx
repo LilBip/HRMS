@@ -1,4 +1,11 @@
-import { Card, Descriptions, Spin, Typography, message, Avatar } from "antd";
+import {
+  Card,
+  Descriptions,
+  Spin,
+  Typography,
+  message,
+  Avatar,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContexts";
 import {
@@ -7,36 +14,68 @@ import {
   IdcardOutlined,
   TagOutlined,
   KeyOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
-  const [profile, setProfile] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const [account, setAccount] = useState<any>(null);
+  const [employee, setEmployee] = useState<any>(null);
+  const [department, setDepartment] = useState<any>(null);
+  const [roleName, setRoleName] = useState<string>("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) {
-      setProfile(null);
-      return;
-    }
+    if (!user) return;
 
-    setProfile(user);
+    const fetchData = async () => {
+      try {
+        // 1. Lấy account
+        const accRes = await fetch(`http://localhost:3001/accounts?id=${user.id}`);
+        const accData = await accRes.json();
+        const accountInfo = accData[0];
+        setAccount(accountInfo);
 
-    setLoading(true);
-    fetch("http://localhost:3001/accounts?id=" + user.id)
-      .then((res) => res.json())
-      .then((data) => {
-        setProfile(data[0]);
-      })
-      .catch(() => {
-        message.error("Không thể tải thông tin cá nhân");
-      })
-      .finally(() => setLoading(false));
+        // 2. Lấy employee theo account.employeeId
+        const empRes = await fetch(`http://localhost:3001/employees?id=${accountInfo.employeeId}`);
+        const empData = await empRes.json();
+        const employeeInfo = empData[0];
+        setEmployee(employeeInfo);
+
+        // 3. Lấy phòng ban
+        const deptRes = await fetch(`http://localhost:3001/departments?id=${employeeInfo.departmentId}`);
+        const deptData = await deptRes.json();
+        setDepartment(deptData[0]);
+
+        // 4. Lấy role name
+        const roleRes = await fetch(`http://localhost:3001/roles?id=${accountInfo.roleId}`);
+        const roleData = await roleRes.json();
+        setRoleName(roleData[0]?.name || "Không rõ");
+
+      } catch (err) {
+        message.error("Lỗi khi tải thông tin người dùng");
+      } finally {
+        setLoading(false);
+      }
+      console.log("user.id:", user?.id);
+      console.log("account:", account);
+      console.log("employee:", employee);
+      console.log("department:", department);
+      
+    };
+
+    fetchData();
   }, [user]);
 
-  if (!user || !profile || loading) return <Spin style={{ display: "block", margin: "100px auto" }} size="large" />;
+  if (!user || !account || !employee || loading)
+    return (
+      <Spin
+        style={{ display: "block", margin: "100px auto" }}
+        size="large"
+      />
+    );
 
   return (
     <Card
@@ -56,11 +95,9 @@ const Profile: React.FC = () => {
           style={{ backgroundColor: "#1890ff", marginBottom: 16 }}
         />
         <Title level={3} style={{ marginBottom: 0 }}>
-          {profile.fullName}
+          {employee.fullName}
         </Title>
-        <Text type="secondary">
-          {profile.role === "admin" ? "Quản trị viên" : "Người dùng"}
-        </Text>
+        <Text type="secondary">{roleName}</Text>
       </div>
 
       <Descriptions
@@ -70,16 +107,22 @@ const Profile: React.FC = () => {
         contentStyle={{ backgroundColor: "#ffffff" }}
       >
         <Descriptions.Item label={<><IdcardOutlined /> ID</>}>
-          {profile.id}
+          {account.id}
         </Descriptions.Item>
         <Descriptions.Item label={<><KeyOutlined /> Tên đăng nhập</>}>
-          {profile.username}
+          {account.username}
         </Descriptions.Item>
         <Descriptions.Item label={<><MailOutlined /> Email</>}>
-          {profile.email}
+          {employee.email}
+        </Descriptions.Item>
+        <Descriptions.Item label={<><TagOutlined /> Chức vụ</>}>
+          {employee.position}
+        </Descriptions.Item>
+        <Descriptions.Item label={<><AppstoreOutlined /> Phòng ban</>}>
+          {department?.name || "Không rõ"}
         </Descriptions.Item>
         <Descriptions.Item label={<><TagOutlined /> Vai trò</>}>
-          {profile.role}
+          {roleName}
         </Descriptions.Item>
       </Descriptions>
     </Card>
