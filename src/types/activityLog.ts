@@ -3,4 +3,4 @@ export interface ActivityLog {
   name: string;
   activityType: string;
   time: string;
-} 
+}

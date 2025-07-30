@@ -1,11 +1,4 @@
-import {
-  Card,
-  Descriptions,
-  Spin,
-  Typography,
-  message,
-  Avatar,
-} from "antd";
+import { Card, Descriptions, Spin, Typography, message, Avatar } from "antd";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContexts";
 import {
@@ -61,10 +54,7 @@ const Profile: React.FC = () => {
 
   if (!user || !profile || loading)
     return (
-      <Spin
-        style={{ display: "block", margin: "100px auto" }}
-        size="large"
-      />
+      <Spin style={{ display: "block", margin: "100px auto" }} size="large" />
     );
 
   const departmentName =
@@ -103,22 +93,58 @@ const Profile: React.FC = () => {
         labelStyle={{ fontWeight: 600, backgroundColor: "#fafafa" }}
         contentStyle={{ backgroundColor: "#ffffff" }}
       >
-        <Descriptions.Item label={<><IdcardOutlined /> ID</>}>
+        <Descriptions.Item
+          label={
+            <>
+              <IdcardOutlined /> ID
+            </>
+          }
+        >
           {profile.id}
         </Descriptions.Item>
-        <Descriptions.Item label={<><KeyOutlined /> Tên đăng nhập</>}>
+        <Descriptions.Item
+          label={
+            <>
+              <KeyOutlined /> Tên đăng nhập
+            </>
+          }
+        >
           {profile.username}
         </Descriptions.Item>
-        <Descriptions.Item label={<><MailOutlined /> Email</>}>
+        <Descriptions.Item
+          label={
+            <>
+              <MailOutlined /> Email
+            </>
+          }
+        >
           {profile.email}
         </Descriptions.Item>
-        <Descriptions.Item label={<><TagOutlined /> Chức vụ</>}>
+        <Descriptions.Item
+          label={
+            <>
+              <TagOutlined /> Chức vụ
+            </>
+          }
+        >
           {profile.position}
         </Descriptions.Item>
-        <Descriptions.Item label={<><AppstoreOutlined /> Phòng ban</>}>
-          {departmentName}
+        <Descriptions.Item
+          label={
+            <>
+              <AppstoreOutlined /> Phòng ban
+            </>
+          }
+        >
+          {profile.department}
         </Descriptions.Item>
-        <Descriptions.Item label={<><TagOutlined /> Vai trò</>}>
+        <Descriptions.Item
+          label={
+            <>
+              <TagOutlined /> Vai trò
+            </>
+          }
+        >
           {roleName}
         </Descriptions.Item>
       </Descriptions>

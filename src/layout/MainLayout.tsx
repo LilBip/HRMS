@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContexts";
-import logo from "../style/images/logo.jpg";
+import logo from "../style/images/hrm-logo.jpg";
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -18,9 +18,9 @@ import {
   LogoutOutlined,
   ClockCircleOutlined,
   FileTextOutlined,
-  CalendarOutlined ,
+  CalendarOutlined,
   UserOutlined,
-  IdcardOutlined
+  IdcardOutlined,
 } from "@ant-design/icons";
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -95,7 +95,7 @@ const MainLayout: React.FC = () => {
           key: "/position",
           icon: <IdcardOutlined />,
           label: <Link to="/position">Chức vụ</Link>,
-        }
+        },
       ];
     }
 
@@ -115,7 +115,11 @@ const MainLayout: React.FC = () => {
             background: "#001529",
           }}
         >
-          <img src={logo} alt="Logo" style={{ height: 32, borderRadius: "50%" }} />
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ height: 32, borderRadius: "50%" }}
+          />
           <Title level={4} style={{ color: "#fff", margin: 0 }}>
             HRM
           </Title>

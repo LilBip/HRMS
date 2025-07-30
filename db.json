@@ -17,15 +17,12 @@
       "id": "1753718339571"
     },
     {
-      "id": "1753753767697",
-      "fullName": "b",
-      "username": "b",
-      "password": "1",
-      "confirmPassword": "1",
-      "email": "kiennghiep2003@gmail.com",
       "name": "b",
+      "department": "Thiết kế đồ họa",
+      "position": "Intern",
       "status": "Đang thử việc",
-      "startDate": "2025-07-29"
+      "startDate": "2025-07-29",
+      "id": "1753753767697"
     }
   ],
   "departments": [
@@ -53,7 +50,10 @@
       "fullName": "Administrator",
       "role": "admin",
       "email": "admin@hrms.com",
-      "status": "active"
+      "position": "Director",
+      "department": "Thiết kế đồ họa",
+      "status": "active",
+      "startDate": "2025-07-24"
     },
     {
       "id": "1753382498200",
@@ -62,25 +62,18 @@
       "fullName": "Dương Kiến Nghiệp",
       "role": "user",
       "email": "kiennghiep2003@gmail.com",
-      "status": "active"
+      "position": "Intern",
+      "department": "Thiết kế đồ họa",
+      "status": "active",
+      "startDate": "2025-07-24"
     },
     {
-      "id": "1753718339571",
-      "username": "A",
-      "password": "1",
-      "fullName": "A",
-      "role": "user",
-      "email": "A@gmail.com",
-      "status": "active"
-    },
-    {
-      "id": "1753753767697",
-      "username": "b",
-      "password": "1",
-      "fullName": "b",
-      "role": "user",
-      "email": "kiennghiep2003@gmail.com",
-      "status": "active"
+      "fullName": "Khánh Duy",
+      "department": "Thiết kế đồ họa",
+      "position": "Developer",
+      "status": "active",
+      "startDate": "2025-07-24",
+      "id": "1753718339571"
     }
   ],
   "activityLogs": [
@@ -335,6 +328,54 @@
       "activityType": "Add",
       "details": "Thêm phòng ban mới Nghia Tran Minh",
       "time": "2025-07-29T01:48:35.497Z"
+    },
+    {
+      "id": "1753780522246",
+      "name": "b",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên b",
+      "time": "2025-07-29T09:15:22.246Z"
+    },
+    {
+      "id": "1753782272704",
+      "name": "Khánh Duy",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Khánh Duy",
+      "time": "2025-07-29T09:44:32.704Z"
+    },
+    {
+      "id": "1753782690670",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên undefined",
+      "time": "2025-07-29T09:51:30.670Z"
+    },
+    {
+      "id": "1753782901194",
+      "name": "Khánh Duy",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Khánh Duy",
+      "time": "2025-07-29T09:55:01.194Z"
+    },
+    {
+      "id": "1753783043899",
+      "name": "Khánh Duy",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Khánh Duy",
+      "time": "2025-07-29T09:57:23.899Z"
+    },
+    {
+      "id": "1753846050779",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Add",
+      "details": "Check-in lúc 10:27:30 ngày 30/07/2025",
+      "time": "2025-07-30T03:27:30.779Z"
+    },
+    {
+      "id": "1753846065730",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Update",
+      "details": "Check-out lúc 10:27:45 ngày 30/07/2025",
+      "time": "2025-07-30T03:27:45.730Z"
     }
   ],
   "requestForms": [
@@ -399,6 +440,14 @@
       "checkIn": "2025-07-29T01:46:52.489Z",
       "status": "present",
       "checkOut": "2025-07-29T01:46:54.097Z"
+    },
+    {
+      "id": "1753382498200-2025-07-30",
+      "userId": "1753382498200",
+      "date": "2025-07-30",
+      "checkIn": "2025-07-30T03:27:30.758Z",
+      "status": "present",
+      "checkOut": "2025-07-30T03:27:45.717Z"
     }
   ],
   "position": [

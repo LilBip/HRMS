@@ -1,46 +1,24 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Form, Input, Button, Typography, Alert, Card } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { AuthContext } from "../contexts/AuthContexts";
 import { login, LoginCredentials } from "../api/authApi";
-import {
-  Container,
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Alert,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+const { Title } = Typography;
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(AuthContext);
 
-  const [credentials, setCredentials] = useState<LoginCredentials>({
-    username: "",
-    password: "",
-  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const [error, setError] = useState<string>("");
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCredentials((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onFinish = async (values: LoginCredentials) => {
     setError("");
-
+    setLoading(true);
     try {
-      const account = await login(credentials);
+      const account = await login(values);
       if (account) {
         setUser({
           token: account.token || account.id,
@@ -54,146 +32,89 @@ const Login: React.FC = () => {
       }
     } catch (err) {
       setError("Invalid username or password");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         minHeight: "100vh",
-        bgcolor: "#181a1f",
+        backgroundColor: "#f0f2f5",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        px: 2,
+        padding: 16,
       }}
     >
-      <Container maxWidth="xs">
-        <Paper
-          elevation={4}
-          sx={{
-            p: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            borderRadius: 3,
-            bgcolor: "rgba(255, 255, 255, 0.05)",
-          }}
+      <Card style={{ width: "100%", maxWidth: 400, borderRadius: 12 }} bordered>
+        <Title level={3} style={{ textAlign: "center", marginBottom: 24 }}>
+          Sign in
+        </Title>
+
+        {error && (
+          <Alert
+            message={error}
+            type="error"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+        )}
+
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={{ username: "", password: "" }}
         >
-          <Typography
-            component="h1"
-            variant="h5"
-            sx={{
-              color: "#f7e9e9",
-              mb: 2,
-              fontWeight: "bold",
-              fontFamily: "Montserrat, sans-serif",
-            }}
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please input your username!" }]}
           >
-            Sign in to become a hero
-          </Typography>
+            <Input placeholder="Enter your username" />
+          </Form.Item>
 
-          <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
-            {error && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {error}
-              </Alert>
-            )}
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-              value={credentials.username}
-              onChange={handleChange}
-              sx={{
-                "& label": { color: "white" },
-                "& input": { color: "white" },
-                "& .MuiInput-underline:before": {
-                  borderBottomColor: "white",
-                },
-                "& .MuiInput-underline:hover:before": {
-                  borderBottomColor: "white",
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "white",
-                },
-              }}
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password
+              placeholder="Enter your password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
             />
+          </Form.Item>
 
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type={showPassword ? "text" : "password"}
-              id="password"
-              autoComplete="current-password"
-              value={credentials.password}
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      edge="end"
-                      sx={{ color: "white" }}
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              sx={{
-                "& label": { color: "white" },
-                "& input": { color: "white" },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "white" },
-                  "&:hover fieldset": { borderColor: "white" },
-                  "&.Mui-focused fieldset": { borderColor: "white" },
-                },
-              }}
-            />
-
+          <Form.Item>
             <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 3,
-                mb: 2,
-                bgcolor: "#00A8E8",
-                color: "#fff",
+              type="primary"
+              htmlType="submit"
+              block
+              loading={loading}
+              style={{
                 fontWeight: "bold",
-                fontSize: "1rem",
-                "&:hover": {
-                  bgcolor: "#0077B6",
-                },
               }}
             >
               Sign In
             </Button>
+          </Form.Item>
 
+          <Form.Item>
             <Button
-              fullWidth
-              variant="text"
+              type="link"
+              block
               onClick={() => navigate("/register")}
-              sx={{ color: "#00A8E8" }}
+              style={{ padding: 0 }}
             >
               Đăng ký tài khoản mới
             </Button>
-          </Box>
-        </Paper>
-      </Container>
-    </Box>
+          </Form.Item>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

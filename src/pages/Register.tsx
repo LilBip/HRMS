@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Form, Input, Button, message, Card } from "antd";
+import { Form, Input, Button, message, Card, Typography } from "antd";
 import { registerEmployee } from "../api/registerApi";
 import { useNavigate } from "react-router-dom";
+
+const { Title } = Typography;
 
 const Register: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -26,12 +28,20 @@ const Register: React.FC = () => {
 
   return (
     <Card style={{ maxWidth: 500, margin: "40px auto" }}>
-      <h2 style={{ textAlign: "center", marginBottom: 24 }}>Tạo tài khoản nhân viên</h2>
+      <Title level={3} style={{ textAlign: "center", marginBottom: 24 }}>
+        Tạo tài khoản nhân viên
+      </Title>
       <Form layout="vertical" onFinish={onFinish}>
         <Form.Item
           name="fullName"
           label="Họ và tên"
-          rules={[{ required: true, message: "Vui lòng nhập họ và tên" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập họ và tên" },
+            {
+              pattern: /^[\p{L}\s]+$/u,
+              message: "Họ và tên chỉ được chứa chữ cái và khoảng trắng",
+            },
+          ]}
         >
           <Input />
         </Form.Item>
@@ -39,7 +49,13 @@ const Register: React.FC = () => {
         <Form.Item
           name="username"
           label="Tên đăng nhập"
-          rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập tên đăng nhập" },
+            {
+              pattern: /^[a-zA-Z0-9_]{4,20}$/,
+              message: "Tên đăng nhập chỉ chứa chữ, số, gạch dưới (4–20 ký tự)",
+            },
+          ]}
         >
           <Input />
         </Form.Item>
@@ -47,7 +63,15 @@ const Register: React.FC = () => {
         <Form.Item
           name="password"
           label="Mật khẩu"
-          rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập mật khẩu" },
+            {
+              pattern:
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^])[A-Za-z\d@$!%*#?&^]{6,}$/,
+              message:
+                "Mật khẩu phải có ít nhất 6 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+            },
+          ]}
         >
           <Input.Password />
         </Form.Item>
@@ -63,7 +87,9 @@ const Register: React.FC = () => {
                 if (!value || getFieldValue("password") === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(new Error("Mật khẩu xác nhận không khớp!"));
+                return Promise.reject(
+                  new Error("Mật khẩu xác nhận không khớp!")
+                );
               },
             }),
           ]}

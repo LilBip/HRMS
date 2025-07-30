@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'http://localhost:3001'; // hoặc URL API bạn đang dùng
+const API_URL = "http://localhost:3001"; // hoặc URL API bạn đang dùng
 
 export const getAllEmployees = async () => {
-  const res = await axios.get(`${API_URL}/employees`);
+  const res = await axios.get(`${API_URL}/accounts`);
   return res.data;
 };
 
