@@ -5,8 +5,10 @@ export interface RequestForm {
   type: string;
   content: string;
   time: string;
-  submissionDate: string;
+  startDate: string | null;
+  endDate: string | null;
   status: "pending" | "approved" | "rejected";
+  submissionDate: string;
   approvedBy?: string;
   approvalDate?: string;
   approvalNote?: string;

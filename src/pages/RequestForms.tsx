@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContexts";
-import { getRequests, approveRequest } from "../api/requestApi";
+import {
+  createRequest,
+  getRequests,
+  approveRequest,
+  deleteRequest,
+  updateRequest,
+} from "../api/requestApi";
 import { createActivityLog } from "../api/activityLogApi";
 import { RequestForm } from "../types/request";
 import {
@@ -16,6 +22,7 @@ import {
   Select,
   DatePicker,
 } from "antd";
+import moment from "moment";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -40,7 +47,13 @@ const RequestForms: React.FC = () => {
   const loadRequests = async () => {
     try {
       const data = await getRequests();
-      setRequests(data);
+
+      const filtered =
+        user?.role === "admin"
+          ? data
+          : data.filter((r: RequestForm) => r.employeeId === user?.id);
+
+      setRequests(filtered);
     } catch (error) {
       console.error("Error loading requests:", error);
     }
@@ -50,44 +63,65 @@ const RequestForms: React.FC = () => {
     try {
       const [startDate, endDate] = values.dateRange || [];
       const content = values.content;
-      const time = `${
+      const time =
         startDate && endDate
           ? `Từ ${startDate.format("DD/MM/YYYY")} đến ${endDate.format(
               "DD/MM/YYYY"
             )}`
-          : ""
-      }`;
+          : "";
 
-      const newRequest = {
-        id: Date.now().toString(),
+      const requestData = {
         employeeId: user?.id || "",
         employeeName: user?.fullName || "",
         type: values.type === "Khác" ? values.customType : values.type,
         content,
         time,
-        submissionDate: new Date().toISOString(),
-        status: "pending",
+        startDate: startDate?.toISOString(),
+        endDate: endDate?.toISOString(),
+        status: "pending", // Add status for update case
+        submissionDate:
+          selectedRequest?.submissionDate || new Date().toISOString(), // Keep original submission date when updating
       };
 
-      await fetch("http://localhost:3001/requestForms", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newRequest),
-      });
+      if (selectedRequest) {
+        // Update existing request
+        await updateRequest(selectedRequest.id, {
+          // Spread requestData first, then override with selected request properties
+          ...requestData,
+          id: selectedRequest.id,
+          status: selectedRequest.status,
+          approvedBy: selectedRequest.approvedBy,
+          approvalDate: selectedRequest.approvalDate,
+          approvalNote: selectedRequest.approvalNote,
+        });
 
-      await createActivityLog({
-        name: user?.fullName || "",
-        activityType: "Add",
-        details: `Tạo đơn ${newRequest.type} mới`,
-      });
+        await createActivityLog({
+          name: user?.fullName || "",
+          activityType: "Update",
+          details: `Sửa đơn ${requestData.type}`,
+        });
 
-      message.success("Tạo đơn thành công");
+        message.success("Sửa đơn thành công");
+      } else {
+        // Create new request
+        await createRequest(requestData);
+
+        await createActivityLog({
+          name: user?.fullName || "",
+          activityType: "Add",
+          details: `Tạo đơn ${requestData.type} mới`,
+        });
+
+        message.success("Tạo đơn thành công");
+      }
+
       setCreateModalVisible(false);
+      setSelectedRequest(null);
       form.resetFields();
       loadRequests();
     } catch (error) {
-      console.error("Error creating request:", error);
-      message.error("Lỗi khi tạo đơn");
+      console.error("Error saving request:", error);
+      message.error("Lỗi khi lưu đơn");
     }
   };
 
@@ -149,6 +183,41 @@ const RequestForms: React.FC = () => {
     }
   };
 
+  const onEditRequest = (record: RequestForm) => {
+    form.setFieldsValue({
+      type: ["Nghỉ phép", "Công tác", "Tăng ca"].includes(record.type)
+        ? record.type
+        : "Khác",
+      customType: !["Nghỉ phép", "Công tác", "Tăng ca"].includes(record.type)
+        ? record.type
+        : undefined,
+      content: record.content,
+      dateRange:
+        record.startDate && record.endDate
+          ? [record.startDate, record.endDate]
+          : [null, null],
+    });
+    setSelectedRequest(record);
+    setCreateModalVisible(true);
+  };
+
+  const onDeleteRequest = async (id: string) => {
+    try {
+      await deleteRequest(id);
+
+      await createActivityLog({
+        name: user?.fullName || "",
+        activityType: "Delete",
+        details: `Xóa đơn`,
+      });
+      message.success("Xóa đơn thành công");
+      loadRequests();
+    } catch (error) {
+      console.error("Error deleting request:", error);
+      message.error("Lỗi khi xóa đơn");
+    }
+  };
+
   const columns = [
     {
       title: "Người gửi",
@@ -198,6 +267,7 @@ const RequestForms: React.FC = () => {
           "-"
         ),
     },
+    // Cột dành cho admin (duyệt)
     ...(user?.role === "admin"
       ? [
           {
@@ -212,6 +282,31 @@ const RequestForms: React.FC = () => {
                 >
                   Duyệt đơn
                 </Button>
+              ),
+          },
+        ]
+      : []),
+    // Cột dành cho user (sửa/xóa)
+    ...(user?.role === "user"
+      ? [
+          {
+            title: "Hành động",
+            key: "user-action",
+            render: (_: any, record: RequestForm) =>
+              record.employeeId === user.id &&
+              record.status === "pending" && (
+                <Space>
+                  <Button size="small" onClick={() => onEditRequest(record)}>
+                    Sửa
+                  </Button>
+                  <Button
+                    size="small"
+                    danger
+                    onClick={() => onDeleteRequest(record.id)}
+                  >
+                    Xóa
+                  </Button>
+                </Space>
               ),
           },
         ]

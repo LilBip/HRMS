@@ -139,6 +139,90 @@
       "activityType": "Thêm check-out",
       "details": "Check-out lúc 16:15:46 ngày 31/07/2025",
       "time": "2025-07-31 16:15:46"
+    },
+    {
+      "id": "1754021128689",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Delete",
+      "details": "Xóa đơn",
+      "time": "2025-08-01 11:05:28"
+    },
+    {
+      "id": "1754021415114",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Add",
+      "details": "Tạo đơn Tăng ca mới",
+      "time": "2025-08-01 11:10:15"
+    },
+    {
+      "id": "1754021425964",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Add",
+      "details": "Tạo đơn Nghỉ phép mới",
+      "time": "2025-08-01 11:10:25"
+    },
+    {
+      "id": "1754021462982",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Add",
+      "details": "Tạo đơn Tăng ca mới",
+      "time": "2025-08-01 11:11:02"
+    },
+    {
+      "id": "1754021473378",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Add",
+      "details": "Tạo đơn Tăng ca mới",
+      "time": "2025-08-01 11:11:13"
+    },
+    {
+      "id": "1754021485813",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Delete",
+      "details": "Xóa đơn",
+      "time": "2025-08-01 11:11:25"
+    },
+    {
+      "id": "1754022367703",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Update",
+      "details": "Sửa đơn Công tác",
+      "time": "2025-08-01 11:26:07"
+    },
+    {
+      "id": "1754022374196",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Update",
+      "details": "Sửa đơn Công tác",
+      "time": "2025-08-01 11:26:14"
+    },
+    {
+      "id": "1754022386749",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Update",
+      "details": "Sửa đơn Nghỉ phép",
+      "time": "2025-08-01 11:26:26"
+    },
+    {
+      "id": "1754029924985",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Delete",
+      "details": "Xóa đơn",
+      "time": "2025-08-01 13:32:04"
+    },
+    {
+      "id": "1754030345708",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Update",
+      "details": "Sửa đơn Công tác",
+      "time": "2025-08-01 13:39:05"
+    },
+    {
+      "id": "1754030356917",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Add",
+      "details": "Tạo đơn Công tác mới",
+      "time": "2025-08-01 13:39:16"
     }
   ],
   "requestForms": [
@@ -218,14 +302,38 @@
       "status": "pending"
     },
     {
-      "id": "1753952794652",
       "employeeId": "1753382498200",
       "employeeName": "Dương Kiến Nghiệp",
       "type": "Công tác",
-      "content": "áda",
-      "time": "Từ 02/07/2025 đến 04/08/2025",
-      "submissionDate": "2025-07-31T09:06:34.652Z",
+      "content": "dsfsdf",
+      "time": "Từ 01/08/2025 đến 03/09/2025",
+      "startDate": "2025-07-31T17:00:00.000Z",
+      "endDate": "2025-09-02T17:00:00.000Z",
+      "status": "pending",
+      "submissionDate": "2025-08-01T04:10:25.955Z",
+      "id": "1754021425955"
+    },
+    {
+      "id": "1754021462973",
+      "employeeId": "1753382498200",
+      "employeeName": "Dương Kiến Nghiệp",
+      "type": "Tăng ca",
+      "content": "12355",
+      "time": "Từ 02/08/2025 đến 04/09/2025",
+      "submissionDate": "2025-08-01T04:11:02.973Z",
       "status": "pending"
+    },
+    {
+      "id": "fdc4",
+      "employeeId": "1753382498200",
+      "employeeName": "Dương Kiến Nghiệp",
+      "type": "Công tác",
+      "content": "qưe",
+      "time": "Từ 01/08/2025 đến 01/09/2025",
+      "startDate": "2025-07-31T17:00:00.000Z",
+      "endDate": "2025-08-31T17:00:00.000Z",
+      "status": "pending",
+      "submissionDate": "2025-08-01T06:39:16.908Z"
     }
   ],
   "attendance": [
