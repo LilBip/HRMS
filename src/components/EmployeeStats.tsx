@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Statistic } from 'antd';
-import { getAllEmployees } from '../api/dashboardApi';
-import { getDepartments } from '../api/departmentApi';
-import { Employee } from '../types/employee';
-import { Department } from '../types/department';
+import React, { useEffect, useState } from "react";
+import { Row, Col, Card, Statistic } from "antd";
+import { getAllEmployees } from "../api/dashboardApi";
+import { getDepartments } from "../api/departmentApi";
+import { Account } from "../types/account";
+import { Department } from "../types/department";
+import { Position } from "../types/position";
+import { getPositions } from "../api/positionApi";
 
 const EmployeeStats: React.FC = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [employees, setEmployees] = useState<Account[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [positions, setPositions] = useState<Position[]>([]);
 
   useEffect(() => {
     getAllEmployees().then(setEmployees);
+    getPositions().then(setPositions);
     getDepartments().then((res) => {
       if (Array.isArray(res)) {
         setDepartments(res);
@@ -21,10 +25,17 @@ const EmployeeStats: React.FC = () => {
   }, []);
 
   const total = employees.length;
-  const probation = employees.filter(emp => emp.status === 'Đang thử việc').length;
-  const working = employees.filter(emp => emp.status === 'Đang làm việc').length;
-  const onLeave = employees.filter(emp => emp.status === 'Đang nghỉ phép').length;
+  const probation = employees.filter(
+    (emp) => emp.accountStatus === "Đang thử việc"
+  ).length;
+  const working = employees.filter(
+    (emp) => emp.accountStatus === "Đang làm việc"
+  ).length;
+  const onLeave = employees.filter(
+    (emp) => emp.accountStatus === "Đang nghỉ phép"
+  ).length;
   const department = departments.length;
+  const totalPosition = positions.length;
 
   return (
     <Row gutter={16} style={{ marginBottom: 24 }}>
@@ -36,6 +47,11 @@ const EmployeeStats: React.FC = () => {
       <Col span={6}>
         <Card>
           <Statistic title="Tổng số phòng ban" value={department} />
+        </Card>
+      </Col>
+      <Col span={6}>
+        <Card>
+          <Statistic title="Tổng số chức vụ" value={totalPosition} />
         </Card>
       </Col>
       <Col span={6}>

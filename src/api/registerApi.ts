@@ -4,7 +4,14 @@ import { Employee } from "../types/employee";
 const EMPLOYEE_API = "http://localhost:3001/employees";
 const ACCOUNT_API = "http://localhost:3001/accounts";
 
-export const registerEmployee = async (employee: Omit<Employee, "id"> & { username: string; password: string; email: string; fullName: string; }) => {
+export const registerEmployee = async (
+  employee: Omit<Employee, "id"> & {
+    username: string;
+    password: string;
+    email: string;
+    fullName: string;
+  }
+) => {
   // Tạo id mới
   const id = Date.now().toString();
 
@@ -25,6 +32,9 @@ export const registerEmployee = async (employee: Omit<Employee, "id"> & { userna
     fullName: employee.fullName,
     role: "user",
     email: employee.email,
-    status: "active"
+    position: "",
+    department: "",
+    accountStatus: "active",
+    workingStatus: "",
   });
 };

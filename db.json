@@ -23,6 +23,39 @@
       "status": "Đang thử việc",
       "startDate": "2025-07-29",
       "id": "1753753767697"
+    },
+    {
+      "id": "1753927294596",
+      "fullName": "Minh Nghia",
+      "username": "minhgnhia",
+      "password": "Minhgnhia123@",
+      "confirmPassword": "Minhgnhia123@",
+      "email": "duyletgo123@gmail.com",
+      "name": "Minh Nghia",
+      "status": "Đang thử việc",
+      "startDate": "2025-07-31"
+    },
+    {
+      "id": "1754013242198",
+      "fullName": "Nguyen Van A",
+      "username": "user1",
+      "password": "Abc@123",
+      "confirmPassword": "Abc@123",
+      "email": "user1@example.com",
+      "name": "Nguyen Van A",
+      "status": "Đang thử việc",
+      "startDate": "2025-08-01"
+    },
+    {
+      "id": "1754014197236",
+      "fullName": "Nguyen Van A",
+      "username": "user1",
+      "password": "Abc@123",
+      "confirmPassword": "Abc@123",
+      "email": "customer1@example.com",
+      "name": "Nguyen Van A",
+      "status": "Đang thử việc",
+      "startDate": "2025-08-01"
     }
   ],
   "departments": [
@@ -52,330 +85,60 @@
       "email": "admin@hrms.com",
       "position": "Director",
       "department": "Thiết kế đồ họa",
-      "status": "active",
-      "startDate": "2025-07-24"
+      "accountStatus": "active",
+      "startDate": "2025-07-24",
+      "workingStatus": "Đang làm việc",
+      "avatarUrl": "avatars/default-avatar.png"
     },
     {
       "id": "1753382498200",
-      "username": "User",
-      "password": "1",
+      "username": "user",
+      "password": "user123",
       "fullName": "Dương Kiến Nghiệp",
       "role": "user",
       "email": "kiennghiep2003@gmail.com",
       "position": "Intern",
       "department": "Thiết kế đồ họa",
-      "status": "active",
-      "startDate": "2025-07-24"
+      "accountStatus": "active",
+      "startDate": "2025-07-24",
+      "workingStatus": "Đang thử việc",
+      "avatarUrl": "avatars/default-avatar.png"
     },
     {
-      "fullName": "Khánh Duy",
-      "department": "Thiết kế đồ họa",
-      "position": "Developer",
-      "status": "active",
-      "startDate": "2025-07-24",
-      "id": "1753718339571"
+      "id": "1754014197236",
+      "username": "user1",
+      "password": "Abc@123",
+      "fullName": "Nguyen Van A",
+      "role": "user",
+      "email": "customer1@example.com",
+      "position": "",
+      "department": "",
+      "accountStatus": "active",
+      "workingStatus": "",
+      "avatarUrl": "avatars/default-avatar.png"
     }
   ],
   "activityLogs": [
     {
-      "id": "1753383062317",
+      "id": "1753952759891",
+      "name": "Dương Kiến Nghiệp",
+      "activityType": "Thêm check-in",
+      "details": "Check-in lúc 16:05:59 ngày 31/07/2025",
+      "time": "2025-07-31 16:05:59"
+    },
+    {
+      "id": "1753952794659",
       "name": "Dương Kiến Nghiệp",
       "activityType": "Add",
-      "details": "Check-in vào lúc 01:51:02 ngày 25/07/2025",
-      "time": "2025-07-24T18:51:02.317Z"
+      "details": "Tạo đơn Công tác mới",
+      "time": "2025-07-31 16:06:34"
     },
     {
-      "id": "1753383062710",
+      "id": "1753953346771",
       "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Check-out vào lúc 01:51:02 ngày 25/07/2025",
-      "time": "2025-07-24T18:51:02.710Z"
-    },
-    {
-      "id": "1753383240385",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
-      "time": "2025-07-24T18:54:00.385Z"
-    },
-    {
-      "id": "1753383274169",
-      "name": "Thiết kế đồ họa",
-      "activityType": "Add",
-      "details": "Thêm phòng ban mới Thiết kế đồ họa",
-      "time": "2025-07-24T18:54:34.169Z"
-    },
-    {
-      "id": "1753383331093",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Check-out vào lúc 01:55:31 ngày 25/07/2025",
-      "time": "2025-07-24T18:55:31.093Z"
-    },
-    {
-      "id": "1753407221181",
-      "name": "Administrator",
-      "activityType": "Add",
-      "details": "Tạo đơn Nghỉ phép mới",
-      "time": "2025-07-25T01:33:41.181Z"
-    },
-    {
-      "id": "1753407229869",
-      "name": "Administrator",
-      "activityType": "Approve",
-      "details": "Phê duyệt đơn Nghỉ phép của Administrator",
-      "time": "2025-07-25T01:33:49.870Z"
-    },
-    {
-      "id": "1753407256315",
-      "name": "Lập trình C++ cơ bản, nâng cao000",
-      "activityType": "Add",
-      "details": "Thêm phòng ban mới Lập trình C++ cơ bản, nâng cao000",
-      "time": "2025-07-25T01:34:16.315Z"
-    },
-    {
-      "id": "1753412838782",
-      "name": "quach khanh duy",
-      "activityType": "Add",
-      "details": "Thêm chức vụ mới quach khanh duy",
-      "time": "2025-07-25T03:07:18.782Z"
-    },
-    {
-      "id": "1753412847710",
-      "name": "Intern",
-      "activityType": "Add",
-      "details": "Thêm chức vụ mới Intern",
-      "time": "2025-07-25T03:07:27.710Z"
-    },
-    {
-      "id": "1753412850765",
-      "name": "Intern",
-      "activityType": "Delete",
-      "details": "Xóa chức vụ Intern",
-      "time": "2025-07-25T03:07:30.765Z"
-    },
-    {
-      "id": "1753412862906",
-      "name": "Employee",
-      "activityType": "Add",
-      "details": "Thêm chức vụ mới Employee",
-      "time": "2025-07-25T03:07:42.906Z"
-    },
-    {
-      "id": "1753412868526",
-      "name": "Employee",
-      "activityType": "Delete",
-      "details": "Xóa chức vụ Employee",
-      "time": "2025-07-25T03:07:48.526Z"
-    },
-    {
-      "id": "1753412870607",
-      "name": "quach khanh duy",
-      "activityType": "Delete",
-      "details": "Xóa chức vụ quach khanh duy",
-      "time": "2025-07-25T03:07:50.607Z"
-    },
-    {
-      "id": "1753412873490",
-      "name": "Developers",
-      "activityType": "Update",
-      "details": "Cập nhật chức vụ Developers",
-      "time": "2025-07-25T03:07:53.490Z"
-    },
-    {
-      "id": "1753412877202",
-      "name": "Developer",
-      "activityType": "Update",
-      "details": "Cập nhật chức vụ Developer",
-      "time": "2025-07-25T03:07:57.202Z"
-    },
-    {
-      "id": "1753414385735",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
-      "time": "2025-07-25T03:33:05.735Z"
-    },
-    {
-      "id": "1753414394701",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
-      "time": "2025-07-25T03:33:14.701Z"
-    },
-    {
-      "id": "1753414398376",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Dương Kiến Nghiệp",
-      "time": "2025-07-25T03:33:18.376Z"
-    },
-    {
-      "id": "1753718364244",
-      "name": "A",
-      "activityType": "Add",
-      "details": "Check-in vào lúc 22:59:24 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:24.244Z"
-    },
-    {
-      "id": "1753718364570",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Check-out vào lúc 22:59:24 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:24.570Z"
-    },
-    {
-      "id": "1753718365131",
-      "name": "A",
-      "activityType": "Add",
-      "details": "Check-in vào lúc 22:59:25 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:25.131Z"
-    },
-    {
-      "id": "1753718365407",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Check-out vào lúc 22:59:25 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:25.407Z"
-    },
-    {
-      "id": "1753718366428",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Check-out vào lúc 22:59:26 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:26.428Z"
-    },
-    {
-      "id": "1753718367780",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Check-out vào lúc 22:59:27 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:27.780Z"
-    },
-    {
-      "id": "1753718368040",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Check-out vào lúc 22:59:28 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:28.040Z"
-    },
-    {
-      "id": "1753718368302",
-      "name": "A",
-      "activityType": "Add",
-      "details": "Check-in vào lúc 22:59:28 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:28.302Z"
-    },
-    {
-      "id": "1753718369264",
-      "name": "A",
-      "activityType": "Add",
-      "details": "Check-in vào lúc 22:59:29 ngày 28/07/2025",
-      "time": "2025-07-28T15:59:29.264Z"
-    },
-    {
-      "id": "1753718394628",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên A",
-      "time": "2025-07-28T15:59:54.628Z"
-    },
-    {
-      "id": "1753718603843",
-      "name": "A",
-      "activityType": "Add",
-      "details": "Check-in lúc 23:03:23 ngày 22/07/2025",
-      "time": "2025-07-28T16:03:23.843Z"
-    },
-    {
-      "id": "1753718605261",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Check-out lúc 23:03:25 ngày 22/07/2025",
-      "time": "2025-07-28T16:03:25.261Z"
-    },
-    {
-      "id": "1753718610290",
-      "name": "A",
-      "activityType": "Add",
-      "details": "Check-in lúc 23:03:30 ngày 31/07/2025",
-      "time": "2025-07-28T16:03:30.290Z"
-    },
-    {
-      "id": "1753718610716",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Check-out lúc 23:03:30 ngày 31/07/2025",
-      "time": "2025-07-28T16:03:30.716Z"
-    },
-    {
-      "id": "1753753612503",
-      "name": "A",
-      "activityType": "Add",
-      "details": "Check-in lúc 08:46:52 ngày 29/07/2025",
-      "time": "2025-07-29T01:46:52.503Z"
-    },
-    {
-      "id": "1753753614108",
-      "name": "A",
-      "activityType": "Update",
-      "details": "Check-out lúc 08:46:54 ngày 29/07/2025",
-      "time": "2025-07-29T01:46:54.108Z"
-    },
-    {
-      "id": "1753753715497",
-      "name": "Nghia Tran Minh",
-      "activityType": "Add",
-      "details": "Thêm phòng ban mới Nghia Tran Minh",
-      "time": "2025-07-29T01:48:35.497Z"
-    },
-    {
-      "id": "1753780522246",
-      "name": "b",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên b",
-      "time": "2025-07-29T09:15:22.246Z"
-    },
-    {
-      "id": "1753782272704",
-      "name": "Khánh Duy",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Khánh Duy",
-      "time": "2025-07-29T09:44:32.704Z"
-    },
-    {
-      "id": "1753782690670",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên undefined",
-      "time": "2025-07-29T09:51:30.670Z"
-    },
-    {
-      "id": "1753782901194",
-      "name": "Khánh Duy",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Khánh Duy",
-      "time": "2025-07-29T09:55:01.194Z"
-    },
-    {
-      "id": "1753783043899",
-      "name": "Khánh Duy",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Khánh Duy",
-      "time": "2025-07-29T09:57:23.899Z"
-    },
-    {
-      "id": "1753846050779",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Add",
-      "details": "Check-in lúc 10:27:30 ngày 30/07/2025",
-      "time": "2025-07-30T03:27:30.779Z"
-    },
-    {
-      "id": "1753846065730",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Check-out lúc 10:27:45 ngày 30/07/2025",
-      "time": "2025-07-30T03:27:45.730Z"
+      "activityType": "Thêm check-out",
+      "details": "Check-out lúc 16:15:46 ngày 31/07/2025",
+      "time": "2025-07-31 16:15:46"
     }
   ],
   "requestForms": [
@@ -385,11 +148,84 @@
       "employeeName": "Administrator",
       "type": "Nghỉ phép",
       "content": "abcd từ 25/07/2025 đến 28/08/2025",
+      "time": "Từ 25/07/2025 đến 28/08/2025",
       "submissionDate": "2025-07-25T01:33:41.167Z",
       "status": "approved",
       "approvedBy": "Administrator",
       "approvalDate": "2025-07-25T01:33:49.860Z",
       "approvalNote": ""
+    },
+    {
+      "id": "1753930790350",
+      "employeeId": "admin-001",
+      "employeeName": "Administrator",
+      "type": "Nghỉ phép",
+      "content": "qwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Á từ 03/07/2025 đến 01/08/2025",
+      "time": "Từ 03/07/2025 đến 01/08/2025",
+      "submissionDate": "2025-07-31T02:59:50.350Z",
+      "status": "rejected",
+      "approvedBy": "Administrator",
+      "approvalDate": "2025-07-31T03:02:33.995Z",
+      "approvalNote": ""
+    },
+    {
+      "id": "1753931759312",
+      "employeeId": "admin-001",
+      "employeeName": "Administrator",
+      "type": "Nghỉ phép",
+      "content": "123",
+      "submissionDate": "2025-07-31T03:15:59.312Z",
+      "status": "pending"
+    },
+    {
+      "id": "1753931954304",
+      "employeeId": "admin-001",
+      "employeeName": "Administrator",
+      "type": "123123",
+      "content": "123",
+      "time": "123 từ 01/07/2025 đến 06/08/2025",
+      "submissionDate": "2025-07-31T03:19:14.304Z",
+      "status": "pending"
+    },
+    {
+      "id": "1753932000539",
+      "employeeId": "admin-001",
+      "employeeName": "Administrator",
+      "type": "Nghỉ phép",
+      "content": "123",
+      "time": " từ 01/07/2025 đến 05/08/2025",
+      "submissionDate": "2025-07-31T03:20:00.539Z",
+      "status": "pending"
+    },
+    {
+      "id": "1753932025721",
+      "employeeId": "admin-001",
+      "employeeName": "Administrator",
+      "type": "asdasd",
+      "content": "123123123123",
+      "time": "Từ 02/07/2025 đến 07/08/2025",
+      "submissionDate": "2025-07-31T03:20:25.721Z",
+      "status": "pending"
+    },
+    {
+      "id": "1753932063779",
+      "employeeId": "admin-001",
+      "employeeName": "Administrator",
+      "type": "Tăng ca",
+      "content": "asdSGas sdgadsg ",
+      "time": "Từ 31/07/2025 đến 01/08/2025",
+      "submissionDate": "2025-07-31T03:21:03.779Z",
+      "status": "pending"
+    },
+    {
+      "id": "1753952794652",
+      "employeeId": "1753382498200",
+      "employeeName": "Dương Kiến Nghiệp",
+      "type": "Công tác",
+      "content": "áda",
+      "time": "Từ 02/07/2025 đến 04/08/2025",
+      "submissionDate": "2025-07-31T09:06:34.652Z",
+      "status": "pending"
     }
   ],
   "attendance": [
@@ -448,6 +284,14 @@
       "checkIn": "2025-07-30T03:27:30.758Z",
       "status": "present",
       "checkOut": "2025-07-30T03:27:45.717Z"
+    },
+    {
+      "id": "1753382498200-2025-07-31",
+      "userId": "1753382498200",
+      "date": "2025-07-31",
+      "checkIn": "2025-07-31T09:05:59.881Z",
+      "status": "present",
+      "checkOut": "2025-07-31T09:15:46.755Z"
     }
   ],
   "position": [
@@ -465,6 +309,11 @@
       "name": "Developer",
       "description": "Lập trình viên",
       "id": "3"
+    },
+    {
+      "id": "3ca5d72f-0f3d-4bb2-915b-ec8cc6ca2da4",
+      "name": "qưewe",
+      "description": "123"
     }
   ]
 }

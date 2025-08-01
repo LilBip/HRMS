@@ -21,7 +21,7 @@ const Login: React.FC = () => {
       const account = await login(values);
       if (account) {
         setUser({
-          token: account.token || account.id,
+          token: account.id,
           id: account.id,
           username: account.username,
           fullName: account.fullName,
@@ -31,7 +31,7 @@ const Login: React.FC = () => {
         navigate("/");
       }
     } catch (err) {
-      setError("Invalid username or password");
+      setError("Tên đăng nhập sai hoặc mật khẩu không đúng");
     } finally {
       setLoading(false);
     }
@@ -50,7 +50,7 @@ const Login: React.FC = () => {
     >
       <Card style={{ width: "100%", maxWidth: 400, borderRadius: 12 }} bordered>
         <Title level={3} style={{ textAlign: "center", marginBottom: 24 }}>
-          Sign in
+          Đăng nhập
         </Title>
 
         {error && (
@@ -68,20 +68,27 @@ const Login: React.FC = () => {
           initialValues={{ username: "", password: "" }}
         >
           <Form.Item
-            label="Username"
+            label="Tên đăng nhập:"
             name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập tên đăng nhập" },
+              {
+                pattern: /^[a-zA-Z0-9_]{4,20}$/,
+                message:
+                  "Tên đăng nhập chỉ chứa chữ, số, gạch dưới (4–20 ký tự)",
+              },
+            ]}
           >
-            <Input placeholder="Enter your username" />
+            <Input placeholder="Nhập tên đăng nhập..." />
           </Form.Item>
 
           <Form.Item
-            label="Password"
+            label="Mật khẩu:"
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
           >
             <Input.Password
-              placeholder="Enter your password"
+              placeholder="Nhập mật khẩu..."
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
@@ -98,7 +105,7 @@ const Login: React.FC = () => {
                 fontWeight: "bold",
               }}
             >
-              Sign In
+              Đăng nhập
             </Button>
           </Form.Item>
 

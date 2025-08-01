@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Button,
@@ -8,30 +8,30 @@ import {
   DatePicker,
   Select,
   Typography,
-} from 'antd';
-import dayjs, { Dayjs } from 'dayjs';
-import { getAllEmployees } from '../api/employeeApi';
+} from "antd";
+import dayjs, { Dayjs } from "dayjs";
+import { getAllEmployees } from "../api/employeeApi";
 import {
   getAttendanceHistory,
   addAttendanceRecord,
-} from '../api/attendanceApi';
-import { AttendanceRecord } from '../types/attendance';
-import { useAuth } from '../contexts/AuthContexts';
-import { Employee } from '../types/employee';
-import { createActivityLog } from '../api/activityLogApi';
+} from "../api/attendanceApi";
+import { AttendanceRecord } from "../types/attendance";
+import { useAuth } from "../contexts/AuthContexts";
+import { Account } from "../types/account";
+import { createActivityLog } from "../api/activityLogApi";
 
 const Attendance: React.FC = () => {
   const { user } = useAuth();
   const [attendanceData, setAttendanceData] = useState<AttendanceRecord[]>([]);
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [employees, setEmployees] = useState<Account[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
-  const [selectedUserId, setSelectedUserId] = useState<string>(user?.id || '');
+  const [selectedUserId, setSelectedUserId] = useState<string>(user?.id || "");
 
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = user?.role === "admin";
 
   // ✅ Chỉ cho phép chấm công ngày hôm nay
-  const isToday = (date: Dayjs) => date.isSame(dayjs(), 'day');
+  const isToday = (date: Dayjs) => date.isSame(dayjs(), "day");
 
   useEffect(() => {
     if (isAdmin) {
@@ -42,7 +42,7 @@ const Attendance: React.FC = () => {
             setSelectedUserId(data[0].id);
           }
         })
-        .catch(() => message.error('Không thể tải danh sách nhân viên'));
+        .catch(() => message.error("Không thể tải danh sách nhân viên"));
     }
     // eslint-disable-next-line
   }, []);
@@ -58,12 +58,14 @@ const Attendance: React.FC = () => {
       const all = await getAttendanceHistory();
       const filtered = all.filter(
         (record) =>
-          record.date === selectedDate.format('YYYY-MM-DD') &&
-          (isAdmin ? record.userId === selectedUserId : record.userId === user?.id)
+          record.date === selectedDate.format("YYYY-MM-DD") &&
+          (isAdmin
+            ? record.userId === selectedUserId
+            : record.userId === user?.id)
       );
       setAttendanceData(filtered);
     } catch {
-      message.error('Không thể tải dữ liệu chấm công');
+      message.error("Không thể tải dữ liệu chấm công");
     } finally {
       setLoading(false);
     }
@@ -71,53 +73,56 @@ const Attendance: React.FC = () => {
 
   const handleCheckIn = async () => {
     if (!isToday(selectedDate)) {
-      return message.warning('Chỉ có thể check-in trong ngày hôm nay');
+      return message.warning("Chỉ có thể check-in trong ngày hôm nay");
     }
 
     try {
-      const recordId = `${user?.id}-${selectedDate.format('YYYY-MM-DD')}`;
+      const recordId = `${user?.id}-${selectedDate.format("YYYY-MM-DD")}`;
       const alreadyCheckedIn = attendanceData.some((r) => r.checkIn);
       if (alreadyCheckedIn) {
-        return message.warning('Bạn đã check-in rồi');
+        return message.warning("Bạn đã check-in rồi");
       }
 
       await addAttendanceRecord({
         id: recordId,
-        userId: user?.id || '',
-        date: selectedDate.format('YYYY-MM-DD'),
+        userId: user?.id || "",
+        date: selectedDate.format("YYYY-MM-DD"),
         checkIn: dayjs().toISOString(),
-        status: 'present',
+        status: "present",
       });
 
       await createActivityLog({
-        name: user?.fullName || user?.username || 'Unknown',
-        activityType: 'Add',
-        details: `Check-in lúc ${dayjs().format('HH:mm:ss')} ngày ${selectedDate.format('DD/MM/YYYY')}`,
+        name: user?.fullName || user?.username || "Unknown",
+        activityType: "Thêm check-in",
+        details: `Check-in lúc ${dayjs().format(
+          "HH:mm:ss"
+        )} ngày ${selectedDate.format("DD/MM/YYYY")}`,
       });
 
-      message.success('Check-in thành công');
+      message.success("Check-in thành công");
       fetchAttendance();
     } catch {
-      message.error('Check-in thất bại');
+      message.error("Check-in thất bại");
     }
   };
 
   const handleCheckOut = async () => {
     if (!isToday(selectedDate)) {
-      return message.warning('Chỉ có thể check-out trong ngày hôm nay');
+      return message.warning("Chỉ có thể check-out trong ngày hôm nay");
     }
 
     try {
       const todayRecord = attendanceData.find(
-        (r) => r.userId === user?.id && r.date === selectedDate.format('YYYY-MM-DD')
+        (r) =>
+          r.userId === user?.id && r.date === selectedDate.format("YYYY-MM-DD")
       );
 
       if (!todayRecord || !todayRecord.checkIn) {
-        return message.error('Bạn cần check-in trước!');
+        return message.error("Bạn cần check-in trước!");
       }
 
       if (todayRecord.checkOut) {
-        return message.warning('Bạn đã check-out rồi');
+        return message.warning("Bạn đã check-out rồi");
       }
 
       await addAttendanceRecord({
@@ -126,61 +131,64 @@ const Attendance: React.FC = () => {
       });
 
       await createActivityLog({
-        name: user?.fullName || user?.username || 'Unknown',
-        activityType: 'Update',
-        details: `Check-out lúc ${dayjs().format('HH:mm:ss')} ngày ${selectedDate.format('DD/MM/YYYY')}`,
+        name: user?.fullName || user?.username || "Unknown",
+        activityType: "Thêm check-out",
+        details: `Check-out lúc ${dayjs().format(
+          "HH:mm:ss"
+        )} ngày ${selectedDate.format("DD/MM/YYYY")}`,
       });
 
-      message.success('Check-out thành công');
+      message.success("Check-out thành công");
       fetchAttendance();
     } catch {
-      message.error('Check-out thất bại');
+      message.error("Check-out thất bại");
     }
   };
 
   const columns = [
     {
-      title: 'Nhân viên',
-      dataIndex: 'userId',
-      key: 'userId',
+      title: "Nhân viên",
+      dataIndex: "userId",
+      key: "userId",
       render: (id: string) => {
+        if (!isAdmin) return user?.fullName || "-";
         const emp = employees.find((e) => e.id === id);
-        return emp ? emp.name : id;
+        return emp?.fullName || "-";
       },
     },
     {
-      title: 'Ngày',
-      dataIndex: 'date',
-      key: 'date',
-      render: (date: string) => dayjs(date).format('DD/MM/YYYY'),
+      title: "Ngày",
+      dataIndex: "date",
+      key: "date",
+      render: (date: string) => dayjs(date).format("DD/MM/YYYY"),
     },
     {
-      title: 'Check-in',
-      dataIndex: 'checkIn',
-      key: 'checkIn',
-      render: (t: string) => (t ? dayjs(t).format('HH:mm:ss') : '-'),
+      title: "Check-in",
+      dataIndex: "checkIn",
+      key: "checkIn",
+      render: (t: string) => (t ? dayjs(t).format("HH:mm:ss") : "-"),
     },
     {
-      title: 'Check-out',
-      dataIndex: 'checkOut',
-      key: 'checkOut',
-      render: (t: string) => (t ? dayjs(t).format('HH:mm:ss') : '-'),
+      title: "Check-out",
+      dataIndex: "checkOut",
+      key: "checkOut",
+      render: (t: string) => (t ? dayjs(t).format("HH:mm:ss") : "-"),
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
       render: (s: string) => {
         const color =
-          s === 'present' ? 'green' : s === 'leave' ? 'blue' : 'red';
+          s === "present" ? "green" : s === "leave" ? "blue" : "red";
         return <Tag color={color}>{s.toUpperCase()}</Tag>;
       },
     },
     {
-      title: 'Ghi chú',
-      dataIndex: 'note',
-      key: 'note',
-      render: (text: string) => text || '-',
+      title: "Ghi chú",
+      dataIndex: "note",
+      key: "note",
+      render: (text: string) => text || "-",
     },
   ];
 
@@ -205,7 +213,7 @@ const Attendance: React.FC = () => {
           >
             {employees.map((emp) => (
               <Select.Option key={emp.id} value={emp.id}>
-                {emp.name}
+                {emp.fullName}
               </Select.Option>
             ))}
           </Select>

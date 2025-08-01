@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Typography, Card, Spin, message } from 'antd';
-import { getActivityLogs } from '../api/activityLogApi';
-import { ActivityLog } from '../types/activityLog';
+import React, { useEffect, useState } from "react";
+import { Table, Typography, Card, Spin, message } from "antd";
+import { getActivityLogs } from "../api/activityLogApi";
+import { ActivityLog } from "../types/activityLog";
 
 const { Title } = Typography;
 
@@ -15,7 +15,7 @@ const ActivityLogPage: React.FC = () => {
         const data = await getActivityLogs();
         setLogs(data);
       } catch (error) {
-        message.error('Lỗi khi tải lịch sử hoạt động');
+        message.error("Lỗi khi tải lịch sử hoạt động");
       } finally {
         setLoading(false);
       }
@@ -25,24 +25,24 @@ const ActivityLogPage: React.FC = () => {
 
   const columns = [
     {
-      title: 'Thời gian',
-      dataIndex: 'time',
-      key: 'time',
+      title: "Thời gian",
+      dataIndex: "time",
+      key: "time",
     },
     {
-      title: 'Tên',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Tên",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Hoạt động',
-      dataIndex: 'activityType',
-      key: 'activityType',
+      title: "Hoạt động",
+      dataIndex: "activityType",
+      key: "activityType",
     },
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
   ];
 
@@ -53,7 +53,7 @@ const ActivityLogPage: React.FC = () => {
         <Spin tip="Đang tải dữ liệu..." />
       ) : (
         <Table
-          dataSource={logs}
+          dataSource={[...logs].reverse()}
           columns={columns}
           rowKey="id"
           pagination={{ pageSize: 10 }}

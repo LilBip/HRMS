@@ -176,7 +176,7 @@ const Employees: React.FC = () => {
     { title: "Họ tên", dataIndex: "fullName" },
     { title: "Phòng ban", dataIndex: "department" },
     { title: "Vị trí", dataIndex: "position" },
-    { title: "Trạng thái", dataIndex: "status" },
+    { title: "Trạng thái", dataIndex: "workingStatus" },
     { title: "Ngày bắt đầu", dataIndex: "startDate" },
     {
       title: "Hành động",

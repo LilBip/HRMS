@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 
 interface User {
   id: string;
@@ -25,12 +31,14 @@ export const AuthContext = createContext<AuthContextType>({
   loading: true, // mặc định là đang loading
 });
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [user, setUserState] = useState<User | null>(null);
   const [loading, setLoading] = useState(true); // thêm loading
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('authUser');
+    const storedUser = localStorage.getItem("authUser");
     if (storedUser) {
       setUserState(JSON.parse(storedUser));
     }
@@ -39,9 +47,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const setUser = (user: User | null) => {
     if (user) {
-      localStorage.setItem('authUser', JSON.stringify(user));
+      localStorage.setItem("authUser", JSON.stringify(user));
     } else {
-      localStorage.removeItem('authUser');
+      localStorage.removeItem("authUser");
     }
     setUserState(user);
   };
@@ -64,7 +72,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

@@ -1,9 +1,13 @@
-export interface Employee {
+export interface Account {
   id: string;
-  name: string;
-  department: string;
-  position: string;
-  status: string;
-  startDate: string;
+  username: string;
+  password: string;
+  fullName: string;
+  role: string;
   email: string;
+  position: string;
+  department: string;
+  accountStatus: string;
+  startDate: string;
+  workingStatus: string;
 }
