@@ -25,6 +25,11 @@ const ActivityLogPage: React.FC = () => {
 
   const columns = [
     {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
       title: "Thời gian",
       dataIndex: "time",
       key: "time",
@@ -36,13 +41,8 @@ const ActivityLogPage: React.FC = () => {
     },
     {
       title: "Hoạt động",
-      dataIndex: "activityType",
-      key: "activityType",
-    },
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "details",
+      key: "details",
     },
   ];
 

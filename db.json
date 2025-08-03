@@ -1,74 +1,4 @@
 {
-  "employees": [
-    {
-      "name": "Dương Kiến Nghiệp",
-      "department": "Thiết kế đồ họa",
-      "position": "Director",
-      "status": "Đang làm việc",
-      "startDate": "2025-07-24",
-      "id": "1753382498200"
-    },
-    {
-      "name": "A",
-      "department": "Thiết kế đồ họa",
-      "position": "Intern",
-      "status": "Đang thử việc",
-      "startDate": "2025-07-28",
-      "id": "1753718339571"
-    },
-    {
-      "name": "b",
-      "department": "Thiết kế đồ họa",
-      "position": "Intern",
-      "status": "Đang thử việc",
-      "startDate": "2025-07-29",
-      "id": "1753753767697"
-    },
-    {
-      "id": "1753927294596",
-      "fullName": "Minh Nghia",
-      "username": "minhgnhia",
-      "password": "Minhgnhia123@",
-      "confirmPassword": "Minhgnhia123@",
-      "email": "duyletgo123@gmail.com",
-      "name": "Minh Nghia",
-      "status": "Đang thử việc",
-      "startDate": "2025-07-31"
-    },
-    {
-      "id": "1754013242198",
-      "fullName": "Nguyen Van A",
-      "username": "user1",
-      "password": "Abc@123",
-      "confirmPassword": "Abc@123",
-      "email": "user1@example.com",
-      "name": "Nguyen Van A",
-      "status": "Đang thử việc",
-      "startDate": "2025-08-01"
-    },
-    {
-      "id": "1754014197236",
-      "fullName": "Nguyen Van A",
-      "username": "user1",
-      "password": "Abc@123",
-      "confirmPassword": "Abc@123",
-      "email": "customer1@example.com",
-      "name": "Nguyen Van A",
-      "status": "Đang thử việc",
-      "startDate": "2025-08-01"
-    },
-    {
-      "id": "1754200303170",
-      "fullName": "Nguyen Van A",
-      "username": "khanhduy",
-      "password": "Abc@123",
-      "confirmPassword": "Abc@123",
-      "email": "khanhduy123@gmail.com",
-      "name": "Nguyen Van A",
-      "status": "Đang thử việc",
-      "startDate": "2025-08-03"
-    }
-  ],
   "departments": [
     {
       "id": "dd75effb-eeea-43af-a786-70a221a84a36",
@@ -281,6 +211,34 @@
       "activityType": "Update",
       "details": "Sửa đơn Công tác",
       "time": "2025-08-03 13:15:55"
+    },
+    {
+      "id": "1754203721385",
+      "name": "Nguyen Van A",
+      "activityType": "Delete",
+      "details": "Xóa đơn",
+      "time": "2025-08-03 13:48:41"
+    },
+    {
+      "id": "1754204489342",
+      "name": "Nguyen Van A",
+      "activityType": "Tạo đơn từ",
+      "details": "Tạo đơn Công tác mới",
+      "time": "2025-08-03 14:01:29"
+    },
+    {
+      "id": "1754204511120",
+      "name": "Nguyen Van A",
+      "activityType": "Sửa đơn từ",
+      "details": "Sửa đơn Công tác",
+      "time": "2025-08-03 14:01:51"
+    },
+    {
+      "id": "1754204514737",
+      "name": "Nguyen Van A",
+      "activityType": "Xóa đơn",
+      "details": "Xóa đơn",
+      "time": "2025-08-03 14:01:54"
     }
   ],
   "requestForms": [
@@ -392,18 +350,6 @@
       "endDate": "2025-08-31T17:00:00.000Z",
       "status": "pending",
       "submissionDate": "2025-08-01T06:39:16.908Z"
-    },
-    {
-      "employeeId": "1754200303170",
-      "employeeName": "Nguyen Van A",
-      "type": "Công tác",
-      "content": "abv",
-      "time": "Từ 07/08/2025 đến 17/09/2025",
-      "startDate": "2025-08-06T17:00:00.000Z",
-      "endDate": "2025-09-16T17:00:00.000Z",
-      "status": "pending",
-      "submissionDate": "2025-08-03T05:57:27.596Z",
-      "id": "648b"
     }
   ],
   "attendance": [

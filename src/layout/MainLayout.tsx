@@ -37,23 +37,23 @@ const MainLayout: React.FC = () => {
     navigate("/login");
   };
   const getMenuItems = () => {
-    const baseMenuItems = [
-      {
+    const baseMenuItems = [];
+
+    // Chỉ admin mới thấy mục Dashboard
+    if (user?.role === "admin") {
+      baseMenuItems.push({
         key: "/",
         icon: <DashboardOutlined />,
         label: <Link to="/">Dashboard</Link>,
-      },
-      {
-        key: "/requests",
-        icon: <FileTextOutlined />,
-        label: <Link to="/requests">Đơn từ</Link>,
-      },
-      {
-        key: "/activity-log",
-        icon: <ClockCircleOutlined />,
-        label: <Link to="/activity-log">Nhật ký hoạt động</Link>,
-      },
-    ];
+      });
+    }
+
+    // Tất cả roles đều thấy mục "Đơn từ"
+    baseMenuItems.push({
+      key: "/requests",
+      icon: <FileTextOutlined />,
+      label: <Link to="/requests">Đơn từ</Link>,
+    });
 
     if (user?.role === "user") {
       return [
@@ -95,6 +95,11 @@ const MainLayout: React.FC = () => {
           key: "/position",
           icon: <IdcardOutlined />,
           label: <Link to="/position">Chức vụ</Link>,
+        },
+        {
+          key: "/activity-log",
+          icon: <ClockCircleOutlined />,
+          label: <Link to="/activity-log">Nhật ký hoạt động</Link>,
         },
       ];
     }

@@ -21,6 +21,7 @@ import {
   Form,
   Select,
   DatePicker,
+  Popconfirm,
 } from "antd";
 import dayjs from "dayjs";
 const { TextArea } = Input;
@@ -96,7 +97,7 @@ const RequestForms: React.FC = () => {
 
         await createActivityLog({
           name: user?.fullName || "",
-          activityType: "Update",
+          activityType: "Sửa đơn từ",
           details: `Sửa đơn ${requestData.type}`,
         });
 
@@ -107,7 +108,7 @@ const RequestForms: React.FC = () => {
 
         await createActivityLog({
           name: user?.fullName || "",
-          activityType: "Add",
+          activityType: "Tạo đơn từ",
           details: `Tạo đơn ${requestData.type} mới`,
         });
 
@@ -146,7 +147,7 @@ const RequestForms: React.FC = () => {
         // Tạo activity log
         await createActivityLog({
           name: user.fullName,
-          activityType: approved ? "Approve" : "Reject",
+          activityType: approved ? "Phê duyệt đơn" : "Từ chối đơn",
           details: `${approved ? "Phê duyệt" : "Từ chối"} đơn ${
             selectedRequest.type
           } của ${selectedRequest.employeeName}${
@@ -215,7 +216,7 @@ const RequestForms: React.FC = () => {
 
       await createActivityLog({
         name: user?.fullName || "",
-        activityType: "Delete",
+        activityType: "Xóa đơn",
         details: `Xóa đơn`,
       });
       message.success("Xóa đơn thành công");
@@ -307,13 +308,17 @@ const RequestForms: React.FC = () => {
                   <Button size="small" onClick={() => onEditRequest(record)}>
                     Sửa
                   </Button>
-                  <Button
-                    size="small"
-                    danger
-                    onClick={() => onDeleteRequest(record.id)}
+                  <Popconfirm
+                    title="Xác nhận xóa?"
+                    description="Bạn có chắc chắn muốn xóa đơn này không?"
+                    onConfirm={() => onDeleteRequest(record.id)}
+                    okText="Xóa"
+                    cancelText="Hủy"
                   >
-                    Xóa
-                  </Button>
+                    <Button size="small" danger>
+                      Xóa
+                    </Button>
+                  </Popconfirm>
                 </Space>
               ),
           },
