@@ -246,6 +246,41 @@
       "activityType": "Add",
       "details": "Tạo đơn Công tác mới",
       "time": "2025-08-01 13:39:16"
+    },
+    {
+      "id": "1754200478634",
+      "name": "Nguyen Van A",
+      "activityType": "Add",
+      "details": "Tạo đơn Công tác mới",
+      "time": "2025-08-03 12:54:38"
+    },
+    {
+      "id": "1754200638020",
+      "name": "Nguyen Van A",
+      "activityType": "Delete",
+      "details": "Xóa đơn",
+      "time": "2025-08-03 12:57:18"
+    },
+    {
+      "id": "1754200647606",
+      "name": "Nguyen Van A",
+      "activityType": "Add",
+      "details": "Tạo đơn Công tác mới",
+      "time": "2025-08-03 12:57:27"
+    },
+    {
+      "id": "1754201748173",
+      "name": "Nguyen Van A",
+      "activityType": "Update",
+      "details": "Sửa đơn Công tác",
+      "time": "2025-08-03 13:15:48"
+    },
+    {
+      "id": "1754201755672",
+      "name": "Nguyen Van A",
+      "activityType": "Update",
+      "details": "Sửa đơn Công tác",
+      "time": "2025-08-03 13:15:55"
     }
   ],
   "requestForms": [
@@ -357,6 +392,18 @@
       "endDate": "2025-08-31T17:00:00.000Z",
       "status": "pending",
       "submissionDate": "2025-08-01T06:39:16.908Z"
+    },
+    {
+      "employeeId": "1754200303170",
+      "employeeName": "Nguyen Van A",
+      "type": "Công tác",
+      "content": "abv",
+      "time": "Từ 07/08/2025 đến 17/09/2025",
+      "startDate": "2025-08-06T17:00:00.000Z",
+      "endDate": "2025-09-16T17:00:00.000Z",
+      "status": "pending",
+      "submissionDate": "2025-08-03T05:57:27.596Z",
+      "id": "648b"
     }
   ],
   "attendance": [

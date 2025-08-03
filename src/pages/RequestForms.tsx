@@ -22,8 +22,7 @@ import {
   Select,
   DatePicker,
 } from "antd";
-import moment from "moment";
-
+import dayjs from "dayjs";
 const { TextArea } = Input;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -183,20 +182,29 @@ const RequestForms: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (selectedRequest) {
+      const start = dayjs(selectedRequest.startDate);
+      const end = dayjs(selectedRequest.endDate);
+
+      form.setFieldsValue({
+        type: ["Nghỉ phép", "Công tác", "Tăng ca"].includes(
+          selectedRequest.type
+        )
+          ? selectedRequest.type
+          : "Khác",
+        customType: !["Nghỉ phép", "Công tác", "Tăng ca"].includes(
+          selectedRequest.type
+        )
+          ? selectedRequest.type
+          : undefined,
+        content: selectedRequest.content,
+        dateRange: start.isValid() && end.isValid() ? [start, end] : undefined,
+      });
+    }
+  }, [selectedRequest, form]);
+
   const onEditRequest = (record: RequestForm) => {
-    form.setFieldsValue({
-      type: ["Nghỉ phép", "Công tác", "Tăng ca"].includes(record.type)
-        ? record.type
-        : "Khác",
-      customType: !["Nghỉ phép", "Công tác", "Tăng ca"].includes(record.type)
-        ? record.type
-        : undefined,
-      content: record.content,
-      dateRange:
-        record.startDate && record.endDate
-          ? [record.startDate, record.endDate]
-          : [null, null],
-    });
     setSelectedRequest(record);
     setCreateModalVisible(true);
   };
