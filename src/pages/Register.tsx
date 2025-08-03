@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, message, Card, Typography } from "antd";
-import { registerEmployee } from "../api/registerApi";
+import { registerEmployee, checkEmailExists } from "../api/registerApi";
 import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
@@ -14,6 +14,11 @@ const Register: React.FC = () => {
     try {
       if (values.password !== values.confirmPassword) {
         message.error("Mật khẩu xác nhận không khớp!");
+        return;
+      }
+
+      if (await checkEmailExists(values.email)) {
+        message.error("Email đã tồn tại!");
         return;
       }
       await registerEmployee(values);

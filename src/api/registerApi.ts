@@ -38,3 +38,19 @@ export const registerEmployee = async (
     workingStatus: "",
   });
 };
+
+export const checkEmailExists = async (email: string): Promise<boolean> => {
+  try {
+    const response = await axios.get("http://localhost:3001/accounts");
+    const accounts = response.data;
+
+    const existingAccount = accounts.find(
+      (acc: { email: string }) => acc.email === email
+    );
+
+    return !!existingAccount; // true nếu tìm thấy
+  } catch (error) {
+    console.error("Check email error:", error);
+    throw error;
+  }
+};

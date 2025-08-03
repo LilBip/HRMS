@@ -56,6 +56,17 @@
       "name": "Nguyen Van A",
       "status": "Đang thử việc",
       "startDate": "2025-08-01"
+    },
+    {
+      "id": "1754200303170",
+      "fullName": "Nguyen Van A",
+      "username": "khanhduy",
+      "password": "Abc@123",
+      "confirmPassword": "Abc@123",
+      "email": "khanhduy123@gmail.com",
+      "name": "Nguyen Van A",
+      "status": "Đang thử việc",
+      "startDate": "2025-08-03"
     }
   ],
   "departments": [
@@ -116,6 +127,18 @@
       "accountStatus": "active",
       "workingStatus": "",
       "avatarUrl": "avatars/default-avatar.png"
+    },
+    {
+      "id": "1754200303170",
+      "username": "khanhduy",
+      "password": "Abc@123",
+      "fullName": "Nguyen Van A",
+      "role": "user",
+      "email": "khanhduy123@gmail.com",
+      "position": "",
+      "department": "",
+      "accountStatus": "active",
+      "workingStatus": ""
     }
   ],
   "activityLogs": [
