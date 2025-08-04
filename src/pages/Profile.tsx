@@ -1,4 +1,15 @@
-import { Card, Descriptions, Spin, Typography, message, Avatar } from "antd";
+import {
+  Card,
+  Descriptions,
+  Spin,
+  Typography,
+  message,
+  Avatar,
+  Modal,
+  Form,
+  Input,
+  Button,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContexts";
 import {
@@ -18,6 +29,8 @@ const Profile: React.FC = () => {
   const [departments, setDepartments] = useState<any[]>([]);
   const [roles, setRoles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     if (!user) {
@@ -52,6 +65,35 @@ const Profile: React.FC = () => {
     fetchData();
   }, [user]);
 
+  const handleUpdateProfile = async () => {
+    try {
+      const values = await form.validateFields();
+      const { email, password } = values;
+
+      const updatedProfile = {
+        ...profile,
+        email,
+        ...(password ? { password } : {}), // Chỉ cập nhật nếu nhập mật khẩu mới
+      };
+
+      const res = await fetch(`http://localhost:3001/accounts/${profile.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedProfile),
+      });
+
+      if (!res.ok) throw new Error("Cập nhật thất bại");
+
+      setProfile(updatedProfile);
+      message.success("Cập nhật thông tin thành công");
+      setIsModalOpen(false);
+    } catch (err) {
+      message.error("Cập nhật thất bại");
+    }
+  };
+
   if (!user || !profile || loading)
     return (
       <Spin style={{ display: "block", margin: "100px auto" }} size="large" />
@@ -65,81 +107,110 @@ const Profile: React.FC = () => {
     (profile.role === "admin" ? "Quản trị viên" : "Nhân viên");
 
   return (
-    <Card
-      style={{
-        maxWidth: 600,
-        margin: "40px auto",
-        borderRadius: 16,
-        boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-        background: "linear-gradient(to right, #ffffff, #f9f9f9)",
-      }}
-      bodyStyle={{ padding: "32px" }}
-    >
-      <div style={{ textAlign: "center", marginBottom: 24 }}>
-        <Avatar
-          size={96}
-          icon={<UserOutlined />}
-          style={{ backgroundColor: "#1890ff", marginBottom: 16 }}
-        />
-        <Title level={3} style={{ marginBottom: 0 }}>
-          {profile.fullName}
-        </Title>
-        <Text type="secondary">{roleName}</Text>
-      </div>
-
-      <Descriptions
-        bordered
-        column={1}
-        labelStyle={{ fontWeight: 600, backgroundColor: "#fafafa" }}
-        contentStyle={{ backgroundColor: "#ffffff" }}
+    <>
+      <Card
+        style={{
+          maxWidth: 600,
+          margin: "40px auto",
+          borderRadius: 16,
+          boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+          background: "linear-gradient(to right, #ffffff, #f9f9f9)",
+        }}
+        bodyStyle={{ padding: "32px" }}
       >
-        <Descriptions.Item
-          label={
-            <>
-              <IdcardOutlined /> ID
-            </>
-          }
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <Avatar
+            size={96}
+            icon={<UserOutlined />}
+            style={{ backgroundColor: "#1890ff", marginBottom: 16 }}
+          />
+          <Title level={3} style={{ marginBottom: 0 }}>
+            {profile.fullName}
+          </Title>
+          <Text type="secondary">{roleName}</Text>
+        </div>
+
+        <Button
+          type="primary"
+          style={{ float: "right", marginBottom: 16 }}
+          onClick={() => {
+            form.setFieldsValue({ email: profile.email }); // chỉ set email
+            setIsModalOpen(true);
+          }}
         >
-          {profile.id}
-        </Descriptions.Item>
-        <Descriptions.Item
-          label={
-            <>
-              <KeyOutlined /> Tên đăng nhập
-            </>
-          }
+          Chỉnh sửa thông tin
+        </Button>
+
+        <Descriptions
+          bordered
+          column={1}
+          labelStyle={{ fontWeight: 600, backgroundColor: "#fafafa" }}
+          contentStyle={{ backgroundColor: "#ffffff" }}
         >
-          {profile.username}
-        </Descriptions.Item>
-        <Descriptions.Item
-          label={
-            <>
-              <MailOutlined /> Email
-            </>
-          }
-        >
-          {profile.email}
-        </Descriptions.Item>
-        <Descriptions.Item
-          label={
-            <>
-              <AppstoreOutlined /> Phòng ban
-            </>
-          }
-        >
-          {departmentName}
-        </Descriptions.Item>
-        <Descriptions.Item
-          label={
-            <>
-              <TagOutlined /> Vai trò
-            </>
-          }
-        >
-          {roleName}
-        </Descriptions.Item>
-      </Descriptions>
-    </Card>
+          <Descriptions.Item label={<><IdcardOutlined /> ID</>}>
+            {profile.id}
+          </Descriptions.Item>
+          <Descriptions.Item label={<><KeyOutlined /> Tên đăng nhập</>}>
+            {profile.username}
+          </Descriptions.Item>
+          <Descriptions.Item label={<><MailOutlined /> Email</>}>
+            {profile.email}
+          </Descriptions.Item>
+          <Descriptions.Item label={<><AppstoreOutlined /> Phòng ban</>}>
+            {departmentName}
+          </Descriptions.Item>
+          <Descriptions.Item label={<><TagOutlined /> Vai trò</>}>
+            {roleName}
+          </Descriptions.Item>
+        </Descriptions>
+      </Card>
+
+      <Modal
+        title="Chỉnh sửa thông tin"
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        onOk={handleUpdateProfile}
+        okText="Lưu"
+        cancelText="Hủy"
+      >
+        <Form layout="vertical" form={form}>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, message: "Vui lòng nhập email" },
+              { type: "email", message: "Email không hợp lệ" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item name="password" label="Mật khẩu mới">
+            <Input.Password placeholder="Để trống nếu không đổi" />
+          </Form.Item>
+
+          <Form.Item
+            name="confirmPassword"
+            label="Xác nhận mật khẩu mới"
+            dependencies={["password"]}
+            rules={[
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!getFieldValue("password") || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Mật khẩu xác nhận không khớp")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password placeholder="Nhập lại mật khẩu mới" />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 };
 
