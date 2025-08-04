@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Table,
   Button,
@@ -21,11 +21,14 @@ import { Employee } from "../types/employee";
 import { Department } from "../types/department";
 import { getPositions } from "../api/positionApi";
 import { Position } from "../types/position";
+import { AuthContext } from "../contexts/AuthContexts";
 
 const { Option } = Select;
 const EMPLOYEE_API = "http://localhost:3001/accounts";
 
 const Employees: React.FC = () => {
+  const { user } = useContext(AuthContext);
+
   const [employees, setEmployees] = useState<any[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [positions, setPositions] = useState<Position[]>([]);
@@ -41,15 +44,35 @@ const Employees: React.FC = () => {
   const [departmentFilter, setDepartmentFilter] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchEmployees();
     fetchDepartments();
     fetchPositions();
   }, []);
 
+  useEffect(() => {
+    if (departments.length > 0 && positions.length > 0) {
+      fetchEmployees(); // Chỉ fetch khi đã có đầy đủ dữ liệu
+    }
+  }, [departments, positions]);
+
   const fetchEmployees = async () => {
     try {
       const data = await getAllEmployees();
-      setEmployees(data);
+
+      const enhancedData = data.map((emp: any) => {
+        const department = departments.find(
+          (dep) => dep.id === emp.departmentId
+        );
+        const position = positions.find((pos) => pos.id === emp.positionId);
+        console.log(department?.name);
+        console.log(position?.name || "Không rõ");
+        return {
+          ...emp,
+          departmentName: department?.name || "Không rõ",
+          positionName: position?.name || "Không rõ",
+        };
+      });
+
+      setEmployees(enhancedData);
     } catch {
       message.error("Không thể tải danh sách nhân viên");
     }
@@ -91,11 +114,19 @@ const Employees: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const employee = employees.find((emp) => emp.id === id);
+      if (
+        employee.workingStatus === "Đang làm việc" ||
+        employee.workingStatus === "Đang nghỉ phép" ||
+        employee.workingStatus === "Đang thử việc"
+      ) {
+        message.error("Chỉ có thể xóa nhân viên đang nghỉ việc");
+        return;
+      }
       await fetch(`${EMPLOYEE_API}/${id}`, { method: "DELETE" });
 
       if (employee) {
         await createActivityLog({
-          name: employee.fullName,
+          name: user?.fullName || "",
           activityType: "Delete",
           details: `Xóa nhân viên ${employee.fullName}`,
         });
@@ -128,7 +159,7 @@ const Employees: React.FC = () => {
         });
 
         await createActivityLog({
-          name: formatted.fullName,
+          name: user?.fullName || "",
           activityType: "Update",
           details: `Cập nhật thông tin nhân viên ${formatted.fullName}`,
         });
@@ -143,7 +174,7 @@ const Employees: React.FC = () => {
         });
 
         await createActivityLog({
-          name: formatted.fullName,
+          name: user?.fullName || "",
           activityType: "Add",
           details: `Thêm nhân viên mới ${formatted.fullName}`,
         });
@@ -162,9 +193,10 @@ const Employees: React.FC = () => {
     const matchText =
       (emp.fullName?.toLowerCase().includes(searchText.toLowerCase()) ??
         false) ||
-      (emp.department?.toLowerCase().includes(searchText.toLowerCase()) ??
+      (emp.departmentId?.toLowerCase().includes(searchText.toLowerCase()) ??
         false) ||
-      (emp.position?.toLowerCase().includes(searchText.toLowerCase()) ?? false);
+      (emp.positionId?.toLowerCase().includes(searchText.toLowerCase()) ??
+        false);
 
     const matchDepartment =
       !departmentFilter || emp.department === departmentFilter;
@@ -174,8 +206,8 @@ const Employees: React.FC = () => {
 
   const columns = [
     { title: "Họ tên", dataIndex: "fullName" },
-    { title: "Phòng ban", dataIndex: "department" },
-    { title: "Vị trí", dataIndex: "position" },
+    { title: "Phòng ban", dataIndex: "departmentName" },
+    { title: "Chức vụ", dataIndex: "positionName" },
     { title: "Trạng thái", dataIndex: "workingStatus" },
     { title: "Ngày bắt đầu", dataIndex: "startDate" },
     {
@@ -208,9 +240,9 @@ const Employees: React.FC = () => {
         Danh sách nhân viên
       </Typography.Title>
       <Space style={{ marginBottom: 16 }} wrap>
-        <Button type="primary" onClick={handleAdd}>
+        {/* <Button type="primary" onClick={handleAdd}>
           Thêm nhân viên
-        </Button>
+        </Button> */}
         <Input.Search
           placeholder="Tìm theo tên, phòng ban, vị trí..."
           allowClear
@@ -232,7 +264,12 @@ const Employees: React.FC = () => {
       </Space>
 
       {/* Danh sách nhân viên */}
-      <Table columns={columns} dataSource={filteredEmployees} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={filteredEmployees}
+        rowKey="id"
+        scroll={{ x: "max-content" }}
+      />
 
       {/* Modal Thêm/Sửa */}
       <Modal
@@ -247,38 +284,73 @@ const Employees: React.FC = () => {
           <Form.Item
             name="fullName"
             label="Họ tên"
-            rules={[{ required: true, message: "Vui lòng nhập họ tên" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập họ tên" },
+              {
+                max: 255,
+                message: "Tên phòng ban không được vượt quá 255 ký tự",
+              },
+            ]}
           >
-            <Input />
+            <Input maxLength={255} showCount />
           </Form.Item>
           <Form.Item
-            name="department"
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, message: "Vui lòng nhập email" },
+              { type: "email", message: "Email không hợp lệ" },
+              { max: 255, message: "Email không được vượt quá 255 ký tự" },
+              {
+                validator: async (_, value) => {
+                  if (!value) return Promise.resolve();
+
+                  const emailExists = employees.some(
+                    (emp) =>
+                      emp.email === value &&
+                      (!editingEmployee || emp.id !== editingEmployee.id)
+                  );
+
+                  if (emailExists) {
+                    return Promise.reject(new Error("Email đã tồn tại"));
+                  }
+
+                  return Promise.resolve();
+                },
+              },
+            ]}
+          >
+            <Input maxLength={255} showCount />
+          </Form.Item>
+
+          <Form.Item
+            name="departmentId"
             label="Phòng ban"
             rules={[{ required: true, message: "Vui lòng chọn phòng ban" }]}
           >
             <Select placeholder="Chọn phòng ban">
               {departments.map((dep) => (
-                <Option key={dep.name} value={dep.name}>
+                <Option key={dep.id} value={dep.id}>
                   {dep.name}
                 </Option>
               ))}
             </Select>
           </Form.Item>
           <Form.Item
-            name="position"
-            label="Vị trí"
+            name="positionId"
+            label="Chức vụ"
             rules={[{ required: true, message: "Vui lòng nhập vị trí" }]}
           >
             <Select placeholder="Chọn vị trí">
               {positions.map((pos) => (
-                <Option key={pos.name} value={pos.name}>
+                <Option key={pos.id} value={pos.id}>
                   {pos.name}
                 </Option>
               ))}
             </Select>
           </Form.Item>
           <Form.Item
-            name="status"
+            name="workingStatus"
             label="Trạng thái"
             rules={[{ required: true, message: "Vui lòng chọn trạng thái" }]}
           >
@@ -286,6 +358,7 @@ const Employees: React.FC = () => {
               <Option value="Đang thử việc">Đang thử việc</Option>
               <Option value="Đang làm việc">Đang làm việc</Option>
               <Option value="Đang nghỉ phép">Đang nghỉ phép</Option>
+              <Option value="Nghỉ việc">Nghỉ việc</Option>
             </Select>
           </Form.Item>
           <Form.Item
@@ -319,13 +392,13 @@ const Employees: React.FC = () => {
               {selectedEmployee.email}
             </Descriptions.Item>
             <Descriptions.Item label="Phòng ban">
-              {selectedEmployee.department}
+              {selectedEmployee.departmentName}
             </Descriptions.Item>
-            <Descriptions.Item label="Vị trí">
-              {selectedEmployee.position}
+            <Descriptions.Item label="Chức vụ">
+              {selectedEmployee.positionName}
             </Descriptions.Item>
             <Descriptions.Item label="Trạng thái">
-              {selectedEmployee.status}
+              {selectedEmployee.workingStatus}
             </Descriptions.Item>
             <Descriptions.Item label="Ngày bắt đầu">
               {selectedEmployee.startDate}

@@ -61,7 +61,7 @@ const Profile: React.FC = () => {
     departments.find((d) => d.id === profile.departmentId)?.name || "Không rõ";
 
   const roleName =
-    roles.find((r) => r.id === profile.roleId)?.name ||
+    roles.find((r) => r.id === profile.positionId)?.name ||
     (profile.role === "admin" ? "Quản trị viên" : "Nhân viên");
 
   return (
@@ -123,20 +123,11 @@ const Profile: React.FC = () => {
         <Descriptions.Item
           label={
             <>
-              <TagOutlined /> Chức vụ
-            </>
-          }
-        >
-          {profile.position}
-        </Descriptions.Item>
-        <Descriptions.Item
-          label={
-            <>
               <AppstoreOutlined /> Phòng ban
             </>
           }
         >
-          {profile.department}
+          {departmentName}
         </Descriptions.Item>
         <Descriptions.Item
           label={

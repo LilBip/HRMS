@@ -35,7 +35,7 @@ const ActivityLogPage: React.FC = () => {
       key: "time",
     },
     {
-      title: "Tên",
+      title: "Người thực hiện",
       dataIndex: "name",
       key: "name",
     },

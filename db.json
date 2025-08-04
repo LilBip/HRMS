@@ -24,12 +24,11 @@
       "fullName": "Administrator",
       "role": "admin",
       "email": "admin@hrms.com",
-      "position": "Director",
-      "department": "Thiết kế đồ họa",
+      "positionId": "1",
+      "departmentId": "dd75effb-eeea-43af-a786-70a221a84a36",
       "accountStatus": "active",
       "startDate": "2025-07-24",
-      "workingStatus": "Đang làm việc",
-      "avatarUrl": "avatars/default-avatar.png"
+      "workingStatus": "Đang làm việc"
     },
     {
       "id": "1753382498200",
@@ -38,37 +37,38 @@
       "fullName": "Dương Kiến Nghiệp",
       "role": "user",
       "email": "kiennghiep2003@gmail.com",
-      "position": "Intern",
-      "department": "Thiết kế đồ họa",
+      "positionId": "3",
+      "departmentId": "e6515ca4-ab5b-49a2-877c-e6c864719dca",
       "accountStatus": "active",
       "startDate": "2025-07-24",
-      "workingStatus": "Đang thử việc",
-      "avatarUrl": "avatars/default-avatar.png"
+      "workingStatus": "Đang thử việc"
     },
     {
-      "id": "1754014197236",
-      "username": "user1",
-      "password": "Abc@123",
       "fullName": "Nguyen Van A",
-      "role": "user",
+      "email": "duyqkce182413@fpt.edu.vn",
+      "departmentId": "dd75effb-eeea-43af-a786-70a221a84a36",
+      "positionId": "2",
+      "workingStatus": "Nghỉ việc",
+      "startDate": "2025-08-04",
+      "id": "1754200303170"
+    },
+    {
+      "fullName": "Nguyen Van A",
+      "email": "duyqkce182413@fpt.edu.vn",
+      "departmentId": "dd75effb-eeea-43af-a786-70a221a84a36",
+      "positionId": "2",
+      "workingStatus": "Đang nghỉ phép",
+      "startDate": "2025-08-04",
+      "id": "372c8d12-726a-4fee-9265-83119cfd7c27"
+    },
+    {
+      "id": "d3faa4e7-066a-456a-85f4-d1c2c6ddf157",
+      "fullName": "abc",
       "email": "customer1@example.com",
-      "position": "",
-      "department": "",
-      "accountStatus": "active",
-      "workingStatus": "",
-      "avatarUrl": "avatars/default-avatar.png"
-    },
-    {
-      "id": "1754200303170",
-      "username": "khanhduy",
-      "password": "Abc@123",
-      "fullName": "Nguyen Van A",
-      "role": "user",
-      "email": "khanhduy123@gmail.com",
-      "position": "",
-      "department": "",
-      "accountStatus": "active",
-      "workingStatus": ""
+      "departmentId": "dd75effb-eeea-43af-a786-70a221a84a36",
+      "positionId": "1",
+      "workingStatus": "Đang thử việc",
+      "startDate": "2025-08-04"
     }
   ],
   "activityLogs": [
@@ -239,6 +239,90 @@
       "activityType": "Xóa đơn",
       "details": "Xóa đơn",
       "time": "2025-08-03 14:01:54"
+    },
+    {
+      "id": "1754290713837",
+      "name": "Thiết kế đồ họa",
+      "activityType": "Delete",
+      "details": "Xóa phòng ban Thiết kế đồ họa",
+      "time": "2025-08-04 13:58:33"
+    },
+    {
+      "id": "1754290918782",
+      "name": "Thiết kế đồ họa",
+      "activityType": "Delete",
+      "details": "Xóa phòng ban Thiết kế đồ họa",
+      "time": "2025-08-04 14:01:58"
+    },
+    {
+      "id": "1754296156671",
+      "name": "Administrator",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới quach khanh duy",
+      "time": "2025-08-04 15:29:16"
+    },
+    {
+      "id": "1754296168777",
+      "name": "Administrator",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên quach khanh duy",
+      "time": "2025-08-04 15:29:28"
+    },
+    {
+      "id": "1754296170452",
+      "name": "Administrator",
+      "activityType": "Delete",
+      "details": "Xóa nhân viên quach khanh duy",
+      "time": "2025-08-04 15:29:30"
+    },
+    {
+      "id": "1754296192048",
+      "name": "Administrator",
+      "activityType": "Add",
+      "details": "Thêm chức vụ mới abc",
+      "time": "2025-08-04 15:29:52"
+    },
+    {
+      "id": "1754298005306",
+      "name": "Administrator",
+      "activityType": "Delete",
+      "details": "Xóa nhân viên Nguyen Van A",
+      "time": "2025-08-04 16:00:05"
+    },
+    {
+      "id": "1754298097970",
+      "name": "Administrator",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Nguyen Van A",
+      "time": "2025-08-04 16:01:37"
+    },
+    {
+      "id": "1754298208733",
+      "name": "Administrator",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Nguyen Van A",
+      "time": "2025-08-04 16:03:28"
+    },
+    {
+      "id": "1754298429690",
+      "name": "Administrator",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Nguyen Van A",
+      "time": "2025-08-04 16:07:09"
+    },
+    {
+      "id": "1754298435574",
+      "name": "Administrator",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Nguyen Van A",
+      "time": "2025-08-04 16:07:15"
+    },
+    {
+      "id": "1754298965094",
+      "name": "Administrator",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới abc",
+      "time": "2025-08-04 16:16:05"
     }
   ],
   "requestForms": [
@@ -435,9 +519,9 @@
       "id": "3"
     },
     {
-      "id": "3ca5d72f-0f3d-4bb2-915b-ec8cc6ca2da4",
-      "name": "qưewe",
-      "description": "123"
+      "id": "a706ec34-6683-4bfd-b6c2-cb5796bc58e2",
+      "name": "abc",
+      "description": "abc"
     }
   ]
 }

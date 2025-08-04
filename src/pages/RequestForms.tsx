@@ -40,6 +40,10 @@ const RequestForms: React.FC = () => {
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [form] = Form.useForm();
 
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [typeFilter, setTypeFilter] = useState<string | null>(null);
+  const [searchText, setSearchText] = useState("");
+
   useEffect(() => {
     loadRequests();
   }, []);
@@ -58,6 +62,32 @@ const RequestForms: React.FC = () => {
       console.error("Error loading requests:", error);
     }
   };
+
+  const filteredRequests = requests
+    .filter((request) => {
+      // Lọc theo trạng thái
+      const statusMatch =
+        !statusFilter ||
+        request.status.toLowerCase() === statusFilter.toLowerCase();
+
+      // Lọc theo loại đơn
+      const typeMatch =
+        !typeFilter || request.type.toLowerCase() === typeFilter.toLowerCase();
+
+      // Tìm kiếm chung (theo tên người gửi, nội dung, loại đơn)
+      const searchMatch =
+        !searchText ||
+        request.employeeName.toLowerCase().includes(searchText.toLowerCase()) ||
+        request.content.toLowerCase().includes(searchText.toLowerCase()) ||
+        request.type.toLowerCase().includes(searchText.toLowerCase());
+
+      return statusMatch && typeMatch && searchMatch;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.submissionDate).getTime();
+      const dateB = new Date(b.submissionDate).getTime();
+      return dateB - dateA; // Sắp xếp giảm dần: mới nhất trước
+    });
 
   const handleCreateRequest = async (values: any) => {
     try {
@@ -343,8 +373,41 @@ const RequestForms: React.FC = () => {
         </Button>
       </Space>
 
+      {/* Thêm các bộ lọc và tìm kiếm */}
+      <Space style={{ marginBottom: 16 }} wrap>
+        <Input.Search
+          placeholder="Tìm kiếm đơn..."
+          allowClear
+          onChange={(e) => setSearchText(e.target.value)}
+          style={{ width: 300 }}
+        />
+
+        <Select
+          placeholder="Lọc theo trạng thái"
+          allowClear
+          onChange={(value) => setStatusFilter(value)}
+          style={{ width: 200 }}
+        >
+          <Option value="pending">Chờ duyệt</Option>
+          <Option value="approved">Đã duyệt</Option>
+          <Option value="rejected">Từ chối</Option>
+        </Select>
+
+        <Select
+          placeholder="Lọc theo loại đơn"
+          allowClear
+          onChange={(value) => setTypeFilter(value)}
+          style={{ width: 200 }}
+        >
+          <Option value="Nghỉ phép">Nghỉ phép</Option>
+          <Option value="Công tác">Công tác</Option>
+          <Option value="Tăng ca">Tăng ca</Option>
+          {/* Thêm các loại đơn khác nếu có */}
+        </Select>
+      </Space>
+
       <Table
-        dataSource={requests}
+        dataSource={filteredRequests}
         columns={columns}
         rowKey="id"
         bordered
@@ -452,9 +515,17 @@ const RequestForms: React.FC = () => {
                   label="Tên loại đơn"
                   rules={[
                     { required: true, message: "Vui lòng nhập tên loại đơn" },
+                    {
+                      max: 255,
+                      message: "Tên phòng ban không được vượt quá 255 ký tự",
+                    },
                   ]}
                 >
-                  <Input placeholder="Nhập tên loại đơn..." />
+                  <Input
+                    maxLength={255}
+                    showCount
+                    placeholder="Nhập tên loại đơn..."
+                  />
                 </Form.Item>
               ) : null
             }
@@ -477,11 +548,13 @@ const RequestForms: React.FC = () => {
             label="Nội dung chi tiết"
             rules={[
               { required: true, message: "Vui lòng nhập nội dung đơn" },
-              { max: 200, message: "Nội dung không được vượt quá 250 ký tự" },
+              { max: 255, message: "Nội dung không được vượt quá 255 ký tự" },
             ]}
           >
             <TextArea
               rows={5}
+              maxLength={255}
+              showCount
               style={{ resize: "none" }}
               placeholder="Nhập nội dung chi tiết của đơn..."
             />

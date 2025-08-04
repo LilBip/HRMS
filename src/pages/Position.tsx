@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Table,
   Button,
@@ -23,7 +23,9 @@ import {
   SolutionOutlined,
   FileTextOutlined,
 } from "@ant-design/icons";
-
+import { Account } from "../types/account";
+import { getAllEmployees } from "../api/employeeApi";
+import { AuthContext } from "../contexts/AuthContexts";
 
 interface Position {
   id: string;
@@ -32,14 +34,27 @@ interface Position {
 }
 
 const Positions: React.FC = () => {
+  const { user } = useContext(AuthContext);
+
   const [positions, setPositions] = useState<Position[]>([]);
+  const [employees, setEmployees] = useState<Account[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [editingPosition, setEditingPosition] = useState<Position | null>(null);
 
   useEffect(() => {
     fetchPositions();
+    fetchEmployees();
   }, []);
+
+  const fetchEmployees = async () => {
+    try {
+      const data = await getAllEmployees();
+      setEmployees(data);
+    } catch {
+      message.error("Không thể tải danh sách nhân viên");
+    }
+  };
 
   const fetchPositions = async () => {
     try {
@@ -64,17 +79,24 @@ const Positions: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
+      const isConflict = employees.some((emp) => emp.positionId === id);
+      console.log(isConflict);
+      if (isConflict) {
+        message.error("Có nhân viên đang giữ chức vụ này");
+        return;
+      }
+
       const position = positions.find((pos) => pos.id === id);
       await deletePosition(id);
       message.success("Xóa chức vụ thành công");
       if (position) {
         await createActivityLog({
-          name: position.name,
+          name: user?.fullName || "",
           activityType: "Delete",
           details: `Xóa chức vụ ${position.name}`,
         });
       }
-      fetchPositions();
+      await fetchPositions();
     } catch {
       message.error("Xóa chức vụ thất bại");
     }
@@ -89,7 +111,7 @@ const Positions: React.FC = () => {
         });
         message.success("Cập nhật chức vụ thành công");
         await createActivityLog({
-          name: values.name,
+          name: user?.fullName || "",
           activityType: "Update",
           details: `Cập nhật chức vụ ${values.name}`,
         });
@@ -97,7 +119,7 @@ const Positions: React.FC = () => {
         await addPosition(values);
         message.success("Thêm chức vụ thành công");
         await createActivityLog({
-          name: values.name,
+          name: user?.fullName || "",
           activityType: "Add",
           details: `Thêm chức vụ mới ${values.name}`,
         });
@@ -107,6 +129,14 @@ const Positions: React.FC = () => {
     } catch {
       message.error("Lưu dữ liệu thất bại");
     }
+  };
+
+  const checkDuplicateName = (name: string, currentId?: string) => {
+    return positions.some(
+      (pos) =>
+        pos.name.toLowerCase() === name.toLowerCase().trim() &&
+        pos.id !== currentId
+    );
   };
 
   const getPositionIcon = (name: string) => {
@@ -195,12 +225,32 @@ const Positions: React.FC = () => {
           <Form.Item
             name="name"
             label="Tên chức vụ"
-            rules={[{ required: true, message: "Vui lòng nhập tên chức vụ" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập tên chức vụ" },
+              {
+                max: 255,
+                message: "Tên chức vụ không được vượt quá 255 ký tự",
+              },
+              {
+                validator: (_, value) => {
+                  if (checkDuplicateName(value, editingPosition?.id)) {
+                    return Promise.reject(new Error("Tên chức vụ đã tồn tại"));
+                  }
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
-            <Input />
+            <Input maxLength={255} showCount />
           </Form.Item>
-          <Form.Item name="description" label="Mô tả">
-            <Input.TextArea rows={4} />
+          <Form.Item
+            name="description"
+            label="Mô tả"
+            rules={[
+              { max: 255, message: "Mô tả không được vượt quá 255 ký tự" },
+            ]}
+          >
+            <Input.TextArea rows={4} maxLength={255} showCount />
           </Form.Item>
           <Form.Item style={{ textAlign: "right", marginBottom: 0 }}>
             <Button type="primary" htmlType="submit">

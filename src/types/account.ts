@@ -5,8 +5,8 @@ export interface Account {
   fullName: string;
   role: string;
   email: string;
-  position: string;
-  department: string;
+  positionId: string;
+  departmentId: string;
   accountStatus: string;
   startDate: string;
   workingStatus: string;
