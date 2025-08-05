@@ -1,13 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Table, Typography, Card, Spin, message } from "antd";
 import { getActivityLogs } from "../api/activityLogApi";
 import { ActivityLog } from "../types/activityLog";
+import { AuthContext } from "../contexts/AuthContexts";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
 const ActivityLogPage: React.FC = () => {
   const [logs, setLogs] = useState<ActivityLog[]>([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && user.role !== "admin") {
+      navigate("/requests");
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     const fetchLogs = async () => {

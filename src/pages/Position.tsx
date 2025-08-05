@@ -26,6 +26,7 @@ import {
 import { Account } from "../types/account";
 import { getAllEmployees } from "../api/employeeApi";
 import { AuthContext } from "../contexts/AuthContexts";
+import { useNavigate } from "react-router-dom";
 
 interface Position {
   id: string;
@@ -41,6 +42,14 @@ const Positions: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [editingPosition, setEditingPosition] = useState<Position | null>(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && user.role !== "admin") {
+      navigate("/requests");
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     fetchPositions();

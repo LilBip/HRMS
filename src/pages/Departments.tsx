@@ -21,6 +21,7 @@ import { createActivityLog } from "../api/activityLogApi";
 import { Account } from "../types/account";
 import { getAllEmployees } from "../api/employeeApi";
 import { AuthContext } from "../contexts/AuthContexts";
+import { useNavigate } from "react-router-dom";
 
 const Departments: React.FC = () => {
   const { user } = useContext(AuthContext);
@@ -32,6 +33,14 @@ const Departments: React.FC = () => {
     null
   );
   const [searchText, setSearchText] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && user.role !== "admin") {
+      navigate("/requests");
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     fetchDepartments();

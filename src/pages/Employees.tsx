@@ -22,6 +22,7 @@ import { Department } from "../types/department";
 import { getPositions } from "../api/positionApi";
 import { Position } from "../types/position";
 import { AuthContext } from "../contexts/AuthContexts";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 const EMPLOYEE_API = "http://localhost:3001/accounts";
@@ -47,6 +48,14 @@ const Employees: React.FC = () => {
     fetchDepartments();
     fetchPositions();
   }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && user.role !== "admin") {
+      navigate("/requests");
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     if (departments.length > 0 && positions.length > 0) {
