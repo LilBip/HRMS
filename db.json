@@ -1,507 +1,135 @@
 {
-  "departments": [
-    {
-      "id": "dd75effb-eeea-43af-a786-70a221a84a36",
-      "name": "Thiết kế đồ họa",
-      "description": "a"
-    },
-    {
-      "id": "e6515ca4-ab5b-49a2-877c-e6c864719dca",
-      "name": "Lập trình C++ cơ bản, nâng cao000",
-      "description": "kjbk"
-    },
-    {
-      "id": "3d48ef2c-95d1-4a58-a275-8634bce2aed8",
-      "name": "Nghia Tran Minh",
-      "description": "he he he\n"
-    }
-  ],
   "accounts": [
     {
-      "id": "admin-001",
+      "id": "1754393708391",
       "username": "admin",
-      "password": "admin123",
-      "fullName": "Administrator",
+      "password": "Admin123@",
+      "fullName": "Admin",
       "role": "admin",
-      "email": "admin@hrms.com",
-      "positionId": "1",
-      "departmentId": "dd75effb-eeea-43af-a786-70a221a84a36",
+      "email": "Admin1@gmail.com",
+      "position": "",
+      "department": "",
       "accountStatus": "active",
-      "startDate": "2025-07-24",
-      "workingStatus": "Đang làm việc"
+      "workingStatus": "working",
+      "startDate": "2025-7-25"
     },
     {
-      "id": "1753382498200",
-      "username": "user",
-      "password": "1",
-      "fullName": "Dương Kiến Nghiệp",
+      "id": "1754442123999",
+      "username": "User",
+      "password": "User123@",
+      "fullName": "Nguyễn Nhĩ Thái",
       "role": "user",
-      "email": "abc@gmail.com",
-      "positionId": "2",
-      "departmentId": "e6515ca4-ab5b-49a2-877c-e6c864719dca",
+      "email": "kiennghiep2003@gmail.com",
+      "position": "",
+      "department": "",
       "accountStatus": "active",
-      "startDate": "2025-07-24",
-      "workingStatus": "Đang thử việc"
-    },
-    {
-      "fullName": "Nguyen Van A",
-      "email": "duyqkce182413@fpt.edu.vn",
-      "departmentId": "dd75effb-eeea-43af-a786-70a221a84a36",
-      "positionId": "2",
-      "workingStatus": "Nghỉ việc",
-      "startDate": "2025-08-04",
-      "id": "1754200303170"
-    },
-    {
-      "fullName": "Nguyen Van A",
-      "email": "duyqkce182413@fpt.edu.vn",
-      "departmentId": "dd75effb-eeea-43af-a786-70a221a84a36",
-      "positionId": "2",
-      "workingStatus": "Đang nghỉ phép",
-      "startDate": "2025-08-04",
-      "id": "372c8d12-726a-4fee-9265-83119cfd7c27"
-    },
-    {
-      "id": "d3faa4e7-066a-456a-85f4-d1c2c6ddf157",
-      "fullName": "abc",
-      "email": "customer1@example.com",
-      "departmentId": "dd75effb-eeea-43af-a786-70a221a84a36",
-      "positionId": "1",
-      "workingStatus": "Đang thử việc",
-      "startDate": "2025-08-04"
+      "workingStatus": ""
     }
   ],
-  "activityLogs": [
+  "departments": [
     {
-      "id": "1753952759891",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Thêm check-in",
-      "details": "Check-in lúc 16:05:59 ngày 31/07/2025",
-      "time": "2025-07-31 16:05:59"
+      "id": "PB001",
+      "name": "Phòng Nhân sự",
+      "description": "Quản lý tuyển dụng, đào tạo và chính sách nhân sự."
     },
     {
-      "id": "1753952794659",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Add",
-      "details": "Tạo đơn Công tác mới",
-      "time": "2025-07-31 16:06:34"
+      "id": "PB002",
+      "name": "Phòng Kế toán",
+      "description": "Quản lý tài chính, sổ sách và báo cáo kế toán."
     },
     {
-      "id": "1753953346771",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Thêm check-out",
-      "details": "Check-out lúc 16:15:46 ngày 31/07/2025",
-      "time": "2025-07-31 16:15:46"
+      "id": "PB003",
+      "name": "Phòng Kỹ thuật",
+      "description": "Phụ trách kỹ thuật, bảo trì và hạ tầng hệ thống."
     },
     {
-      "id": "1754021128689",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Delete",
-      "details": "Xóa đơn",
-      "time": "2025-08-01 11:05:28"
+      "id": "PB004",
+      "name": "Phòng Marketing",
+      "description": "Lên kế hoạch và triển khai các chiến dịch tiếp thị."
     },
     {
-      "id": "1754021415114",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Add",
-      "details": "Tạo đơn Tăng ca mới",
-      "time": "2025-08-01 11:10:15"
+      "id": "PB005",
+      "name": "Phòng Kinh doanh",
+      "description": "Chịu trách nhiệm bán hàng và chăm sóc khách hàng."
     },
     {
-      "id": "1754021425964",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Add",
-      "details": "Tạo đơn Nghỉ phép mới",
-      "time": "2025-08-01 11:10:25"
+      "id": "PB006",
+      "name": "Phòng Dự án",
+      "description": "Quản lý các dự án nội bộ và khách hàng."
     },
     {
-      "id": "1754021462982",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Add",
-      "details": "Tạo đơn Tăng ca mới",
-      "time": "2025-08-01 11:11:02"
+      "id": "PB007",
+      "name": "Phòng Pháp chế",
+      "description": "Xử lý các vấn đề pháp lý và tư vấn luật doanh nghiệp."
     },
     {
-      "id": "1754021473378",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Add",
-      "details": "Tạo đơn Tăng ca mới",
-      "time": "2025-08-01 11:11:13"
+      "id": "PB008",
+      "name": "Phòng IT",
+      "description": "Hỗ trợ công nghệ thông tin và hệ thống phần mềm."
     },
     {
-      "id": "1754021485813",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Delete",
-      "details": "Xóa đơn",
-      "time": "2025-08-01 11:11:25"
+      "id": "PB009",
+      "name": "Phòng Thiết kế",
+      "description": "Thiết kế đồ họa, giao diện và trải nghiệm người dùng."
     },
     {
-      "id": "1754022367703",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Sửa đơn Công tác",
-      "time": "2025-08-01 11:26:07"
+      "id": "PB010",
+      "name": "Phòng R&D",
+      "description": "Nghiên cứu và phát triển sản phẩm mới."
     },
     {
-      "id": "1754022374196",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Sửa đơn Công tác",
-      "time": "2025-08-01 11:26:14"
+      "id": "PB011",
+      "name": "Phòng Hành chính",
+      "description": "Hỗ trợ hành chính, văn thư và hậu cần."
     },
     {
-      "id": "1754022386749",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Sửa đơn Nghỉ phép",
-      "time": "2025-08-01 11:26:26"
+      "id": "PB012",
+      "name": "Phòng Quản lý Chất lượng",
+      "description": "Đảm bảo tiêu chuẩn và kiểm soát chất lượng sản phẩm."
     },
     {
-      "id": "1754029924985",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Delete",
-      "details": "Xóa đơn",
-      "time": "2025-08-01 13:32:04"
+      "id": "PB013",
+      "name": "Phòng Sản xuất",
+      "description": "Tổ chức và vận hành quá trình sản xuất."
     },
     {
-      "id": "1754030345708",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Update",
-      "details": "Sửa đơn Công tác",
-      "time": "2025-08-01 13:39:05"
+      "id": "PB014",
+      "name": "Phòng Đào tạo",
+      "description": "Tổ chức các khóa đào tạo nội bộ cho nhân viên."
     },
     {
-      "id": "1754030356917",
-      "name": "Dương Kiến Nghiệp",
-      "activityType": "Add",
-      "details": "Tạo đơn Công tác mới",
-      "time": "2025-08-01 13:39:16"
+      "id": "PB015",
+      "name": "Phòng Chăm sóc Khách hàng",
+      "description": "Tiếp nhận và xử lý phản hồi, yêu cầu của khách hàng."
     },
     {
-      "id": "1754200478634",
-      "name": "Nguyen Van A",
-      "activityType": "Add",
-      "details": "Tạo đơn Công tác mới",
-      "time": "2025-08-03 12:54:38"
+      "id": "PB016",
+      "name": "Phòng Điều hành",
+      "description": "Giám sát và điều phối các hoạt động chung của công ty."
     },
     {
-      "id": "1754200638020",
-      "name": "Nguyen Van A",
-      "activityType": "Delete",
-      "details": "Xóa đơn",
-      "time": "2025-08-03 12:57:18"
+      "id": "PB017",
+      "name": "Phòng An ninh",
+      "description": "Đảm bảo an ninh nội bộ và an toàn thông tin."
     },
     {
-      "id": "1754200647606",
-      "name": "Nguyen Van A",
-      "activityType": "Add",
-      "details": "Tạo đơn Công tác mới",
-      "time": "2025-08-03 12:57:27"
+      "id": "PB018",
+      "name": "Phòng Môi trường",
+      "description": "Giám sát và thực hiện các tiêu chuẩn môi trường."
     },
     {
-      "id": "1754201748173",
-      "name": "Nguyen Van A",
-      "activityType": "Update",
-      "details": "Sửa đơn Công tác",
-      "time": "2025-08-03 13:15:48"
+      "id": "PB019",
+      "name": "Phòng Logistic",
+      "description": "Quản lý vận chuyển, kho bãi và chuỗi cung ứng."
     },
     {
-      "id": "1754201755672",
-      "name": "Nguyen Van A",
-      "activityType": "Update",
-      "details": "Sửa đơn Công tác",
-      "time": "2025-08-03 13:15:55"
-    },
-    {
-      "id": "1754203721385",
-      "name": "Nguyen Van A",
-      "activityType": "Delete",
-      "details": "Xóa đơn",
-      "time": "2025-08-03 13:48:41"
-    },
-    {
-      "id": "1754204489342",
-      "name": "Nguyen Van A",
-      "activityType": "Tạo đơn từ",
-      "details": "Tạo đơn Công tác mới",
-      "time": "2025-08-03 14:01:29"
-    },
-    {
-      "id": "1754204511120",
-      "name": "Nguyen Van A",
-      "activityType": "Sửa đơn từ",
-      "details": "Sửa đơn Công tác",
-      "time": "2025-08-03 14:01:51"
-    },
-    {
-      "id": "1754204514737",
-      "name": "Nguyen Van A",
-      "activityType": "Xóa đơn",
-      "details": "Xóa đơn",
-      "time": "2025-08-03 14:01:54"
-    },
-    {
-      "id": "1754290713837",
-      "name": "Thiết kế đồ họa",
-      "activityType": "Delete",
-      "details": "Xóa phòng ban Thiết kế đồ họa",
-      "time": "2025-08-04 13:58:33"
-    },
-    {
-      "id": "1754290918782",
-      "name": "Thiết kế đồ họa",
-      "activityType": "Delete",
-      "details": "Xóa phòng ban Thiết kế đồ họa",
-      "time": "2025-08-04 14:01:58"
-    },
-    {
-      "id": "1754296156671",
-      "name": "Administrator",
-      "activityType": "Add",
-      "details": "Thêm nhân viên mới quach khanh duy",
-      "time": "2025-08-04 15:29:16"
-    },
-    {
-      "id": "1754296168777",
-      "name": "Administrator",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên quach khanh duy",
-      "time": "2025-08-04 15:29:28"
-    },
-    {
-      "id": "1754296170452",
-      "name": "Administrator",
-      "activityType": "Delete",
-      "details": "Xóa nhân viên quach khanh duy",
-      "time": "2025-08-04 15:29:30"
-    },
-    {
-      "id": "1754296192048",
-      "name": "Administrator",
-      "activityType": "Add",
-      "details": "Thêm chức vụ mới abc",
-      "time": "2025-08-04 15:29:52"
-    },
-    {
-      "id": "1754298005306",
-      "name": "Administrator",
-      "activityType": "Delete",
-      "details": "Xóa nhân viên Nguyen Van A",
-      "time": "2025-08-04 16:00:05"
-    },
-    {
-      "id": "1754298097970",
-      "name": "Administrator",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Nguyen Van A",
-      "time": "2025-08-04 16:01:37"
-    },
-    {
-      "id": "1754298208733",
-      "name": "Administrator",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Nguyen Van A",
-      "time": "2025-08-04 16:03:28"
-    },
-    {
-      "id": "1754298429690",
-      "name": "Administrator",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Nguyen Van A",
-      "time": "2025-08-04 16:07:09"
-    },
-    {
-      "id": "1754298435574",
-      "name": "Administrator",
-      "activityType": "Update",
-      "details": "Cập nhật thông tin nhân viên Nguyen Van A",
-      "time": "2025-08-04 16:07:15"
-    },
-    {
-      "id": "1754298965094",
-      "name": "Administrator",
-      "activityType": "Add",
-      "details": "Thêm nhân viên mới abc",
-      "time": "2025-08-04 16:16:05"
+      "id": "PB020",
+      "name": "Phòng Hỗ trợ kỹ thuật",
+      "description": "Giải quyết sự cố kỹ thuật và hỗ trợ người dùng cuối."
     }
   ],
-  "requestForms": [
-    {
-      "id": "1753407221167",
-      "employeeId": "admin-001",
-      "employeeName": "Administrator",
-      "type": "Nghỉ phép",
-      "content": "abcd từ 25/07/2025 đến 28/08/2025",
-      "time": "Từ 25/07/2025 đến 28/08/2025",
-      "submissionDate": "2025-07-25T01:33:41.167Z",
-      "status": "approved",
-      "approvedBy": "Administrator",
-      "approvalDate": "2025-07-25T01:33:49.860Z",
-      "approvalNote": ""
-    },
-    {
-      "id": "1753930790350",
-      "employeeId": "admin-001",
-      "employeeName": "Administrator",
-      "type": "Nghỉ phép",
-      "content": "qwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Áqwe qưeQDas asD Á từ 03/07/2025 đến 01/08/2025",
-      "time": "Từ 03/07/2025 đến 01/08/2025",
-      "submissionDate": "2025-07-31T02:59:50.350Z",
-      "status": "rejected",
-      "approvedBy": "Administrator",
-      "approvalDate": "2025-07-31T03:02:33.995Z",
-      "approvalNote": ""
-    },
-    {
-      "id": "1753931759312",
-      "employeeId": "admin-001",
-      "employeeName": "Administrator",
-      "type": "Nghỉ phép",
-      "content": "123",
-      "submissionDate": "2025-07-31T03:15:59.312Z",
-      "status": "pending"
-    },
-    {
-      "id": "1753931954304",
-      "employeeId": "admin-001",
-      "employeeName": "Administrator",
-      "type": "123123",
-      "content": "123",
-      "time": "123 từ 01/07/2025 đến 06/08/2025",
-      "submissionDate": "2025-07-31T03:19:14.304Z",
-      "status": "pending"
-    },
-    {
-      "id": "1753932000539",
-      "employeeId": "admin-001",
-      "employeeName": "Administrator",
-      "type": "Nghỉ phép",
-      "content": "123",
-      "time": " từ 01/07/2025 đến 05/08/2025",
-      "submissionDate": "2025-07-31T03:20:00.539Z",
-      "status": "pending"
-    },
-    {
-      "id": "1753932025721",
-      "employeeId": "admin-001",
-      "employeeName": "Administrator",
-      "type": "asdasd",
-      "content": "123123123123",
-      "time": "Từ 02/07/2025 đến 07/08/2025",
-      "submissionDate": "2025-07-31T03:20:25.721Z",
-      "status": "pending"
-    },
-    {
-      "id": "1753932063779",
-      "employeeId": "admin-001",
-      "employeeName": "Administrator",
-      "type": "Tăng ca",
-      "content": "asdSGas sdgadsg ",
-      "time": "Từ 31/07/2025 đến 01/08/2025",
-      "submissionDate": "2025-07-31T03:21:03.779Z",
-      "status": "pending"
-    },
-    {
-      "employeeId": "1753382498200",
-      "employeeName": "Dương Kiến Nghiệp",
-      "type": "Công tác",
-      "content": "dsfsdf",
-      "time": "Từ 01/08/2025 đến 03/09/2025",
-      "startDate": "2025-07-31T17:00:00.000Z",
-      "endDate": "2025-09-02T17:00:00.000Z",
-      "status": "pending",
-      "submissionDate": "2025-08-01T04:10:25.955Z",
-      "id": "1754021425955"
-    },
-    {
-      "id": "1754021462973",
-      "employeeId": "1753382498200",
-      "employeeName": "Dương Kiến Nghiệp",
-      "type": "Tăng ca",
-      "content": "12355",
-      "time": "Từ 02/08/2025 đến 04/09/2025",
-      "submissionDate": "2025-08-01T04:11:02.973Z",
-      "status": "pending"
-    },
-    {
-      "id": "fdc4",
-      "employeeId": "1753382498200",
-      "employeeName": "Dương Kiến Nghiệp",
-      "type": "Công tác",
-      "content": "qưe",
-      "time": "Từ 01/08/2025 đến 01/09/2025",
-      "startDate": "2025-07-31T17:00:00.000Z",
-      "endDate": "2025-08-31T17:00:00.000Z",
-      "status": "pending",
-      "submissionDate": "2025-08-01T06:39:16.908Z"
-    }
-  ],
-  "attendance": [
-    {
-      "id": "1753382498200-2025-07-25",
-      "userId": "1753382498200",
-      "date": "2025-07-25",
-      "checkIn": "2025-07-24T18:51:02.308Z",
-      "status": "present",
-      "checkOut": "2025-07-24T18:55:31.084Z"
-    },
-    {
-      "id": "1753382498200-2025-07-26",
-      "userId": "1753382498200",
-      "date": "2025-07-26",
-      "checkIn": "2025-07-24T18:44:14.655Z",
-      "status": "present",
-      "checkOut": "2025-07-24T18:44:15.545Z"
-    },
-    {
-      "id": "1753718339571-2025-07-28",
-      "userId": "1753718339571",
-      "date": "2025-07-28",
-      "checkIn": "2025-07-28T15:59:29.258Z",
-      "status": "present",
-      "checkOut": "2025-07-28T15:59:28.032Z"
-    },
-    {
-      "id": "1753718339571-2025-07-22",
-      "userId": "1753718339571",
-      "date": "2025-07-22",
-      "checkIn": "2025-07-28T16:03:23.830Z",
-      "status": "present",
-      "checkOut": "2025-07-28T16:03:25.253Z"
-    },
-    {
-      "id": "1753718339571-2025-07-31",
-      "userId": "1753718339571",
-      "date": "2025-07-31",
-      "checkIn": "2025-07-28T16:03:30.278Z",
-      "status": "present",
-      "checkOut": "2025-07-28T16:03:30.708Z"
-    },
-    {
-      "id": "1753718339571-2025-07-29",
-      "userId": "1753718339571",
-      "date": "2025-07-29",
-      "checkIn": "2025-07-29T01:46:52.489Z",
-      "status": "present",
-      "checkOut": "2025-07-29T01:46:54.097Z"
-    },
-    {
-      "id": "1753382498200-2025-07-30",
-      "userId": "1753382498200",
-      "date": "2025-07-30",
-      "checkIn": "2025-07-30T03:27:30.758Z",
-      "status": "present",
-      "checkOut": "2025-07-30T03:27:45.717Z"
-    },
-    {
-      "id": "1753382498200-2025-07-31",
-      "userId": "1753382498200",
-      "date": "2025-07-31",
-      "checkIn": "2025-07-31T09:05:59.881Z",
-      "status": "present",
-      "checkOut": "2025-07-31T09:15:46.755Z"
-    }
-  ],
+  "requestForms": [],
+  "attendance": [],
   "position": [
     {
       "id": "1",
@@ -517,11 +145,15 @@
       "name": "Developer",
       "description": "Lập trình viên",
       "id": "3"
-    },
+    }
+  ],
+  "activityLogs": [
     {
-      "id": "a706ec34-6683-4bfd-b6c2-cb5796bc58e2",
-      "name": "abc",
-      "description": "abc"
+      "id": "1754396489699",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật thông tin nhân viên Nguyễn Văn Minh",
+      "time": "2025-08-05 19:21:29"
     }
   ]
 }
