@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, message, Card, Typography } from "antd";
 import { registerEmployee, checkEmailExists } from "../api/registerApi";
 import { useNavigate } from "react-router-dom";
+import { Account } from "../types/account";
+import { getAllEmployees } from "../api/employeeApi";
 
 const { Title } = Typography;
 
 const Register: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [employees, setEmployees] = useState<Account[]>([]);
+
+  useEffect(() => {
+    fetchEmployees();
+  }, []);
+
+  const fetchEmployees = async () => {
+    try {
+      const data = await getAllEmployees();
+      setEmployees(data);
+    } catch {
+      message.error("Không thể tải danh sách nhân viên");
+    }
+  };
 
   const onFinish = async (values: any) => {
     setLoading(true);
@@ -70,6 +86,23 @@ const Register: React.FC = () => {
                 pattern: /^[a-zA-Z0-9_]{4,20}$/,
                 message:
                   "Tên đăng nhập chỉ chứa chữ, số, gạch dưới (4–20 ký tự)",
+              },
+              {
+                validator: async (_, value) => {
+                  if (!value) return Promise.resolve();
+
+                  const usernameExists = employees.some(
+                    (emp) => emp.username === value
+                  );
+
+                  if (usernameExists) {
+                    return Promise.reject(
+                      new Error("Tên đăng nhập đã tồn tại")
+                    );
+                  }
+
+                  return Promise.resolve();
+                },
               },
             ]}
           >

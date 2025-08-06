@@ -25,17 +25,17 @@ const EmployeeStats: React.FC = () => {
   }, []);
 
   const total = employees.length;
-  const probation = employees.filter(
-    (emp) => emp.accountStatus === "Đang thử việc"
-  ).length;
-  const working = employees.filter(
-    (emp) => emp.accountStatus === "Đang làm việc"
-  ).length;
-  const onLeave = employees.filter(
-    (emp) => emp.accountStatus === "Đang nghỉ phép"
-  ).length;
   const department = departments.length;
   const totalPosition = positions.length;
+  const probation = employees.filter(
+    (emp) => emp.workingStatus === "Đang thử việc"
+  ).length;
+  const working = employees.filter(
+    (emp) => emp.workingStatus === "Đang làm việc"
+  ).length;
+  const onLeave = employees.filter(
+    (emp) => emp.workingStatus === "Đang nghỉ phép"
+  ).length;
 
   return (
     <Row gutter={16} style={{ marginBottom: 24 }}>
