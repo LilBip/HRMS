@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { getAllEmployees } from "../api/dashboardApi";
 import { getDepartments } from "../api/departmentApi";
-import { Employee } from "../types/employee";
 import { Department } from "../types/department";
+import { Account } from "../types/account";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A020F0"];
 
@@ -12,22 +12,23 @@ const DepartmentChart: React.FC = () => {
 
   useEffect(() => {
     Promise.all([getAllEmployees(), getDepartments()]).then(
-      ([employees, departments]: [Employee[], Department[]]) => {
+      ([employees, departments]: [Account[], Department[]]) => {
         // Tạo object đếm nhân viên theo tên phòng ban (name)
         const departmentCount: Record<string, number> = {};
 
         employees.forEach((emp) => {
-          if (emp.department) {
-            departmentCount[emp.department] =
-              (departmentCount[emp.department] || 0) + 1;
+          if (emp.departmentId) {
+            departmentCount[emp.departmentId] =
+              (departmentCount[emp.departmentId] || 0) + 1;
           }
         });
 
         // Duyệt danh sách phòng ban chuẩn và ghép theo tên (name)
         const formattedData = departments.map((dept) => ({
           name: dept.name,
-          value: departmentCount[dept.name] || 0, // nếu chưa có nhân viên thì 0
+          value: departmentCount[dept.id] || 0, // nếu chưa có nhân viên thì 0
         }));
+        console.log(formattedData);
         setData(formattedData);
       }
     );

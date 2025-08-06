@@ -24,6 +24,44 @@
       "department": "",
       "accountStatus": "active",
       "workingStatus": ""
+    },
+    {
+      "id": "1754447558609",
+      "username": "User1",
+      "password": "User123@",
+      "fullName": "Đỗ Thị Ngọc Hoa",
+      "role": "user",
+      "email": "kiennghiep23@gmail.com",
+      "position": "",
+      "department": "",
+      "accountStatus": "active",
+      "workingStatus": ""
+    },
+    {
+      "id": "edcd3a8c-341c-4a49-8539-1e671f7c946a",
+      "fullName": "Khánh Duyyyy",
+      "username": "khanhduy123",
+      "password": "Abc@123",
+      "email": "duyletgoo@gmail.com",
+      "departmentId": "PB003",
+      "positionId": "1",
+      "workingStatus": "Đang thử việc",
+      "startDate": "2025-08-07",
+      "role": "user",
+      "accountStatus": "active"
+    },
+    {
+      "id": "4a8e8c6f-f9f1-4db6-b5c6-a97b735dbc48",
+      "fullName": "Minh Nghia",
+      "email": "duyletgo@gmail.com",
+      "departmentId": "PB001",
+      "positionId": "1",
+      "workingStatus": "Đang thử việc",
+      "startDate": "2025-08-07",
+      "username": "khanhduy12345",
+      "password": "Abc@123",
+      "role": "user",
+      "accountStatus": "active"
     }
   ],
   "departments": [
@@ -154,6 +192,83 @@
       "activityType": "Update",
       "details": "Cập nhật thông tin nhân viên Nguyễn Văn Minh",
       "time": "2025-08-05 19:21:29"
+    },
+    {
+      "id": "1754448276240",
+      "name": "Admin",
+      "activityType": "Add",
+      "details": "Thêm chức vụ mới Phó Giám đốc",
+      "time": "2025-08-06 09:44:36"
+    },
+    {
+      "id": "1754448291374",
+      "name": "Admin",
+      "activityType": "Delete",
+      "details": "Xóa chức vụ Phó Giám đốc",
+      "time": "2025-08-06 09:44:51"
+    },
+    {
+      "id": "1754448311083",
+      "name": "Admin",
+      "activityType": "Add",
+      "details": "Thêm phòng ban mới Thiết kế đồ họa",
+      "time": "2025-08-06 09:45:11"
+    },
+    {
+      "id": "1754448320009",
+      "name": "Admin",
+      "activityType": "Delete",
+      "details": "Xóa phòng ban Thiết kế đồ họa",
+      "time": "2025-08-06 09:45:20"
+    },
+    {
+      "id": "1754448344627",
+      "name": "Admin",
+      "activityType": "Tạo đơn từ",
+      "details": "Tạo đơn Công tác mới",
+      "time": "2025-08-06 09:45:44"
+    },
+    {
+      "id": "1754448376869",
+      "name": "Admin",
+      "activityType": "Phê duyệt đơn",
+      "details": "Phê duyệt đơn Công tác của Admin",
+      "time": "2025-08-06 09:46:16"
+    },
+    {
+      "id": "1754448792642",
+      "name": "Admin",
+      "activityType": "Add",
+      "details": "Thêm chức vụ mới Quản Lý thực tập sinh",
+      "time": "2025-08-06 09:53:12"
+    },
+    {
+      "id": "1754449104751",
+      "name": "Admin",
+      "activityType": "Delete",
+      "details": "Xóa chức vụ Quản Lý thực tập sinh",
+      "time": "2025-08-06 09:58:24"
+    },
+    {
+      "id": "1754449453676",
+      "name": "Administrator",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới Khánh Duyyyy",
+      "time": "2025-08-06 10:04:13"
+    },
+    {
+      "id": "1754449935097",
+      "name": "Administrator",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới Minh Nghia",
+      "time": "2025-08-06 10:12:15"
+    },
+    {
+      "id": "1754450586721",
+      "name": "Administrator",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Khánh Duyyyy",
+      "time": "2025-08-06 10:23:06"
     }
   ]
 }

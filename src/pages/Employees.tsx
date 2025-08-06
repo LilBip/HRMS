@@ -17,12 +17,12 @@ import dayjs from "dayjs";
 import { getAllEmployees } from "../api/dashboardApi";
 import { getDepartments } from "../api/departmentApi";
 import { createActivityLog } from "../api/activityLogApi";
-import { Employee } from "../types/employee";
 import { Department } from "../types/department";
 import { getPositions } from "../api/positionApi";
 import { Position } from "../types/position";
 import { AuthContext } from "../contexts/AuthContexts";
 import { useNavigate } from "react-router-dom";
+import { Account } from "../types/account";
 
 const { Option } = Select;
 const EMPLOYEE_API = "http://localhost:3001/accounts";
@@ -72,12 +72,12 @@ const Employees: React.FC = () => {
           (dep) => dep.id === emp.departmentId
         );
         const position = positions.find((pos) => pos.id === emp.positionId);
-        console.log(department?.name);
-        console.log(position?.name || "Không rõ");
         return {
           ...emp,
-          departmentName: department?.name || "Không rõ",
-          positionName: position?.name || "Không rõ",
+          departmentName: department?.name || "Chưa rõ",
+          positionName: position?.name || "Chưa rõ",
+          workingStatus: emp.workingStatus || "Chưa rõ",
+          startDate: emp.startDate || "Chưa rõ",
         };
       });
 
@@ -111,11 +111,16 @@ const Employees: React.FC = () => {
     setDrawerVisible(true);
   };
 
-  const handleEdit = (record: Employee) => {
+  const handleEdit = (record: Account) => {
     setEditingEmployee(record);
     form.setFieldsValue({
       ...record,
-      startDate: dayjs(record.startDate),
+      startDate: dayjs(record.startDate).isValid()
+        ? dayjs(record.startDate)
+        : dayjs(),
+      workingStatus: record.workingStatus || undefined,
+      positionId: record.positionId || undefined,
+      departmentId: record.departmentId || undefined,
     });
     setDrawerVisible(true);
   };
@@ -148,7 +153,7 @@ const Employees: React.FC = () => {
     }
   };
 
-  const handleViewDetail = (record: Employee) => {
+  const handleViewDetail = (record: Account) => {
     setSelectedEmployee(record);
     setDetailVisible(true);
   };
@@ -161,21 +166,47 @@ const Employees: React.FC = () => {
 
     try {
       if (editingEmployee) {
+        const diffData: any = {};
+
+        // Chỉ thêm vào diffData nếu giá trị khác
+        Object.keys(formatted).forEach((key) => {
+          // so sánh cả giá trị cũ và mới dưới dạng string để tránh mismatch do kiểu dữ liệu
+          const oldVal = editingEmployee[key];
+          const newVal = formatted[key];
+
+          if (String(oldVal) !== String(newVal)) {
+            diffData[key] = newVal;
+          }
+        });
+
+        if (Object.keys(diffData).length === 0) {
+          message.info("Không có thay đổi nào để cập nhật.");
+          return;
+        }
+
         await fetch(`${EMPLOYEE_API}/${editingEmployee.id}`, {
-          method: "PUT",
+          method: "PATCH", // sử dụng PATCH thay vì PUT để cập nhật từng phần
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formatted),
+          body: JSON.stringify(diffData),
         });
 
         await createActivityLog({
           name: user?.fullName || "",
           activityType: "Update",
-          details: `Cập nhật thông tin nhân viên ${formatted.fullName}`,
+          details: `Cập nhật nhân viên ${editingEmployee.fullName}`,
         });
 
         message.success("Cập nhật nhân viên thành công");
       } else {
-        const newEmployee = { ...formatted, id: crypto.randomUUID() };
+        const newEmployee = {
+          ...formatted,
+          id: crypto.randomUUID(),
+          username: values.username,
+          password: values.password,
+          role: "user",
+          accountStatus: "active",
+        };
+
         await fetch(EMPLOYEE_API, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -185,7 +216,7 @@ const Employees: React.FC = () => {
         await createActivityLog({
           name: user?.fullName || "",
           activityType: "Add",
-          details: `Thêm nhân viên mới ${formatted.fullName}`,
+          details: `Thêm nhân viên mới ${newEmployee.fullName}`,
         });
 
         message.success("Thêm nhân viên thành công");
@@ -193,7 +224,8 @@ const Employees: React.FC = () => {
 
       setDrawerVisible(false);
       fetchEmployees();
-    } catch {
+    } catch (error) {
+      console.error(error);
       message.error("Lưu dữ liệu thất bại");
     }
   };
@@ -202,13 +234,13 @@ const Employees: React.FC = () => {
     const matchText =
       (emp.fullName?.toLowerCase().includes(searchText.toLowerCase()) ??
         false) ||
-      (emp.departmentId?.toLowerCase().includes(searchText.toLowerCase()) ??
+      (emp.departmentName?.toLowerCase().includes(searchText.toLowerCase()) ??
         false) ||
-      (emp.positionId?.toLowerCase().includes(searchText.toLowerCase()) ??
+      (emp.positionName?.toLowerCase().includes(searchText.toLowerCase()) ??
         false);
 
     const matchDepartment =
-      !departmentFilter || emp.department === departmentFilter;
+      !departmentFilter || emp.departmentName === departmentFilter;
 
     return matchText && matchDepartment;
   });
@@ -221,7 +253,7 @@ const Employees: React.FC = () => {
     { title: "Ngày bắt đầu", dataIndex: "startDate" },
     {
       title: "Hành động",
-      render: (_: any, record: Employee) => (
+      render: (_: any, record: Account) => (
         <Space>
           <Button type="link" onClick={() => handleViewDetail(record)}>
             Xem
@@ -249,9 +281,9 @@ const Employees: React.FC = () => {
         Danh sách nhân viên
       </Typography.Title>
       <Space style={{ marginBottom: 16 }} wrap>
-        {/* <Button type="primary" onClick={handleAdd}>
+        <Button type="primary" onClick={handleAdd}>
           Thêm nhân viên
-        </Button> */}
+        </Button>
         <Input.Search
           placeholder="Tìm theo tên, phòng ban, vị trí..."
           allowClear
@@ -303,6 +335,53 @@ const Employees: React.FC = () => {
           >
             <Input maxLength={255} showCount />
           </Form.Item>
+          {!editingEmployee && (
+            <>
+              <Form.Item
+                name="username"
+                label="Tên đăng nhập"
+                rules={[
+                  { required: true, message: "Vui lòng nhập tên đăng nhập" },
+                  {
+                    validator: async (_, value) => {
+                      if (!value) return Promise.resolve();
+
+                      const usernameExists = employees.some(
+                        (emp) => emp.username === value
+                      );
+
+                      if (usernameExists) {
+                        return Promise.reject(
+                          new Error("Tên đăng nhập đã tồn tại")
+                        );
+                      }
+
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
+              >
+                <Input maxLength={100} showCount />
+              </Form.Item>
+
+              <Form.Item
+                name="password"
+                label="Mật khẩu"
+                rules={[
+                  { required: true, message: "Vui lòng nhập mật khẩu" },
+                  {
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^])[A-Za-z\d@$!%*#?&^]{6,}$/,
+                    message:
+                      "Mật khẩu phải có ít nhất 6 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+                  },
+                ]}
+              >
+                <Input.Password maxLength={100} showCount />
+              </Form.Item>
+            </>
+          )}
+
           <Form.Item
             name="email"
             label="Email"
