@@ -10,4 +10,5 @@ export interface Account {
   accountStatus: string;
   startDate: string;
   workingStatus: string;
+  phone: number;
 }

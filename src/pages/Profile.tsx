@@ -73,7 +73,7 @@ const Profile: React.FC = () => {
       const updatedProfile = {
         ...profile,
         email,
-        ...(password ? { password } : {}), // Chỉ cập nhật nếu nhập mật khẩu mới
+        ...(password ? { password } : {}),
       };
 
       const res = await fetch(`http://localhost:3001/accounts/${profile.id}`, {
@@ -130,17 +130,6 @@ const Profile: React.FC = () => {
           <Text type="secondary">{roleName}</Text>
         </div>
 
-        <Button
-          type="primary"
-          style={{ float: "right", marginBottom: 16 }}
-          onClick={() => {
-            form.setFieldsValue({ email: profile.email }); // chỉ set email
-            setIsModalOpen(true);
-          }}
-        >
-          Chỉnh sửa thông tin
-        </Button>
-
         <Descriptions
           bordered
           column={1}
@@ -162,7 +151,21 @@ const Profile: React.FC = () => {
           <Descriptions.Item label={<><TagOutlined /> Vai trò</>}>
             {roleName}
           </Descriptions.Item>
+          
         </Descriptions>
+
+        {/* Nút chỉnh sửa được đặt ở đây */}
+        <div style={{ textAlign: "center", marginTop: 24 }}>
+          <Button
+            type="primary"
+            onClick={() => {
+              form.setFieldsValue({ email: profile.email });
+              setIsModalOpen(true);
+            }}
+          >
+            Chỉnh sửa thông tin
+          </Button>
+        </div>
       </Card>
 
       <Modal
@@ -196,7 +199,10 @@ const Profile: React.FC = () => {
             rules={[
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!getFieldValue("password") || getFieldValue("password") === value) {
+                  if (
+                    !getFieldValue("password") ||
+                    getFieldValue("password") === value
+                  ) {
                     return Promise.resolve();
                   }
                   return Promise.reject(

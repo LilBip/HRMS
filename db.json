@@ -10,20 +10,10 @@
       "position": "",
       "department": "",
       "accountStatus": "active",
-      "workingStatus": "working",
-      "startDate": "2025-7-25"
-    },
-    {
-      "id": "1754442123999",
-      "username": "User",
-      "password": "User123@",
-      "fullName": "Nguyễn Nhĩ Thái",
-      "role": "user",
-      "email": "kiennghiep2003@gmail.com",
-      "position": "",
-      "department": "",
-      "accountStatus": "active",
-      "workingStatus": ""
+      "workingStatus": "Đang làm việc",
+      "startDate": "2025-07-25",
+      "departmentId": "it01",
+      "positionId": "1"
     },
     {
       "id": "1754447558609",
@@ -35,7 +25,10 @@
       "position": "",
       "department": "",
       "accountStatus": "active",
-      "workingStatus": ""
+      "workingStatus": "Đang thử việc",
+      "departmentId": "it06",
+      "positionId": "3",
+      "startDate": "2025-08-06"
     },
     {
       "id": "edcd3a8c-341c-4a49-8539-1e671f7c946a",
@@ -43,9 +36,9 @@
       "username": "khanhduy123",
       "password": "Abc@123",
       "email": "duyletgoo@gmail.com",
-      "departmentId": "PB003",
+      "departmentId": "it02",
       "positionId": "1",
-      "workingStatus": "Đang thử việc",
+      "workingStatus": "Đang làm việc",
       "startDate": "2025-08-07",
       "role": "user",
       "accountStatus": "active"
@@ -54,119 +47,108 @@
       "id": "4a8e8c6f-f9f1-4db6-b5c6-a97b735dbc48",
       "fullName": "Minh Nghia",
       "email": "duyletgo@gmail.com",
-      "departmentId": "PB001",
-      "positionId": "1",
+      "departmentId": "it03",
+      "positionId": "2",
       "workingStatus": "Đang thử việc",
       "startDate": "2025-08-07",
       "username": "khanhduy12345",
       "password": "Abc@123",
       "role": "user",
       "accountStatus": "active"
+    },
+    {
+      "id": "cab1b27c-f1c9-413c-9003-56d556289386",
+      "fullName": "Phạm Thị Cẩm Đào",
+      "username": "user4",
+      "password": "User123@",
+      "email": "ptcdao@gmail.com",
+      "departmentId": "it03",
+      "positionId": "1",
+      "workingStatus": "Đang làm việc",
+      "startDate": "2025-08-07",
+      "role": "user",
+      "accountStatus": "active"
+    },
+    {
+      "id": "1754988001765",
+      "username": "user7",
+      "password": "User123@",
+      "fullName": "Nguyễn Nhĩ Thái",
+      "role": "user",
+      "email": "NNThai@gmail.com",
+      "position": "",
+      "department": "",
+      "accountStatus": "active",
+      "workingStatus": "Đang làm việc",
+      "departmentId": "it02",
+      "positionId": "3",
+      "startDate": "2025-08-12"
     }
   ],
   "departments": [
     {
-      "id": "PB001",
-      "name": "Phòng Nhân sự",
-      "description": "Quản lý tuyển dụng, đào tạo và chính sách nhân sự."
+      "id": "it01",
+      "name": "Phòng Công Nghệ Thông Tin",
+      "description": "Quản lý hạ tầng công nghệ, bảo mật và phần mềm nội bộ"
     },
     {
-      "id": "PB002",
-      "name": "Phòng Kế toán",
-      "description": "Quản lý tài chính, sổ sách và báo cáo kế toán."
+      "id": "it02",
+      "name": "Phát triển Web & App",
+      "description": "Phát triển website, ứng dụng di động và hệ thống tích hợp"
     },
     {
-      "id": "PB003",
-      "name": "Phòng Kỹ thuật",
-      "description": "Phụ trách kỹ thuật, bảo trì và hạ tầng hệ thống."
+      "id": "it03",
+      "name": "UI/UX Design",
+      "description": "Thiết kế giao diện người dùng và trải nghiệm người dùng cho sản phẩm số"
     },
     {
-      "id": "PB004",
-      "name": "Phòng Marketing",
-      "description": "Lên kế hoạch và triển khai các chiến dịch tiếp thị."
+      "id": "it04",
+      "name": "Thiết kế Đồ họa",
+      "description": "Thiết kế nhận diện thương hiệu, ấn phẩm truyền thông và quảng cáo"
     },
     {
-      "id": "PB005",
-      "name": "Phòng Kinh doanh",
-      "description": "Chịu trách nhiệm bán hàng và chăm sóc khách hàng."
+      "id": "it05",
+      "name": "Hỗ trợ Kỹ thuật",
+      "description": "Hỗ trợ kỹ thuật cho nhân viên và vận hành hệ thống hàng ngày"
     },
     {
-      "id": "PB006",
-      "name": "Phòng Dự án",
-      "description": "Quản lý các dự án nội bộ và khách hàng."
-    },
-    {
-      "id": "PB007",
-      "name": "Phòng Pháp chế",
-      "description": "Xử lý các vấn đề pháp lý và tư vấn luật doanh nghiệp."
-    },
-    {
-      "id": "PB008",
-      "name": "Phòng IT",
-      "description": "Hỗ trợ công nghệ thông tin và hệ thống phần mềm."
-    },
-    {
-      "id": "PB009",
-      "name": "Phòng Thiết kế",
-      "description": "Thiết kế đồ họa, giao diện và trải nghiệm người dùng."
-    },
-    {
-      "id": "PB010",
-      "name": "Phòng R&D",
-      "description": "Nghiên cứu và phát triển sản phẩm mới."
-    },
-    {
-      "id": "PB011",
-      "name": "Phòng Hành chính",
-      "description": "Hỗ trợ hành chính, văn thư và hậu cần."
-    },
-    {
-      "id": "PB012",
-      "name": "Phòng Quản lý Chất lượng",
-      "description": "Đảm bảo tiêu chuẩn và kiểm soát chất lượng sản phẩm."
-    },
-    {
-      "id": "PB013",
-      "name": "Phòng Sản xuất",
-      "description": "Tổ chức và vận hành quá trình sản xuất."
-    },
-    {
-      "id": "PB014",
-      "name": "Phòng Đào tạo",
-      "description": "Tổ chức các khóa đào tạo nội bộ cho nhân viên."
-    },
-    {
-      "id": "PB015",
-      "name": "Phòng Chăm sóc Khách hàng",
-      "description": "Tiếp nhận và xử lý phản hồi, yêu cầu của khách hàng."
-    },
-    {
-      "id": "PB016",
-      "name": "Phòng Điều hành",
-      "description": "Giám sát và điều phối các hoạt động chung của công ty."
-    },
-    {
-      "id": "PB017",
-      "name": "Phòng An ninh",
-      "description": "Đảm bảo an ninh nội bộ và an toàn thông tin."
-    },
-    {
-      "id": "PB018",
-      "name": "Phòng Môi trường",
-      "description": "Giám sát và thực hiện các tiêu chuẩn môi trường."
-    },
-    {
-      "id": "PB019",
-      "name": "Phòng Logistic",
-      "description": "Quản lý vận chuyển, kho bãi và chuỗi cung ứng."
-    },
-    {
-      "id": "PB020",
-      "name": "Phòng Hỗ trợ kỹ thuật",
-      "description": "Giải quyết sự cố kỹ thuật và hỗ trợ người dùng cuối."
+      "id": "it06",
+      "name": "Tester",
+      "description": "Thực hiện kiểm thử chất lượng phần mềm, đảm bảo sản phẩm hoạt động ổn định"
     }
   ],
-  "requestForms": [],
+  "requestForms": [
+    {
+      "id": "c40e",
+      "employeeId": "1754393708391",
+      "employeeName": "Admin",
+      "type": "Nghỉ phép",
+      "content": "em xin nghỉ ạ\n",
+      "time": "Từ 12/08/2025 đến 17/09/2025",
+      "startDate": "2025-08-11T17:00:00.000Z",
+      "endDate": "2025-09-16T17:00:00.000Z",
+      "status": "approved",
+      "submissionDate": "2025-08-06T14:56:53.452Z",
+      "approvedBy": "Admin",
+      "approvalDate": "2025-08-06T14:57:48.549Z",
+      "approvalNote": "Nghỉ luôn thì được"
+    },
+    {
+      "id": "3d54",
+      "employeeId": "1754393708391",
+      "employeeName": "Admin",
+      "type": "Công tác",
+      "content": "Công tác tại Hà Nội\n",
+      "time": "Từ 20/08/2025 đến 17/09/2025",
+      "startDate": "2025-08-19T17:00:00.000Z",
+      "endDate": "2025-09-16T17:00:00.000Z",
+      "status": "rejected",
+      "submissionDate": "2025-08-06T14:57:13.658Z",
+      "approvedBy": "Admin",
+      "approvalDate": "2025-08-06T14:58:36.789Z",
+      "approvalNote": ""
+    }
+  ],
   "attendance": [],
   "position": [
     {
@@ -269,6 +251,125 @@
       "activityType": "Update",
       "details": "Cập nhật nhân viên Khánh Duyyyy",
       "time": "2025-08-06 10:23:06"
+    },
+    {
+      "id": "1754462811172",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Nguyễn Nhĩ Thái",
+      "time": "2025-08-06 13:46:51"
+    },
+    {
+      "id": "1754462839795",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Nguyễn Nhĩ Thái",
+      "time": "2025-08-06 13:47:19"
+    },
+    {
+      "id": "1754462866990",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Nguyễn Nhĩ Thái",
+      "time": "2025-08-06 13:47:46"
+    },
+    {
+      "id": "1754462873658",
+      "name": "Admin",
+      "activityType": "Delete",
+      "details": "Xóa nhân viên Nguyễn Nhĩ Thái",
+      "time": "2025-08-06 13:47:53"
+    },
+    {
+      "id": "1754491789701",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Minh Nghia",
+      "time": "2025-08-06 21:49:49"
+    },
+    {
+      "id": "1754491799577",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Khánh Duyyyy",
+      "time": "2025-08-06 21:49:59"
+    },
+    {
+      "id": "1754491934314",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Đỗ Thị Ngọc Hoa",
+      "time": "2025-08-06 21:52:14"
+    },
+    {
+      "id": "1754492213463",
+      "name": "Admin",
+      "activityType": "Tạo đơn từ",
+      "details": "Tạo đơn Nghỉ phép mới",
+      "time": "2025-08-06 21:56:53"
+    },
+    {
+      "id": "1754492233667",
+      "name": "Admin",
+      "activityType": "Tạo đơn từ",
+      "details": "Tạo đơn Công tác mới",
+      "time": "2025-08-06 21:57:13"
+    },
+    {
+      "id": "1754492268560",
+      "name": "Admin",
+      "activityType": "Phê duyệt đơn",
+      "details": "Phê duyệt đơn Nghỉ phép của Admin - Ghi chú: Nghỉ luôn thì được",
+      "time": "2025-08-06 21:57:48"
+    },
+    {
+      "id": "1754492316798",
+      "name": "Admin",
+      "activityType": "Từ chối đơn",
+      "details": "Từ chối đơn Công tác của Admin",
+      "time": "2025-08-06 21:58:36"
+    },
+    {
+      "id": "1754492582967",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Admin",
+      "time": "2025-08-06 22:03:02"
+    },
+    {
+      "id": "1754568020158",
+      "name": "Admin",
+      "activityType": "Add",
+      "details": "Thêm nhân viên mới Phạm Thị Cẩm Đào",
+      "time": "2025-08-07 19:00:20"
+    },
+    {
+      "id": "1754568199620",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Phạm Thị Cẩm Đào",
+      "time": "2025-08-07 19:03:19"
+    },
+    {
+      "id": "1754568210805",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Phạm Thị Cẩm Đào",
+      "time": "2025-08-07 19:03:30"
+    },
+    {
+      "id": "1754568460046",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Phạm Thị Cẩm Đào",
+      "time": "2025-08-07 19:07:40"
+    },
+    {
+      "id": "1754988147344",
+      "name": "Admin",
+      "activityType": "Update",
+      "details": "Cập nhật nhân viên Nguyễn Nhĩ Thái",
+      "time": "2025-08-12 15:42:27"
     }
   ]
 }
